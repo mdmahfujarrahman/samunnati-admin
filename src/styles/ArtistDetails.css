@@ -1,0 +1,259 @@
+.artistDetails-container {
+  width: 95%;
+  padding: 1rem 0;
+  margin: auto;
+}
+
+.artistDetails-personalInfoDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.artistDetails-leftDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 58%;
+}
+
+.artistDetails-imageDiv {
+  width: 120px;
+  height: 120px;
+  margin-right: 2rem;
+  border-radius: 50%;
+}
+
+.artistDetails-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.artistDetails-infoDiv {
+  width: 75%;
+}
+
+.artistDetails-infoContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.artistDetails-personal {
+  width: 50%;
+}
+
+.artistDetails-account {
+  width: 50%;
+  /* padding-left: 10px; */
+  /* border-left: 1px solid #7d8285; */
+}
+
+.artistDetails-infoPara {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 16px;
+  color: #155b89;
+  margin: 10px 0;
+}
+
+.artistDetails-infoPara .artistDetails-infoSpan {
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.artistDetails-leftBtnDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 65%;
+}
+
+.artistDetails-leftBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c7ebf;
+  color: #fff;
+  width: 45%;
+  padding: 4px;
+  border: none;
+  outline: none;
+  border-radius: 22px;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.iconBtn {
+  height: 22px;
+  width: 22px;
+  object-fit: cover;
+  margin-left: 8px;
+}
+
+.artistDetails-rightDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 42%;
+}
+
+.artistDetails-rightBtnDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+}
+.artistDetails-rightBtn {
+  box-sizing: border-box;
+  outline: none;
+  border-radius: 31px;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: transparent;
+  padding: 3px 25px;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.artist-orderDetailDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin-left: auto;
+  margin-top: 2rem;
+}
+
+.paymentIcon {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.paymentBtn {
+  position: relative;
+}
+
+.notification {
+  position: absolute;
+  left: 3%;
+  top: -35%;
+  height: 18px;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: red;
+  color: #fff;
+  font-size: 12px;
+}
+
+.block {
+  border: 2px solid #1c7ebf;
+  color: #1c7ebf;
+  margin-right: 10px;
+}
+
+.delete {
+  border: 2px solid #fc3c00;
+  color: #fc3c00;
+  margin-left: 10px;
+}
+
+/**** Income Section  ****/
+
+.artistDetails-incomeSection {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.artistDetails-incomeCardDiv {
+  width: 22%;
+}
+
+.artistDetails-incomeCardLabel {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2d2d2d;
+  margin: 10px 5px;
+}
+
+.artistDetails-incomeCard {
+  background: linear-gradient(
+    75.72deg,
+    #05478a 4.63%,
+    #73bcf8 106.33%,
+    #05478a 106.92%
+  );
+  box-shadow: 4px 4px 4px rgba(4, 97, 182, 0.15),
+    -4px 4px 4px rgba(109, 92, 252, 0.15);
+  border-radius: 16px;
+  padding: 8px 20px;
+}
+
+.artistDetails-incomeCardTitle {
+  font-weight: normal;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+.artistDetails-income {
+  font-family: Mulish;
+  font-weight: bold;
+  font-size: 30px;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+.artistDetails-ordersDiv {
+  width: 45%;
+}
+
+.artistDetails-orderTitle {
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 18px;
+  color: #223263;
+  margin: 10px 0;
+}
+
+.artistDetails-order {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0;
+  color: #223263;
+}

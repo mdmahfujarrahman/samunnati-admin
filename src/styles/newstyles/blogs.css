@@ -1,0 +1,86 @@
+/* main Container */
+.blogs-container {
+  width: 90%;
+  margin: auto;
+}
+
+/* First section */
+
+.blogs-firstSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 3rem;
+}
+/* First section search  */
+.blogs-searchDiv {
+  width: 50%;
+  padding: 8px 15px;
+  border: 2px solid #1c7ebf;
+  border-radius: 31px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.searchIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 20px;
+}
+
+.blogs-searchInput {
+  width: 100%;
+  /* padding: 8px 15px; */
+  border: none;
+  box-sizing: border-box;
+  /* border-radius: 31px; */
+  background-color: inherit;
+  outline: none;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 16px;
+  color: #1c7ebf;
+}
+
+#searchInput:before {
+  content: url('../../images/searchIcon.svg');
+  padding-right: 10px;
+}
+
+.blogs-searchInput::placeholder {
+  color: #1c7ebf;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 16px;
+  opacity: 0.5;
+}
+
+/* First section Add Blogs  */
+.blogs-addblogsDiv {
+  width: 20%;
+}
+
+.blogs-addBtn {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  background: #1c7ebf;
+  border: none;
+  border-radius: 31px;
+  padding: 8px 10px;
+  color: #fff;
+  font-family: Montserrat;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.blogs-addBtn span {
+  margin-left: 10px;
+}
