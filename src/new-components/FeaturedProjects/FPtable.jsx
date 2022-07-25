@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/ArtistsTable.css';
+import '../../styles/newstyles/btable.css';
 
 const FPtable = () => {
   return (

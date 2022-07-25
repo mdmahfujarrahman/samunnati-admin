@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LoadingPage from '../utils/LoadingPage';
-import '../../styles/ArtistPage.css';
+import '../../styles/newstyles/btable.css';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import addIcon from '../../images/addIcon.svg';
