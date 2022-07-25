@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../../styles/newstyles/addBlogForm.css';
 import { useParams, useHistory } from 'react-router-dom';
-import { addBlog, getblog, updateBlog } from '../../redux/api';
+import { getBlogById, updateBlog } from '../../redux/api';
 import { storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import LoadingPage from '../../new-components/utils/LoadingPage';
@@ -26,7 +26,7 @@ const EditBlogForm = () => {
   const getBlogData = async () => {
     setLoading(true);
     try {
-      const res = await getblog(id);
+      const res = await getBlogById(id);
       const bdata = res.data.data;
       setblogData({
         ...bdata,
@@ -73,8 +73,8 @@ const EditBlogForm = () => {
         ...blogData,
         tags: blogData.tags.split(' ').filter((t) => t.length), //later change to tags array
         timeToRead: blogData.timeToRead + 'min',
+        id: blogData._id,
       };
-      console.log(payloaddata);
       await updateBlog(payloaddata);
       history.push('/blogs');
       console.log('update complete');

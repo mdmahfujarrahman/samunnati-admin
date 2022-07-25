@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteBlog } from '../../../redux/api';
+import { deleteCareer } from '../../../redux/api';
 import DeleteModal from '../../utils/DeleteModal';
-const BtableRow = ({ index, blog, allblogs, setallblogs }) => {
+
+const CtableRow = ({ index, career, allcareers, setallcareers }) => {
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [ConfirmDelete, setConfirmDelete] = useState(false);
 
@@ -15,22 +16,22 @@ const BtableRow = ({ index, blog, allblogs, setallblogs }) => {
   const handleDeleteCancel = () => {
     setdeleteModalOpen(false);
   };
-  const handleDeleteBlog = (e, id) => {
+  const handleDeletecareer = (e) => {
     e.preventDefault();
     setdeleteModalOpen(true);
   };
-  const handleConfirmDeleteBlog = async (id) => {
+  const handleConfirmDeletecareer = async (id) => {
     try {
-      const updatedblogs = allblogs.filter((b) => b._id !== id);
-      setallblogs(updatedblogs);
-      await deleteBlog(id);
+      const updatedcareers = allcareers.filter((b) => b._id !== id);
+      setallcareers(updatedcareers);
+      await deleteCareer(id);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
     if (ConfirmDelete) {
-      handleConfirmDeleteBlog(blog._id);
+      handleConfirmDeletecareer(career._id);
     }
   }, [ConfirmDelete]);
 
@@ -38,32 +39,24 @@ const BtableRow = ({ index, blog, allblogs, setallblogs }) => {
     <>
       <tr>
         <td>{index + 1}</td>
-        <td>{blog.authorName}</td>
-        <td>{blog.updatedAt.substr(0, 10)}</td>
-        <td>{blog.timeToRead}</td>
-        <td>{blog.title}</td>
-        <td>{blog.category}</td>
-        <td style={{ textAlign: 'center' }}>
-          <img
-            src={blog.picture}
-            height="100px"
-            width="100px"
-            alt="product image"
-          />
-        </td>
+        <td>{career.name}</td>
+        <td>{career.description}</td>
+        <td>{career.experience}</td>
+        <td>{career.salary}</td>
+        <td>{career.location}</td>
         <td className="text-right">
           <div
             className="actions"
             style={{ display: 'flex', justifyContent: 'space-evenly' }}
           >
-            <Link to={`/blog/edit/${blog._id}`}>
+            <Link to={`/career/edit/${career._id}`}>
               {' '}
-              <button className="blogs-edit-btn">
+              <button className="career-edit-btn">
                 <ModeEditIcon />{' '}
               </button>
             </Link>
-            <Link onClick={(e) => handleDeleteBlog(e)} to={'#'}>
-              <button className="blogs-delete-btn">
+            <Link onClick={(e) => handleDeletecareer(e)} to={'#'}>
+              <button className="career-delete-btn">
                 <DeleteIcon />{' '}
               </button>
             </Link>
@@ -75,11 +68,11 @@ const BtableRow = ({ index, blog, allblogs, setallblogs }) => {
           show={deleteModalOpen}
           handleConfirm={handleDeleteConfirm}
           handleCancel={handleDeleteCancel}
-          categorytag="Blog"
+          categorytag="Career"
         />
       )}
     </>
   );
 };
 
-export default BtableRow;
+export default CtableRow;

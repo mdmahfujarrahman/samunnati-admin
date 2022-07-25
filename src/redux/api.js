@@ -6,16 +6,37 @@ const API = axios.create({
   baseURL: 'https://aspire0.herokuapp.com/',
 });
 
+// Property
+
+export const getAllProperty = () => API.get('/prop/getAllProperty');
+export const addProperty = (data) => API.post('/prop/addProperty', data);
+export const deleteProperty = (propid) =>
+  API.post('/prop/deleteProperty', { id: propid });
+export const getPropertyById = (propid) =>
+  API.post('/prop/getPropertyById', { id: propid });
+export const updateProperty = (data) => API.post('/prop/updateProperty', data);
+
 // Blogs
+
 export const getAllBlogs = () => API.get('/blog/getAllBlog');
 export const addBlog = (data) => API.post('/blog/addBlog', data);
 export const deleteBlog = (blogid) =>
-  API.post('blog/deleteBlog', { id: blogid });
-export const getblog = (blogid) =>
+  API.post('/blog/deleteBlog', { id: blogid });
+export const getBlogById = (blogid) =>
   API.post('/blog/getBlogById', { id: blogid });
 export const updateBlog = (data) => API.post('/blog/updateBlog', data);
 
-//
+//Career
+
+export const getAllCareer = () => API.get('/cr/getAllCareer');
+export const getCareerById = (blogid) =>
+  API.post('/cr/getCareerById', { id: blogid });
+export const addCareer = (data) => API.post('/cr/addCareer', data);
+export const updateCareer = (data) => API.post('/cr/updateCareer', data);
+export const deleteCareer = (blogid) =>
+  API.post('/cr/deleteCareer', { id: blogid });
+
+//--------------------------------------------------------------------------------------
 API.interceptors.request.use((req) => {
   if (Cookies.get('fanstarAdmin')) {
     req.headers['authorization'] = `Bearer ${Cookies.get('fanstarAdmin')}`;

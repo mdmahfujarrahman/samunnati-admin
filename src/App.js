@@ -20,8 +20,9 @@ import { createBrowserHistory as createHistory } from 'history';
 // new components
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavSidebar from './new-components/NavSidebar';
+
 import LoginPage from './new-components/LoginPage';
+import NavSidebar from './new-components/NavSidebar';
 import Property from './new-components/Property/Property';
 import Career from './new-components/Career/Career';
 import Blogs from './new-components/Blogs/Blogs';
@@ -29,6 +30,8 @@ import AddBlogForm from './new-components/Blogs/AddBlogForm';
 import FeaturedProject from './new-components/FeaturedProjects/FeaturedProject';
 import TrendingLoans from './new-components/TrendingLoans/TrendingLoans';
 import EditBlogForm from './new-components/Blogs/EditBlogForm';
+import AddCareerForm from './new-components/Career/AddCareerForm';
+import EditCareerForm from './new-components/Career/EditCareerForm';
 
 export const history = createHistory();
 const App = () => {
@@ -39,6 +42,8 @@ const App = () => {
         <NavSidebar>
           <Route path="/property" exact component={Property} />
           <Route path="/career" exact component={Career} />
+          <Route path="/career/add" exact component={AddCareerForm} />
+          <Route path="/career/edit/:id/" exact component={EditCareerForm} />
           <Route path="/blogs" exact component={Blogs} />
           <Route path="/blog/add" exact component={AddBlogForm} />
           <Route path="/blog/edit/:id/" component={EditBlogForm} />
