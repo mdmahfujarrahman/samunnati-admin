@@ -202,7 +202,12 @@ const EditCareerForm = () => {
                 {/* 4th Row  */}
                 <div className="addcareer-alignRow">
                   <div className="addcareer-textFieldDiv">
-                    <label className="addcareer-inputLabel">Description</label>
+                    <label className="addcareer-inputLabel">
+                      Description{' '}
+                      <span style={{ color: 'red', fontSize: '1.2rem' }}>
+                        *
+                      </span>{' '}
+                    </label>
                     <textarea
                       className="addcareer-textField"
                       value={careerData.description}

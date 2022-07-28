@@ -132,7 +132,10 @@ const AddCareerForm = () => {
             </div>
             {/* Salary (in Lpa)*/}
             <div className="addcareer-inputFieldDiv">
-              <label className="addcareer-inputLabel">Salary (in Lpa)</label>
+              <label className="addcareer-inputLabel">
+                Salary (in Lpa){' '}
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
               <input
                 name="salary"
                 id={error.salary ? 'red-border' : ''}
@@ -165,7 +168,10 @@ const AddCareerForm = () => {
           {/* 4th Row  */}
           <div className="addcareer-alignRow">
             <div className="addcareer-textFieldDiv">
-              <label className="addcareer-inputLabel">Description</label>
+              <label className="addcareer-inputLabel">
+                Description{' '}
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
               <textarea
                 className="addcareer-textField"
                 value={careerData.description}

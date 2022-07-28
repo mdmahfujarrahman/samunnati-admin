@@ -186,7 +186,8 @@ const EditBlogForm = () => {
               {/* TimetoRead */}
               <div className="addblog-inputFieldDiv">
                 <label className="addblog-inputLabel">
-                  Time To Read (Minutes)
+                  Time To Read (Minutes){' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <input
                   name="minutes"
@@ -203,7 +204,10 @@ const EditBlogForm = () => {
             <div className="addblog-alignRow">
               {/* Author PIctue */}
               <div className="addblog-inputFieldDiv">
-                <label className="addblog-inputLabel">Author Profile</label>
+                <label className="addblog-inputLabel">
+                  Author Profile{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
                 <input
                   type="file"
                   name="profilePic"
@@ -223,7 +227,10 @@ const EditBlogForm = () => {
               </div>
               {/* Blog Picture */}
               <div className="addblog-inputFieldDiv">
-                <label className="addblog-inputLabel">Blog Picture</label>
+                <label className="addblog-inputLabel">
+                  Blog Picture{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
                 <input
                   type="file"
                   name="thumbnail"
@@ -247,7 +254,10 @@ const EditBlogForm = () => {
             <div className="addblog-alignRow">
               {/* Tags */}
               <div className="addblog-textFieldDiv">
-                <label className="addblog-inputLabel">Tags</label>
+                <label className="addblog-inputLabel">
+                  Tags{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
                 <input
                   className="addblog-inputField"
                   value={blogData.tags}
@@ -263,7 +273,10 @@ const EditBlogForm = () => {
             <div className="addblog-alignRow">
               {/*content*/}
               <div className="addblog-textFieldDiv">
-                <label className="addblog-inputLabel">Content</label>
+                <label className="addblog-inputLabel">
+                  Content{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
                 <textarea
                   className="addblog-textField"
                   value={blogData.content}
