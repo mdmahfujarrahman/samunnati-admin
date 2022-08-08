@@ -1,26 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createBrowserHistory as createHistory } from 'history';
-// import DashboardPage from './components/Dashboard/DashboardPage';
-// import ArtistPage from './components/Artists/ArtistPage';
-// import UserPage from './components/Users/UserPage';
-// import AddArtistForm from './components/Artists/AddArtistForm';
-// import BlogPage from './components/Blogs/BlogPage';
-// import PaymentPage from './components/Payments/PaymentPage';
-// import ArtistDetails from './components/Artists/ArtistDetails';
-// import EmployeeDetails from './components/Blogs/EmployeeDetails';
-// import ArtistPayment from './components/Artists/ArtistPayment';
-// import Addcoursepage from './components/Artists/Addcoursepage';
-// import AddEmployeeAccount from './components/Blogs/AddEmployeeAccount';
-// import ViewCoursePage from './components/Artists/Courses/ViewCoursePage';
-// import Edituniversity from './components/Artists/University/Edituniversity';
-// import Editcourse from './components/Artists/Courses/Editcourse';
-// import EditBlog from './components/Blogs/allblogs/EditBlog';
-// import ViewSingleUser from './components/Users/ViewSingleUser';
-// new components
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import LoginPage from './new-components/LoginPage';
 import NavSidebar from './new-components/NavSidebar';
 import Property from './new-components/Property/Property';
@@ -28,12 +9,14 @@ import Career from './new-components/Career/Career';
 import Blogs from './new-components/Blogs/Blogs';
 import AddBlogForm from './new-components/Blogs/AddBlogForm';
 import FeaturedProject from './new-components/FeaturedProjects/FeaturedProject';
-import TrendingLoans from './new-components/TrendingLoans/TrendingLoans';
 import EditBlogForm from './new-components/Blogs/EditBlogForm';
 import AddCareerForm from './new-components/Career/AddCareerForm';
 import EditCareerForm from './new-components/Career/EditCareerForm';
 import AddFeaturedProjectForm from './new-components/FeaturedProjects/AddFeaturedProjectForm';
 import EditFeaturedProjectForm from './new-components/FeaturedProjects/EditFeaturedProjectForm';
+import TrendingLoans from './new-components/TrendingLoans/TrendingLoans';
+import AddTrendingLoansForm from './new-components/TrendingLoans/AddTrendingLoansForm';
+import EditTrendingLoansForm from './new-components/TrendingLoans/EditTrendingLoansForm';
 
 export const history = createHistory();
 const App = () => {
@@ -60,6 +43,15 @@ const App = () => {
             component={EditFeaturedProjectForm}
           />
           <Route path="/trendingloans" exact component={TrendingLoans} />
+          <Route
+            path="/trendingloans/add"
+            exact
+            component={AddTrendingLoansForm}
+          />
+          <Route
+            path="/trendingloans/edit/:id"
+            component={EditTrendingLoansForm}
+          />
         </NavSidebar>
       </Switch>
     </Router>

@@ -39,12 +39,20 @@ export const deleteCareer = (blogid) =>
 //featured Project
 
 export const getAllProject = () => API.get('/proj/getAllProject');
-export const getProjectById = (blogid) =>
-  API.post('/proj/getProjectById', { id: blogid });
+export const getProjectById = (pid) =>
+  API.post('/proj/getProjectById', { id: pid });
 export const addProject = (data) => API.post('/proj/addProject', data);
 export const updateProject = (data) => API.post('/proj/updateProject', data);
 export const deleteProject = (projid) =>
   API.post('/proj/deleteProject', { id: projid });
+
+//Loans
+
+export const getAllLoan = () => API.get('/ln/getAllLoan');
+export const getLoanById = (lid) => API.post('/ln/getLoanById', { id: lid });
+export const addLoan = (data) => API.post('/ln/addLoan', data);
+export const updateLoan = (data) => API.post('/ln/updateLoan', data);
+export const deleteLoan = (lid) => API.post('/ln/deleteLoan', { id: lid });
 
 //--------------------------------------------------------------------------------------
 API.interceptors.request.use((req) => {
@@ -60,66 +68,3 @@ export const login = (loginData) =>
 export const appVisits = () => API.get('/api/admin/private/gettotalappvisits');
 export const totalSubscriptions = () =>
   API.get('/api/admin/private/gettotalsubscribers');
-
-// Artists
-export const getArtistList = (searchInput = '') =>
-  API.post('/api/admin/private/getlistofartists', { field: searchInput });
-export const createArtist = (formData) =>
-  API.post('/api/admin/private/createartist', formData);
-export const getAnArtist = (id) =>
-  API.get(`/api/admin/private/getanartist/${id}`);
-export const getArtistsOfAnEmployee = (id) =>
-  API.get(`/api/admin/private/getartistsofanemployee/${id}`);
-
-export const totalAndPendingOrdersForArtist = (id) =>
-  API.get(`/api/admin/private/getordersofartist/${id}`);
-
-export const allPaymentForArtist = (id) =>
-  API.get(`/api/admin/private/getpayments/${id}`);
-
-export const blockAndUnBlockArtist = (id) =>
-  API.put('/api/admin/private/blockunblockartist', { artistId: id });
-
-export const deleteAnArtist = (id) =>
-  API.delete(`/api/admin/private/deleteanartist/${id}`);
-
-export const EditArtist = (id) =>
-  API.get(`/api/admin/private/generatetokenofanartist/${id}`);
-
-export const addArtistAccount = (id, formData) =>
-  API.put(`api/admin/private/addartistaccount/${id}`, formData);
-
-export const fetchWithdraws = (id) =>
-  API.get(`/api/admin/private/getwithdrawals/${id}`);
-
-export const payToArtist = (formData) =>
-  API.put(`/api/admin/private/updateanartistbalance/`, formData);
-
-// Employee
-export const getEmployeeList = (searchInput = '') =>
-  API.post('/api/admin/private/getlistofemployees', { field: searchInput });
-export const getAnEmployee = (id) =>
-  API.get(`/api/admin/private/getanemployee/${id}`);
-
-export const addEmployeeAccount = (id, formData) =>
-  API.put(`api/admin/private/addemployeeaccount/${id}`, formData);
-
-export const createEmployee = (formData) =>
-  API.post('/api/admin/private/createemployee', formData);
-
-export const blockAndUnBlockEmployee = (id) =>
-  API.put('/api/admin/private/blockunblockemployee', { employeeId: id });
-
-export const deleteAnEmployee = (id) =>
-  API.delete(`/api/admin/private/deleteanemployee/${id}`);
-
-export const allPaymentForEmployee = (id) =>
-  API.get(`/api/admin/private/getpaymentsofartistsofemployee/${id}`);
-
-export const getUserList = () => API.get('/api/admin/private/getallusers');
-export const getPaymentList = (searchInput) =>
-  API.post('/api/admin/private/getallpayments', { field: searchInput });
-export const blockUnblockUser = (id) =>
-  API.put('/api/admin/private/blockunblockuser', {
-    userId: id,
-  });

@@ -1,79 +1,87 @@
-import React, { useEffect, useState } from 'react';
-import LoadingPage from '../utils/LoadingPage';
-import '../../styles/newstyles/btable.css';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import LoadingPage from '../utils/LoadingPage';
 import addIcon from '../../images/addIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
-import TLtable from './TLtable';
+import '../../styles/newstyles/loans.css';
+import { getAllLoan } from '../../redux/api';
+import TLtable from './AllTrendingLoans/TLtable';
 
 const TrendingLoans = () => {
+  const history = useHistory();
+  const [allLoanData, setallLoanData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchInput, setsearchInput] = useState('');
+  const [filterData, setfilterData] = useState([]);
 
-  const history = useHistory();
-  //api call
-  const unicall = async () => {
+  const fetchCarrerList = async () => {
     setLoading(true);
     try {
+      const res = await getAllLoan();
+      setallLoanData(res.data.data);
       setLoading(false);
     } catch (error) {
-      setLoading(false);
       console.log(error);
+      setLoading(false);
     }
   };
-
-  // searchIcon
+  useEffect(() => {
+    fetchCarrerList();
+  }, []);
 
   const searchItems = (searchValue) => {
     setsearchInput(searchValue);
-    // if(searchInput !== ''){
-    //   let filteredData =  universityData.filter((item) => {
-    //   return Object.values(item).join('').toLowerCase().includes(searchValue.toLowerCase())
-    //   })
-    //   setfilterData(filteredData)
-    // }else{
-    //   setfilterData(universityData)
-    // }
+    if (searchValue !== '') {
+      let filteredData = allLoanData.filter((item) => {
+        return Object.values(item)
+          .join('')
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+      });
+      setfilterData(filteredData);
+    } else {
+      setfilterData(allLoanData);
+    }
   };
 
   return (
-    <>
-      <div className="artist-container">
-        {loading ? (
-          <LoadingPage />
-        ) : (
-          <>
-            <div className="artist-firstSection">
-              <div className="artist-searchDiv">
-                <img src={searchIcon} alt="search" className="searchIcon" />
-                <input
-                  type="text"
-                  placeholder="Ex. Harvard University"
-                  className="artist-searchInput"
-                  id="searchInput"
-                  value={searchInput}
-                  onChange={(e) => searchItems(e.target.value)}
-                />
-              </div>
-              <div className="artist-addArtistDiv">
-                <button
-                  className="artist-addBtn"
-                  onClick={() => history.push('/universities/add')}
-                >
-                  <img src={addIcon} alt="add" className="artist-addIcon" />
-                  <span>Add University</span>
-                </button>
-              </div>
+    <div className="loan-container">
+      {loading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <div className="loan-firstSection">
+            <div className="loan-searchDiv">
+              <img src={searchIcon} alt="search" className="searchIcon" />
+              <input
+                type="text"
+                placeholder="Enter a Name , Description or More"
+                className="loan-searchInput"
+                id="searchInput"
+                value={searchInput}
+                onChange={(e) => searchItems(e.target.value)}
+              />
             </div>
-            <div className="artist-tableSection">
-              <TLtable />
+            <div className="loan-addloanDiv">
+              <button
+                className="loan-addBtn"
+                onClick={() => history.push('/trendingloans/add')}
+              >
+                <img src={addIcon} alt="add" className="loan-addIcon" />
+                <span>Add Loan</span>
+              </button>
             </div>
-          </>
-        )}
-      </div>
-    </>
+          </div>
+          <div className="loan-tableSection">
+            {searchInput.length ? (
+              <TLtable loanData={filterData} />
+            ) : (
+              <TLtable loanData={allLoanData} />
+            )}
+          </div>
+        </>
+      )}
+    </div>
   );
 };
-
 export default TrendingLoans;

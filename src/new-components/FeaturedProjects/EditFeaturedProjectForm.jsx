@@ -118,7 +118,7 @@ const EditFeaturedProjectForm = () => {
                 className="addproject-submitDetailBtn"
                 onClick={handlesubmit}
               >
-                Add Project
+                Update Project
                 {spinn ? (
                   <div
                     class="spinner-border spinner-border-sm text-white mx-2"

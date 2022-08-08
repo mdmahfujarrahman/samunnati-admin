@@ -292,7 +292,7 @@ const EditBlogForm = () => {
                 className="addblog-submitDetailBtn"
                 onClick={handlesubmit}
               >
-                Edit Blog
+                Update Blog
                 {spinn ? (
                   <div
                     class="spinner-border spinner-border-sm text-white mx-2"

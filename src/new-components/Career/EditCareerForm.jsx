@@ -223,7 +223,7 @@ const EditCareerForm = () => {
                     className="addcareer-submitDetailBtn"
                     onClick={handlesubmit}
                   >
-                    Edit career
+                    Update career
                     {spinn ? (
                       <div
                         class="spinner-border spinner-border-sm text-white mx-2"
