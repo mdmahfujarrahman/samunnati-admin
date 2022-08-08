@@ -32,6 +32,8 @@ import TrendingLoans from './new-components/TrendingLoans/TrendingLoans';
 import EditBlogForm from './new-components/Blogs/EditBlogForm';
 import AddCareerForm from './new-components/Career/AddCareerForm';
 import EditCareerForm from './new-components/Career/EditCareerForm';
+import AddFeaturedProjectForm from './new-components/FeaturedProjects/AddFeaturedProjectForm';
+import EditFeaturedProjectForm from './new-components/FeaturedProjects/EditFeaturedProjectForm';
 
 export const history = createHistory();
 const App = () => {
@@ -43,11 +45,20 @@ const App = () => {
           <Route path="/property" exact component={Property} />
           <Route path="/career" exact component={Career} />
           <Route path="/career/add" exact component={AddCareerForm} />
-          <Route path="/career/edit/:id/" exact component={EditCareerForm} />
+          <Route path="/career/edit/:id" exact component={EditCareerForm} />
           <Route path="/blogs" exact component={Blogs} />
           <Route path="/blog/add" exact component={AddBlogForm} />
           <Route path="/blog/edit/:id/" component={EditBlogForm} />
           <Route path="/featuredprojects" exact component={FeaturedProject} />
+          <Route
+            path="/featuredprojects/add"
+            exact
+            component={AddFeaturedProjectForm}
+          />
+          <Route
+            path="/featuredprojects/edit/:id"
+            component={EditFeaturedProjectForm}
+          />
           <Route path="/trendingloans" exact component={TrendingLoans} />
         </NavSidebar>
       </Switch>

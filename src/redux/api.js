@@ -36,6 +36,16 @@ export const updateCareer = (data) => API.post('/cr/updateCareer', data);
 export const deleteCareer = (blogid) =>
   API.post('/cr/deleteCareer', { id: blogid });
 
+//featured Project
+
+export const getAllProject = () => API.get('/proj/getAllProject');
+export const getProjectById = (blogid) =>
+  API.post('/proj/getProjectById', { id: blogid });
+export const addProject = (data) => API.post('/proj/addProject', data);
+export const updateProject = (data) => API.post('/proj/updateProject', data);
+export const deleteProject = (projid) =>
+  API.post('/proj/deleteProject', { id: projid });
+
 //--------------------------------------------------------------------------------------
 API.interceptors.request.use((req) => {
   if (Cookies.get('fanstarAdmin')) {

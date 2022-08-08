@@ -18,6 +18,7 @@ const Ctable = ({ careerData }) => {
             <th>Experience</th>
             <th>Salary</th>
             <th>Location</th>
+            <th style={{ textAlign: 'center' }}>Action</th>
           </tr>
         </thead>
         <tbody>
