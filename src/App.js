@@ -17,6 +17,9 @@ import EditFeaturedProjectForm from './new-components/FeaturedProjects/EditFeatu
 import TrendingLoans from './new-components/TrendingLoans/TrendingLoans';
 import AddTrendingLoansForm from './new-components/TrendingLoans/AddTrendingLoansForm';
 import EditTrendingLoansForm from './new-components/TrendingLoans/EditTrendingLoansForm';
+import AddPropertyForm from './new-components/Property/AddPropertyForm';
+import EditPropertyForm from './new-components/Property/EditPropertyForm';
+import Requirements from './new-components/Requirements/Requirements';
 
 export const history = createHistory();
 const App = () => {
@@ -26,6 +29,9 @@ const App = () => {
         <Route path="/" exact component={LoginPage} />
         <NavSidebar>
           <Route path="/property" exact component={Property} />
+          <Route path="/property/add" exact component={AddPropertyForm} />
+          <Route path="/property/edit/:id/" component={EditPropertyForm} />
+          <Route path="/prop/req" exact component={Requirements} />
           <Route path="/career" exact component={Career} />
           <Route path="/career/add" exact component={AddCareerForm} />
           <Route path="/career/edit/:id" exact component={EditCareerForm} />
@@ -52,6 +58,7 @@ const App = () => {
             path="/trendingloans/edit/:id"
             component={EditTrendingLoansForm}
           />
+          <Route path="/contacts" exact component={AddTrendingLoansForm} />
         </NavSidebar>
       </Switch>
     </Router>

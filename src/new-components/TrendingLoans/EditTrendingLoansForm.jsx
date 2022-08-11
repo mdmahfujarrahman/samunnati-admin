@@ -40,7 +40,10 @@ const EditTrendingLoansForm = () => {
 
   const handlerValidatedFormSubmit = async () => {
     try {
-      await updateLoan(loanData);
+      await updateLoan({
+        ...loanData,
+        id: loanData._id,
+      });
       history.push('/trendingloans');
       setspinn(false);
     } catch (error) {

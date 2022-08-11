@@ -15,6 +15,17 @@ export const deleteProperty = (propid) =>
 export const getPropertyById = (propid) =>
   API.post('/prop/getPropertyById', { id: propid });
 export const updateProperty = (data) => API.post('/prop/updateProperty', data);
+export const getAllRequirements = () => API.get('/prop/getRequirements');
+
+// Developer
+
+export const getAllDeveloper = () => API.get('/dev/getAllDeveloper');
+export const addDeveloper = (data) => API.post('/dev/addDeveloper', data);
+export const deleteDeveloper = (devid) =>
+  API.post('/dev/deleteDeveloper', { id: devid });
+export const getDeveloperById = (devid) =>
+  API.post('/dev/getDeveloperById', { id: devid });
+export const updateDeveloper = (data) => API.post('/dev/updateDeveloper', data);
 
 // Blogs
 
@@ -53,6 +64,16 @@ export const getLoanById = (lid) => API.post('/ln/getLoanById', { id: lid });
 export const addLoan = (data) => API.post('/ln/addLoan', data);
 export const updateLoan = (data) => API.post('/ln/updateLoan', data);
 export const deleteLoan = (lid) => API.post('/ln/deleteLoan', { id: lid });
+
+//Contacts
+
+export const getAllContacts = () => API.get('/cn/getAllContacts');
+export const getContactsById = (lid) =>
+  API.post('/cn/getContactsById', { id: lid });
+export const addContacts = (data) => API.post('/cn/addContacts', data);
+export const updateContacts = (data) => API.post('/cn/updateContacts', data);
+export const deleteContacts = (cid) =>
+  API.post('/cn/deleteContacts', { id: cid });
 
 //--------------------------------------------------------------------------------------
 API.interceptors.request.use((req) => {

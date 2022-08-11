@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../../styles/newstyles/ctable.css';
+import '../../../styles/newstyles/table.css';
 import CtableRow from './CtableRow';
 const Ctable = ({ careerData }) => {
   useEffect(() => {

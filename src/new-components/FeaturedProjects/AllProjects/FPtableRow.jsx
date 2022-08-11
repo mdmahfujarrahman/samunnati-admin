@@ -56,12 +56,12 @@ const FPtableRow = ({ index, project, allprojects, setallprojects }) => {
           >
             <Link to={`/featuredprojects/edit/${project._id}`}>
               {' '}
-              <button className="project-edit-btn">
+              <button className="edit-btn">
                 <ModeEditIcon />{' '}
               </button>
             </Link>
             <Link onClick={(e) => handleDeleteproject(e)} to={'#'}>
-              <button className="project-delete-btn">
+              <button className="delete-btn">
                 <DeleteIcon />{' '}
               </button>
             </Link>

@@ -1,12 +1,12 @@
 /* main Container */
-.property-container {
+.requirement-container {
   width: 90%;
   margin: auto;
 }
 
 /* First section */
 
-.property-firstSection {
+.requirement-firstSection {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -15,7 +15,7 @@
   margin-top: 3rem;
 }
 /* First section search  */
-.property-searchDiv {
+.requirement-searchDiv {
   width: 50%;
   padding: 8px 15px;
   border: 2px solid #1c7ebf;
@@ -31,7 +31,7 @@
   margin-right: 20px;
 }
 
-.property-searchInput {
+.requirement-searchInput {
   width: 100%;
   /* padding: 8px 15px; */
   border: none;
@@ -50,7 +50,7 @@
   padding-right: 10px;
 }
 
-.property-searchInput::placeholder {
+.requirement-searchInput::placeholder {
   color: #1c7ebf;
   font-family: Montserrat;
   font-weight: 500;
@@ -58,12 +58,12 @@
   opacity: 0.5;
 }
 
-/* First section Add property  */
-.property-addpropertyDiv {
+/* First section Add requirement  */
+.requirement-addrequirementDiv {
   width: 20%;
 }
 
-.property-addBtn {
+.requirement-addBtn {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -81,6 +81,6 @@
   cursor: pointer;
 }
 
-.property-addBtn span {
+.requirement-addBtn span {
   margin-left: 10px;
 }

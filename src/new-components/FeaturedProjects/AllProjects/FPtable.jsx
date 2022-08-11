@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../../styles/newstyles/fptable.css';
+import '../../../styles/newstyles/table.css';
 import FPtableRow from './FPtableRow';
 const FPtable = ({ projectData }) => {
   useEffect(() => {

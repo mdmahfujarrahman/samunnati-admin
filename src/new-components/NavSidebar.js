@@ -22,6 +22,8 @@ import ArticleIcon from '@mui/icons-material/Article';
 import WorkIcon from '@mui/icons-material/Work';
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
 import MapsHomeWorkOutlinedIcon from '@mui/icons-material/MapsHomeWorkOutlined';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
 
 const drawerWidth = 240;
 
@@ -177,6 +179,24 @@ const NavSidebar = (props) => {
             <ListItem
               button
               className={
+                props.location.pathname.includes('/prop/req')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/prop/req')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/prop/req') ? (
+                  <ListAltIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                ) : (
+                  <ListAltIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Requirement" />
+            </ListItem>
+            <ListItem
+              button
+              className={
                 props.location.pathname.includes('/blogs')
                   ? classes.selectedList
                   : ''
@@ -253,6 +273,28 @@ const NavSidebar = (props) => {
                 )}
               </ListItemIcon>
               <ListItemText primary="Trending Loans" />
+            </ListItem>
+            <ListItem
+              button
+              className={
+                props.location.pathname.includes('/contacts')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/contacts')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/contacts') ? (
+                  <ContactPageIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                ) : (
+                  <ContactPageIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Contact" />
             </ListItem>
           </List>
         </Drawer>

@@ -51,12 +51,12 @@ const CtableRow = ({ index, career, allcareers, setallcareers }) => {
           >
             <Link to={`/career/edit/${career._id}`}>
               {' '}
-              <button className="career-edit-btn">
+              <button className="edit-btn">
                 <ModeEditIcon />{' '}
               </button>
             </Link>
             <Link onClick={(e) => handleDeletecareer(e)} to={'#'}>
-              <button className="career-delete-btn">
+              <button className="delete-btn">
                 <DeleteIcon />{' '}
               </button>
             </Link>

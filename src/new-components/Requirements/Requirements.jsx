@@ -3,22 +3,22 @@ import { useHistory } from 'react-router-dom';
 import LoadingPage from '../utils/LoadingPage';
 import addIcon from '../../images/addIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
-import '../../styles/newstyles/property.css';
-import Ptable from './AllProperty/Ptable';
-import { getAllProperty } from '../../redux/api';
+import '../../styles/newstyles/requirement.css';
+import Rtable from './AllRequirements/Rtable';
+import { getAllRequirements } from '../../redux/api';
 
-const Property = () => {
+const Requirements = () => {
   const history = useHistory();
-  const [allpropertyData, setallpropertyData] = useState([]);
+  const [allrequirementData, setallrequirementData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchInput, setsearchInput] = useState('');
   const [filterData, setfilterData] = useState([]);
 
-  const fetchpropertyList = async () => {
+  const fetchrequirementList = async () => {
     setLoading(true);
     try {
-      const res = await getAllProperty();
-      setallpropertyData(res.data.data);
+      const res = await getAllRequirements();
+      setallrequirementData(res.data.data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -26,13 +26,13 @@ const Property = () => {
     }
   };
   useEffect(() => {
-    fetchpropertyList();
+    fetchrequirementList();
   }, []);
 
   const searchItems = (searchValue) => {
     setsearchInput(searchValue);
     if (searchValue !== '') {
-      let filteredData = allpropertyData.filter((item) => {
+      let filteredData = allrequirementData.filter((item) => {
         return Object.values(item)
           .join('')
           .toLowerCase()
@@ -40,43 +40,34 @@ const Property = () => {
       });
       setfilterData(filteredData);
     } else {
-      setfilterData(allpropertyData);
+      setfilterData(allrequirementData);
     }
   };
 
   return (
-    <div className="property-container">
+    <div className="requirement-container">
       {loading ? (
         <LoadingPage />
       ) : (
         <>
-          <div className="property-firstSection">
-            <div className="property-searchDiv">
+          <div className="requirement-firstSection">
+            <div className="requirement-searchDiv">
               <img src={searchIcon} alt="search" className="searchIcon" />
               <input
                 type="text"
                 placeholder="Enter a Title , Author or Category"
-                className="property-searchInput"
+                className="requirement-searchInput"
                 id="searchInput"
                 value={searchInput}
                 onChange={(e) => searchItems(e.target.value)}
               />
             </div>
-            <div className="property-addpropertyDiv">
-              <button
-                className="property-addBtn"
-                onClick={() => history.push('/property/add')}
-              >
-                <img src={addIcon} alt="add" className="property-addIcon" />
-                <span>Add Property</span>
-              </button>
-            </div>
           </div>
-          <div className="property-tableSection">
+          <div className="requirement-tableSection">
             {searchInput.length ? (
-              <Ptable propertyData={filterData} />
+              <Rtable requirementData={filterData} />
             ) : (
-              <Ptable propertyData={allpropertyData} />
+              <Rtable requirementData={allrequirementData} />
             )}
           </div>
         </>
@@ -84,4 +75,4 @@ const Property = () => {
     </div>
   );
 };
-export default Property;
+export default Requirements;

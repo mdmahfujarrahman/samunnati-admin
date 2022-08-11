@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BtableRow from './BtableRow';
-import '../../../styles/newstyles/btable.css';
+import '../../../styles/newstyles/table.css';
 
 const Btable = ({ blogData }) => {
   useEffect(() => {

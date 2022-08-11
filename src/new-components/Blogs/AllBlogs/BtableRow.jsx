@@ -58,12 +58,12 @@ const BtableRow = ({ index, blog, allblogs, setallblogs }) => {
           >
             <Link to={`/blog/edit/${blog._id}`}>
               {' '}
-              <button className="blogs-edit-btn">
+              <button className="edit-btn">
                 <ModeEditIcon />{' '}
               </button>
             </Link>
             <Link onClick={(e) => handleDeleteBlog(e)} to={'#'}>
-              <button className="blogs-delete-btn">
+              <button className="delete-btn">
                 <DeleteIcon />{' '}
               </button>
             </Link>

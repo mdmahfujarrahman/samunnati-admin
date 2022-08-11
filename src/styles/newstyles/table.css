@@ -74,8 +74,8 @@
 }
 
 /* .fl-table thead tr {
-        border-bottom: 2px solid #f8f8f8;
-      } */
+    border-bottom: 2px solid #f8f8f8;
+  } */
 
 .fl-table thead th:nth-child(odd) {
   color: #333333;
@@ -103,7 +103,7 @@
 }
 
 /* buttons */
-.project-delete-btn {
+.delete-btn {
   color: white;
   background-color: red;
   outline: none;
@@ -111,7 +111,7 @@
   cursor: pointer;
   border-radius: 4px;
 }
-.project-edit-btn {
+.edit-btn {
   color: white;
   background-color: green;
   outline: none;

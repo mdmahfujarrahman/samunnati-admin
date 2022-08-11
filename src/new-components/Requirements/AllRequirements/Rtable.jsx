@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import RtableRow from './RtableRow';
 import '../../../styles/newstyles/table.css';
-import TLtableRow from './TLtableRow';
 
-const TLtable = ({ loanData }) => {
-  useEffect(() => {
-    setallloans(loanData);
-  }, [loanData]);
-
-  const [allloans, setallloans] = useState(loanData);
-
+const Rtable = ({ requirementData }) => {
   return (
     <div className="table-wrapper" id="#scrollBar">
       <table className="fl-table">
@@ -16,21 +10,22 @@ const TLtable = ({ loanData }) => {
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Email</th>
+            <th>Number</th>
+            <th>Area</th>
+            <th>Price</th>
             <th>Interest</th>
-            <th>Description</th>
-            <th style={{ textAlign: 'center' }}>Action</th>
+            <th>Other Spec</th>
           </tr>
         </thead>
         <tbody>
-          {loanData &&
-            allloans.map((loan, index) => {
+          {requirementData &&
+            requirementData.map((requirement, index) => {
               return (
-                <TLtableRow
+                <RtableRow
                   key={index}
                   index={index}
-                  loan={loan}
-                  allloans={allloans}
-                  setallloans={setallloans}
+                  requirement={requirement}
                 />
               );
             })}
@@ -40,4 +35,4 @@ const TLtable = ({ loanData }) => {
   );
 };
 
-export default TLtable;
+export default Rtable;
