@@ -75,6 +75,9 @@ export const updateContacts = (data) => API.post('/cn/updateContacts', data);
 export const deleteContacts = (cid) =>
   API.post('/cn/deleteContacts', { id: cid });
 
+//Experts
+
+export const getAllExperts = () => API.get('/cn/getAllExperts');
 //--------------------------------------------------------------------------------------
 API.interceptors.request.use((req) => {
   if (Cookies.get('fanstarAdmin')) {

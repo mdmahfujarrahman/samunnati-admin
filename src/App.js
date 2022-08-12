@@ -20,6 +20,8 @@ import EditTrendingLoansForm from './new-components/TrendingLoans/EditTrendingLo
 import AddPropertyForm from './new-components/Property/AddPropertyForm';
 import EditPropertyForm from './new-components/Property/EditPropertyForm';
 import Requirements from './new-components/Requirements/Requirements';
+import ContactUs from './new-components/ContactUs/ContactUs';
+import Experts from './new-components/Experts/Experts';
 
 export const history = createHistory();
 const App = () => {
@@ -58,7 +60,8 @@ const App = () => {
             path="/trendingloans/edit/:id"
             component={EditTrendingLoansForm}
           />
-          <Route path="/contacts" exact component={AddTrendingLoansForm} />
+          <Route path="/contacts" exact component={ContactUs} />
+          <Route path="/experts" exact component={Experts} />
         </NavSidebar>
       </Switch>
     </Router>

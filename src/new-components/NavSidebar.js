@@ -296,6 +296,28 @@ const NavSidebar = (props) => {
               </ListItemIcon>
               <ListItemText primary="Contact" />
             </ListItem>
+            <ListItem
+              button
+              className={
+                props.location.pathname.includes('/experts')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/experts')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/experts') ? (
+                  <ContactPageIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                ) : (
+                  <ContactPageIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Experts" />
+            </ListItem>
           </List>
         </Drawer>
         <Box
