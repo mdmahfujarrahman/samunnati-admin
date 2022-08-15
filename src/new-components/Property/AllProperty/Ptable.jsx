@@ -20,6 +20,7 @@ const Btable = ({ propertyData }) => {
             <th>Ready To Move</th>
             <th>Units Left</th>
             <th>Price Range</th>
+            <th style={{ textAlign: 'center' }}>Unit Details</th>
             <th style={{ textAlign: 'center' }}>Developer</th>
             <th style={{ textAlign: 'center' }}>Action</th>
           </tr>

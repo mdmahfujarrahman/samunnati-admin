@@ -24,6 +24,7 @@ import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlin
 import MapsHomeWorkOutlinedIcon from '@mui/icons-material/MapsHomeWorkOutlined';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 const drawerWidth = 240;
 
@@ -307,11 +308,11 @@ const NavSidebar = (props) => {
             >
               <ListItemIcon>
                 {props.location.pathname.includes('/experts') ? (
-                  <ContactPageIcon
+                  <PeopleAltIcon
                     style={{ color: 'white', fontSize: '1.8rem' }}
                   />
                 ) : (
-                  <ContactPageIcon
+                  <PeopleAltIcon
                     style={{ color: 'white', fontSize: '1.8rem' }}
                   />
                 )}

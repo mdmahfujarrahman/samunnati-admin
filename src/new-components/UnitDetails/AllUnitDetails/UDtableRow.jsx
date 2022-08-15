@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteProperty } from '../../../redux/api';
+import { deleteLoan } from '../../../redux/api';
 import DeleteModal from '../../utils/DeleteModal';
-const PtableRow = ({ index, property, allproperty, setallproperty }) => {
+
+const TLtableRow = ({ index, loan, allloans, setallloans }) => {
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [ConfirmDelete, setConfirmDelete] = useState(false);
 
@@ -15,22 +16,22 @@ const PtableRow = ({ index, property, allproperty, setallproperty }) => {
   const handleDeleteCancel = () => {
     setdeleteModalOpen(false);
   };
-  const handleDeleteProperty = (e) => {
+  const handleDeleteloan = (e) => {
     e.preventDefault();
     setdeleteModalOpen(true);
   };
-  const handleConfirmDeleteProperty = async (id) => {
+  const handleConfirmDeleteloan = async (id) => {
     try {
-      const updatedproperty = allproperty.filter((b) => b._id !== id);
-      setallproperty(updatedproperty);
-      await deleteProperty(id);
+      const updatedloans = allloans.filter((b) => b._id !== id);
+      setallloans(updatedloans);
+      await deleteLoan(id);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
     if (ConfirmDelete) {
-      handleConfirmDeleteProperty(property._id);
+      handleConfirmDeleteloan(loan._id);
     }
   }, [ConfirmDelete]);
 
@@ -38,34 +39,21 @@ const PtableRow = ({ index, property, allproperty, setallproperty }) => {
     <>
       <tr>
         <td>{index + 1}</td>
-        <td>{property.name}</td>
-        <td>{property.location}</td>
-        <td>{property.area}</td>
-        <td>{property.ready ? 'Yes' : 'No'}</td>
-        <td>{property.unitsLeft}</td>
-        <td>{property.price}</td>
-        <td style={{ textAlign: 'center' }}>
-          <Link to={`/property/unitdetail/${property._id}`}>
-            <button className="btn btn-outline-secondary btn-sm">Add</button>
-          </Link>
-        </td>
-        <td style={{ textAlign: 'center' }}>
-          <Link to={`/property/viewdev/${property._id}`}>
-            <button className="btn btn-outline-secondary btn-sm">View</button>
-          </Link>
-        </td>
+        <td>{loan.name}</td>
+        <td>{loan.interest}</td>
+        <td>{loan.description}</td>
         <td className="text-right">
           <div
             className="actions"
             style={{ display: 'flex', justifyContent: 'space-evenly' }}
           >
-            <Link to={`/property/edit/${property._id}`}>
+            <Link to={`/trendingloans/edit/${loan._id}`}>
               {' '}
               <button className="edit-btn">
                 <ModeEditIcon />{' '}
               </button>
             </Link>
-            <Link onClick={(e) => handleDeleteProperty(e)} to={'#'}>
+            <Link onClick={(e) => handleDeleteloan(e)} to={'#'}>
               <button className="delete-btn">
                 <DeleteIcon />{' '}
               </button>
@@ -78,11 +66,11 @@ const PtableRow = ({ index, property, allproperty, setallproperty }) => {
           show={deleteModalOpen}
           handleConfirm={handleDeleteConfirm}
           handleCancel={handleDeleteCancel}
-          categorytag="Property"
+          categorytag="Loan"
         />
       )}
     </>
   );
 };
 
-export default PtableRow;
+export default TLtableRow;

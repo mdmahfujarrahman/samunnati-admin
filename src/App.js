@@ -33,6 +33,7 @@ const App = () => {
           <Route path="/property" exact component={Property} />
           <Route path="/property/add" exact component={AddPropertyForm} />
           <Route path="/property/edit/:id/" component={EditPropertyForm} />
+          <Route path="/property/unitdetail/:id" exact component={Property} />
           <Route path="/prop/req" exact component={Requirements} />
           <Route path="/career" exact component={Career} />
           <Route path="/career/add" exact component={AddCareerForm} />

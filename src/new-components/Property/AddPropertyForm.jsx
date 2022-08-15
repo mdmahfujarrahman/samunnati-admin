@@ -17,25 +17,12 @@ const AddPropertyForm = () => {
     city: '',
     area: '',
     BHK: '',
-    price: 'L',
+    price: '',
     ready: '',
     unitsLeft: '',
-    amenities: [],
-    description: '',
+    amenities: '',
     pictures: [],
-    unitDetails: [
-      // {
-      //   bhk: '',
-      //   detail: [
-      //     {
-      //       facing: '',
-      //       floorPlan: '',
-      //       size: '',
-      //       price: '',
-      //     },
-      //   ],
-      // },
-    ],
+    description: '',
   });
 
   const [error, setError] = useState({
@@ -50,47 +37,53 @@ const AddPropertyForm = () => {
     ready: false,
     unitsLeft: false,
     amenities: false,
-    description: false,
     pictures: false,
-    unitDetails: false,
+    description: false,
   });
 
   const handleInputchange = (name) => (event) => {
     setpropertyData({ ...propertyData, [name]: event.target.value });
   };
-  const handleTimeInputChange = (event) => {
-    setpropertyData({
-      ...propertyData,
-      timeToRead: event.target.value + 'min',
-    });
-  };
 
-  const handleFileInputchange = (name) => async (e) => {
+  async function uploadImageAsPromise(file) {
+    const storageRef = ref(storage, `PropertyPictures/${file.name}`);
+    return new Promise(function (resolve, reject) {
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        function error(err) {
+          reject(err);
+        },
+        async function complete() {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            resolve(url);
+          });
+        }
+      );
+    });
+  }
+  const handleFileInputchange = async (e) => {
     e.preventDefault();
-    const file = e.target.files[0];
-    if (!file) return;
-    const storageRef = ref(storage, `${name}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {},
-      (error) => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setpropertyData({ ...propertyData, [name]: url });
-        });
-      }
-    );
+    const promises = [];
+    for (const file of e.target.files) {
+      promises.push(uploadImageAsPromise(file));
+    }
+    const data = await Promise.all(promises);
+    setpropertyData({ ...propertyData, pictures: data });
   };
 
   const handlerValidatedFormSubmit = async () => {
     try {
       const payloaddata = {
         ...propertyData,
-        tags: propertyData.tags.split(' ').filter((t) => t.length), //later change to tags array
+        ready: propertyData.ready === 'YES' ? true : false,
+        amenities: propertyData.amenities.split(' ').filter((t) => t.length),
+        area: propertyData.area + 'sqft',
+        developer: {},
+        unitDetails: [],
       };
+      console.log(payloaddata);
       await addProperty(payloaddata);
       history.push('/property');
       setspinn(false);
@@ -103,14 +96,19 @@ const AddPropertyForm = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     const updatedError = {
-      title: propertyData.title === '' ? true : false,
-      picture: propertyData.picture === '' ? true : false,
-      authorName: propertyData.authorName === '' ? true : false,
-      authorPicture: propertyData.authorPicture === '' ? true : false,
-      category: propertyData.category === '' ? true : false,
-      timeToRead: propertyData.timeToRead === '' ? true : false,
-      tags: propertyData.tags === '' ? true : false, //later change to tags array
-      content: propertyData.content === '' ? true : false,
+      name: propertyData.name == '' ? true : false,
+      location: propertyData.location == '' ? true : false,
+      lat: propertyData.lat == '' ? true : false,
+      lng: propertyData.lng == '' ? true : false,
+      city: propertyData.city == '' ? true : false,
+      area: propertyData.area == '' ? true : false,
+      BHK: propertyData.BHK == '' ? true : false,
+      price: propertyData.price == '' ? true : false,
+      ready: propertyData.ready == '' ? true : false,
+      unitsLeft: propertyData.unitsLeft == '' ? true : false,
+      amenities: propertyData.amenities == '' ? true : false,
+      pictures: !propertyData ? true : false,
+      description: propertyData.description == '' ? true : false,
     };
     setError(updatedError);
   };
@@ -120,14 +118,19 @@ const AddPropertyForm = () => {
       return;
     } else {
       if (
-        !error.title &&
-        !error.picture &&
-        !error.authorName &&
-        !error.authorPicture &&
-        !error.category &&
-        !error.timeToRead &&
-        !error.tags &&
-        !error.content
+        !error.name &&
+        !error.location &&
+        !error.lat &&
+        !error.log &&
+        !error.city &&
+        !error.area &&
+        !error.BHK &&
+        !error.price &&
+        !error.ready &&
+        !error.unitsLeft &&
+        !error.amenities &&
+        !error.description &&
+        !error.pictures
       ) {
         setspinn(true);
         handlerValidatedFormSubmit();
@@ -141,7 +144,7 @@ const AddPropertyForm = () => {
         <div className="addproperty-personalDetails">
           {/* 1st row */}
           <div className="addproperty-alignRow">
-            {/* aUthor Name */}
+            {/* Property Name */}
             <div className="addproperty-inputFieldDiv form-group">
               <label className="addproperty-inputLabel ">
                 Property Name{' '}
@@ -153,80 +156,176 @@ const AddPropertyForm = () => {
                 placeholder="Property Name"
                 className="addproperty-inputField"
                 id={error.name ? 'red-border' : ''}
-                onChange={handleInputchange('authorName')}
+                onChange={handleInputchange('name')}
               />
             </div>
-            {/* Title */}
+            {/* Location */}
             <div className="addproperty-inputFieldDiv form-group">
               <label className="addproperty-inputLabel">
-                Property Title{' '}
+                Property Location{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="text"
-                id={error.title ? 'red-border' : ''}
-                name="Title"
-                placeholder="Property Title"
+                id={error.location ? 'red-border' : ''}
+                name="Property Location"
+                placeholder="Property Location"
                 className="addproperty-inputField"
-                onChange={handleInputchange('title')}
+                onChange={handleInputchange('location')}
               />
             </div>
           </div>
 
           {/* 2nd row */}
           <div className="addproperty-alignRow">
-            {/* Category */}
+            {/* Location Latitude */}
             <div className="addproperty-inputFieldDiv form-group">
               <label className="addproperty-inputLabel">
-                Category{' '}
+                Location Latitude{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="text"
-                name="title"
-                id={error.category ? 'red-border' : ''}
-                placeholder="Title Tagling"
+                name="Location Latitude"
+                id={error.lat ? 'red-border' : ''}
+                placeholder="Location Latitude"
                 className="addproperty-inputField"
-                onChange={handleInputchange('category')}
+                onChange={handleInputchange('lat')}
               />
             </div>
-            {/* TimetoRead */}
+            {/* Location Longitude */}
             <div className="addproperty-inputFieldDiv">
               <label className="addproperty-inputLabel">
-                Time To Read (Minutes){' '}
+                Location Longitude{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
-                name="minutes"
-                id={error.timeToRead ? 'red-border' : ''}
-                onChange={handleTimeInputChange}
+                name="Location Longitude"
+                id={error.lng ? 'red-border' : ''}
+                onChange={handleInputchange('lng')}
+                placeholder="Location Longitude"
                 className="addproperty-inputField"
-                type="number"
+                type="text"
               />
             </div>
           </div>
           {/* 3rd row */}
 
           <div className="addproperty-alignRow">
-            {/* Author PIctue */}
+            {/* City */}
             <div className="addproperty-inputFieldDiv">
               <label className="addproperty-inputLabel">
-                Author Profile{' '}
+                City <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                type="text"
+                name="City"
+                placeholder="City"
+                className="addproperty-inputField"
+                onChange={handleInputchange('city')}
+                id={error.city ? 'red-border' : ''}
+              />
+            </div>
+            {/* Area */}
+            <div className="addproperty-inputFieldDiv">
+              <label className="addproperty-inputLabel">
+                Area <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                type="text"
+                name="Area"
+                placeholder="Area"
+                className="addproperty-inputField"
+                onChange={handleInputchange('area')}
+                id={error.area ? 'red-border' : ''}
+              />
+            </div>
+          </div>
+
+          {/* 4th row */}
+          <div className="addproperty-alignRow">
+            {/* BHK */}
+            <div className="addproperty-inputFieldDiv">
+              <label className="addproperty-inputLabel">
+                BHK <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                type="number"
+                name="BHK"
+                placeholder="BHK"
+                className="addproperty-inputField"
+                onChange={handleInputchange('BHK')}
+                id={error.BHK ? 'red-border' : ''}
+              />
+            </div>
+            {/* Price */}
+            <div className="addproperty-inputFieldDiv">
+              <label className="addproperty-inputLabel">
+                Price{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
-                type="file"
-                name="profilePic"
-                placeholder="Author Profile"
+                type="text"
+                name="Price"
+                placeholder="(xx L-yy L)"
                 className="addproperty-inputField"
-                onChange={handleFileInputchange('authorPicture')}
-                id={error.authorPicture ? 'red-border' : ''}
+                onChange={handleInputchange('price')}
+                id={error.price ? 'red-border' : ''}
               />
             </div>
-            {/* Property Picture */}
+          </div>
+          {/* 5th row */}
+          <div className="addproperty-alignRow">
+            {/* Property Ready To Move In*/}
             <div className="addproperty-inputFieldDiv">
               <label className="addproperty-inputLabel">
-                Property Picture{' '}
+                Ready To Move In{' '}
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <div onChange={handleInputchange('ready')}>
+                <input type="radio" value="YES" name="city" /> YES
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" value="NO" name="city" /> NO
+              </div>
+            </div>
+            {/* Units Left */}
+            <div className="addproperty-inputFieldDiv">
+              <label className="addproperty-inputLabel">
+                Units Left{' '}
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                type="number"
+                name="Units Left"
+                placeholder="Units Left"
+                className="addproperty-inputField"
+                onChange={handleInputchange('unitsLeft')}
+                id={error.area ? 'red-border' : ''}
+              />
+            </div>
+          </div>
+
+          {/* 6th row */}
+          <div className="addproperty-alignRow">
+            {/* Amenities */}
+            <div className="addproperty-inputFieldDiv">
+              <label className="addproperty-inputLabel">
+                Amenities{' '}
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                className="addproperty-inputField"
+                onChange={handleInputchange('amenities')}
+                type="text"
+                name="amenities"
+                id={error.amenities ? 'red-border' : ''}
+              />
+            </div>
+
+            {/* Property  Pictures */}
+            <div className="addproperty-inputFieldDiv">
+              <label className="addproperty-inputLabel">
+                Property Pictures{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
@@ -234,41 +333,27 @@ const AddPropertyForm = () => {
                 name="thumbnail"
                 placeholder="Thumbnail"
                 className="addproperty-inputField"
-                onChange={handleFileInputchange('picture')}
-                id={error.picture ? 'red-border' : ''}
+                onChange={(e) => handleFileInputchange(e)}
+                id={error.pictures ? 'red-border' : ''}
+                multiple
               />
             </div>
           </div>
 
-          {/* 4th row */}
+          {/* 7th row */}
           <div className="addproperty-alignRow">
-            {/* Tags */}
+            {/*Description*/}
             <div className="addproperty-textFieldDiv">
               <label className="addproperty-inputLabel">
-                Tags <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                className="addproperty-inputField"
-                onChange={handleInputchange('tags')}
-                type="text"
-                name="tag"
-                id={error.tags ? 'red-border' : ''}
-              />
-            </div>
-          </div>
-          {/* 5th row */}
-          <div className="addproperty-alignRow">
-            {/*content*/}
-            <div className="addproperty-textFieldDiv">
-              <label className="addproperty-inputLabel">
-                Content{' '}
+                Description{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <textarea
                 className="addproperty-textField"
-                onChange={handleInputchange('content')}
-                name="caption"
-                id={error.content ? 'red-border' : ''}
+                onChange={handleInputchange('description')}
+                name="Description"
+                placeholder="Property Description"
+                id={error.description ? 'red-border' : ''}
               ></textarea>
             </div>
           </div>
