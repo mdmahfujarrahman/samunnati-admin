@@ -17,8 +17,18 @@ export const getPropertyById = (propid) =>
 export const updateProperty = (data) => API.post('/prop/updateProperty', data);
 export const getAllRequirements = () => API.get('/prop/getRequirements');
 
-// Developer
+// UnitDetails
+export const addUnitDetail = (data) => API.post('/prop/addUnitDetail', data);
+export const getUnitDetailByPropertyId = (propid) =>
+  API.post('/prop/getUnitDetail', { id: propid });
+export const deleteUnitDetail = (id, bhk, did) =>
+  API.post('/prop/deleteUnitDetail', {
+    id: id,
+    bhk: bhk,
+    detailId: did,
+  });
 
+// Developer
 export const getAllDeveloper = () => API.get('/dev/getAllDeveloper');
 export const addDeveloper = (data) => API.post('/dev/addDeveloper', data);
 export const deleteDeveloper = (devid) =>

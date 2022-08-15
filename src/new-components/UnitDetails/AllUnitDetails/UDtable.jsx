@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../../../styles/newstyles/table.css';
-import TLtableRow from './TLtableRow';
+import UDtableRow from './UDtableRow';
 
-const TLtable = ({ loanData }) => {
+const UDtable = ({ unitDetailsData, propid }) => {
+  const [allUnitDetails, setallUnitDetails] = useState(unitDetailsData);
+
   useEffect(() => {
-    setallloans(loanData);
-  }, [loanData]);
-
-  const [allloans, setallloans] = useState(loanData);
+    setallUnitDetails(unitDetailsData);
+  }, [unitDetailsData]);
 
   return (
     <div className="table-wrapper" id="#scrollBar">
@@ -15,22 +15,25 @@ const TLtable = ({ loanData }) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Interest</th>
-            <th>Description</th>
+            <th>BHK</th>
+            <th>Facing</th>
+            <th>Size</th>
+            <th>Price</th>
             <th style={{ textAlign: 'center' }}>Action</th>
           </tr>
         </thead>
         <tbody>
-          {loanData &&
-            allloans.map((loan, index) => {
+          {allUnitDetails.length &&
+            allUnitDetails.detail.map((unitdetail, index) => {
               return (
-                <TLtableRow
+                <UDtableRow
                   key={index}
                   index={index}
-                  loan={loan}
-                  allloans={allloans}
-                  setallloans={setallloans}
+                  propid={propid}
+                  bhk={allUnitDetails.bhk}
+                  unitdetail={unitdetail}
+                  allUnitDetails={allUnitDetails}
+                  setallUnitDetails={setallUnitDetails}
                 />
               );
             })}
@@ -40,4 +43,4 @@ const TLtable = ({ loanData }) => {
   );
 };
 
-export default TLtable;
+export default UDtable;

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteLoan } from '../../../redux/api';
+import { deleteUnitDetail } from '../../../redux/api';
 import DeleteModal from '../../utils/DeleteModal';
 
-const TLtableRow = ({ index, loan, allloans, setallloans }) => {
+const UDtableRow = ({
+  index,
+  propid,
+  bhk,
+  unitdetail,
+  allUnitDetails,
+  setallUnitDetails,
+}) => {
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [ConfirmDelete, setConfirmDelete] = useState(false);
 
@@ -16,22 +22,22 @@ const TLtableRow = ({ index, loan, allloans, setallloans }) => {
   const handleDeleteCancel = () => {
     setdeleteModalOpen(false);
   };
-  const handleDeleteloan = (e) => {
+  const handleDeleteUnitDetail = (e) => {
     e.preventDefault();
     setdeleteModalOpen(true);
   };
-  const handleConfirmDeleteloan = async (id) => {
+  const handleConfirmDelete = async (propid, bhk, did) => {
     try {
-      const updatedloans = allloans.filter((b) => b._id !== id);
-      setallloans(updatedloans);
-      await deleteLoan(id);
+      const updatedDetails = allUnitDetails.filter((b) => b._id !== did);
+      setallUnitDetails(updatedDetails);
+      await deleteUnitDetail(propid, bhk, did);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
     if (ConfirmDelete) {
-      handleConfirmDeleteloan(loan._id);
+      handleConfirmDelete(propid, bhk, unitdetail._id);
     }
   }, [ConfirmDelete]);
 
@@ -39,26 +45,16 @@ const TLtableRow = ({ index, loan, allloans, setallloans }) => {
     <>
       <tr>
         <td>{index + 1}</td>
-        <td>{loan.name}</td>
-        <td>{loan.interest}</td>
-        <td>{loan.description}</td>
-        <td className="text-right">
-          <div
-            className="actions"
-            style={{ display: 'flex', justifyContent: 'space-evenly' }}
-          >
-            <Link to={`/trendingloans/edit/${loan._id}`}>
-              {' '}
-              <button className="edit-btn">
-                <ModeEditIcon />{' '}
-              </button>
-            </Link>
-            <Link onClick={(e) => handleDeleteloan(e)} to={'#'}>
-              <button className="delete-btn">
-                <DeleteIcon />{' '}
-              </button>
-            </Link>
-          </div>
+        <td>{bhk}</td>
+        <td>{unitdetail.facing}</td>
+        <td>{unitdetail.size}</td>
+        <td>{unitdetail.price}</td>
+        <td>
+          <Link onClick={(e) => handleDeleteUnitDetail(e)} to={'#'}>
+            <button className="delete-btn">
+              <DeleteIcon />{' '}
+            </button>
+          </Link>
         </td>
       </tr>
       {deleteModalOpen && (
@@ -66,11 +62,11 @@ const TLtableRow = ({ index, loan, allloans, setallloans }) => {
           show={deleteModalOpen}
           handleConfirm={handleDeleteConfirm}
           handleCancel={handleDeleteCancel}
-          categorytag="Loan"
+          categorytag="UnitDetail"
         />
       )}
     </>
   );
 };
 
-export default TLtableRow;
+export default UDtableRow;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import LoadingPage from '../utils/LoadingPage';
 import addIcon from '../../images/addIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import '../../styles/newstyles/unitdetails.css';
-import { getAllLoan } from '../../redux/api';
-// import UDtable from './AllUnitDetails/UDtable';
+import { getUnitDetailByPropertyId } from '../../redux/api';
+import UDtable from './AllUnitDetails/UDtable';
 
 const UnitDetails = () => {
   const history = useHistory();
@@ -14,35 +14,26 @@ const UnitDetails = () => {
   const [loading, setLoading] = useState(false);
   const [searchInput, setsearchInput] = useState('');
   const [filterData, setfilterData] = useState([]);
+
+  useEffect(() => {
+    getUnitDetailsData(id);
+  }, []);
   const getUnitDetailsData = async () => {
     setLoading(true);
     try {
-      const res = await getById(id);
-      const ldata = res.data.data;
-      setLoanData(ldata);
+      const res = await getUnitDetailByPropertyId(id);
+      const uddata = res.data.data;
+      setallUnitDetailsData({
+        //toBeChanged
+        bhk: '4',
+        detail: uddata.unitDetails,
+      });
       setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
   };
-  useEffect(() => {
-    getLoanData(id);
-  }, []);
-  const fetchCarrerList = async () => {
-    setLoading(true);
-    try {
-      const res = await getAllLoan();
-      setallUnitDetailsData(res.data.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchCarrerList();
-  }, []);
 
   const searchItems = (searchValue) => {
     setsearchInput(searchValue);
@@ -60,38 +51,38 @@ const UnitDetails = () => {
   };
 
   return (
-    <div className="unidetails-container">
+    <div className="unitdetails-container">
       {loading ? (
         <LoadingPage />
       ) : (
         <>
-          <div className="unidetails-firstSection">
-            <div className="unidetails-searchDiv">
+          <div className="unitdetails-firstSection">
+            <div className="unitdetails-searchDiv">
               <img src={searchIcon} alt="search" className="searchIcon" />
               <input
                 type="text"
                 placeholder="Enter a Name , Description or More"
-                className="unidetails-searchInput"
+                className="unitdetails-searchInput"
                 id="searchInput"
                 value={searchInput}
                 onChange={(e) => searchItems(e.target.value)}
               />
             </div>
-            <div className="unidetails-addloanDiv">
+            <div className="unitdetails-addloanDiv">
               <button
-                className="unidetails-addBtn"
-                onClick={() => history.push('/trendingloans/add')}
+                className="unitdetails-addBtn"
+                onClick={() => history.push(`/property/unitdetail/add/${id}`)}
               >
-                <img src={addIcon} alt="add" className="unidetails-addIcon" />
-                <span>Add Loan</span>
+                <img src={addIcon} alt="add" className="unitdetails-addIcon" />
+                <span>Add UnitDetail</span>
               </button>
             </div>
           </div>
-          <div className="unidetails-tableSection">
+          <div className="unitdetails-tableSection">
             {searchInput.length ? (
-              <TLtable loanData={filterData} />
+              <UDtable unitDetailsData={filterData} propid={id} />
             ) : (
-              <TLtable loanData={allUnitDetailsData} />
+              <UDtable unitDetailsData={allUnitDetailsData} propid={id} />
             )}
           </div>
         </>

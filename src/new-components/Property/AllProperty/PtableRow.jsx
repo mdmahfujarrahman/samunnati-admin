@@ -46,12 +46,24 @@ const PtableRow = ({ index, property, allproperty, setallproperty }) => {
         <td>{property.price}</td>
         <td style={{ textAlign: 'center' }}>
           <Link to={`/property/unitdetail/${property._id}`}>
-            <button className="btn btn-outline-secondary btn-sm">Add</button>
+            {property.unitDetails.length ? (
+              <button className="btn btn-outline-secondary btn-sm">View</button>
+            ) : (
+              <button type="button" class="btn btn-outline-success btn-sm">
+                Add
+              </button>
+            )}
           </Link>
         </td>
         <td style={{ textAlign: 'center' }}>
           <Link to={`/property/viewdev/${property._id}`}>
-            <button className="btn btn-outline-secondary btn-sm">View</button>
+            {property.developer ? (
+              <button className="btn btn-outline-secondary btn-sm">Edit</button>
+            ) : (
+              <button type="button" class="btn btn-outline-success btn-sm">
+                Add
+              </button>
+            )}
           </Link>
         </td>
         <td className="text-right">

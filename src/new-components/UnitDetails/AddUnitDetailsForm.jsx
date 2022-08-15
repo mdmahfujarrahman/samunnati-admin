@@ -1,45 +1,84 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../../styles/newstyles/addTrendingLoansForm.css';
-import { useHistory } from 'react-router-dom';
-import { addLoan } from '../../redux/api';
+import '../../styles/newstyles/addUnitDetailForm.css';
+import { useParams, useHistory } from 'react-router-dom';
+import { addUnitDetail } from '../../redux/api';
+import { storage } from '../../firebase';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
-const AddTrendingLoansForm = () => {
+const AddUnitDetailsForm = () => {
   const isFirstRender = useRef(true);
   const [spinn, setspinn] = useState(false);
   const history = useHistory();
-
-  const [loanData, setLoanData] = useState({
-    interest: '',
-    description: '',
-    name: '',
+  const { id } = useParams();
+  const [bhk, setbhk] = useState();
+  const [detailData, setdetailData] = useState({
+    facing: '',
+    floorPlan: '',
+    size: '',
+    price: '',
   });
 
   const [error, setError] = useState({
-    interest: '',
-    description: '',
-    name: '',
+    bhk: false,
+    facing: false,
+    floorPlan: false,
+    size: false,
+    price: false,
   });
 
   const handleInputchange = (name) => (event) => {
-    setLoanData({ ...loanData, [name]: event.target.value });
+    setdetailData({ ...detailData, [name]: event.target.value });
   };
+  const handleBhkInputchange = (event) => {
+    setbhk(event.target.value);
+  };
+
   const handlerValidatedFormSubmit = async () => {
     try {
-      await addLoan(loanData);
-      history.push('/trendingloans');
+      const payloaddata = {
+        id: id,
+        bhk: bhk,
+        detail: {
+          ...detailData,
+          price: detailData.price + 'L',
+        },
+      };
+      await addUnitDetail(payloaddata);
+      history.push(`/property/unitdetail/${id}`);
       setspinn(false);
     } catch (error) {
       console.log(error);
       setspinn(false);
     }
   };
+  const handleFileInputchange = (name) => async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) return;
+    const storageRef = ref(storage, `${name}/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {},
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          setdetailData({ ...detailData, floorPlan: url });
+        });
+      }
+    );
+  };
 
   const handlesubmit = (e) => {
     e.preventDefault();
     const updatedError = {
-      name: loanData.name === '' ? true : false,
-      description: loanData.description === '' ? true : false,
-      interest: loanData.interest === '' ? true : false,
+      bhk: bhk === '' ? true : false,
+      facing: detailData.facing === '' ? true : false,
+      floorPlan: detailData.floorPlan === '' ? true : false,
+      size: detailData.size === '' ? true : false,
+      price: detailData.price === '' ? true : false,
     };
     setError(updatedError);
   };
@@ -48,7 +87,13 @@ const AddTrendingLoansForm = () => {
       isFirstRender.current = false;
       return;
     } else {
-      if (!error.name && !error.description && !error.interest) {
+      if (
+        !error.bhk &&
+        !error.facing &&
+        !error.floorPlan &&
+        !error.size &&
+        !error.price
+      ) {
         setspinn(true);
         handlerValidatedFormSubmit();
       }
@@ -57,60 +102,98 @@ const AddTrendingLoansForm = () => {
 
   return (
     <form>
-      <div className="addloan-container">
-        <div className="addloan-personalDetails">
+      <div className="unitdetail-container">
+        <div className="unitdetail-personalDetails">
           {/* 1st row */}
-          <div className="addloan-alignRow">
-            {/* Loan Name */}
-            <div className="addloan-inputFieldDiv form-group">
-              <label className="addloan-inputLabel ">
-                Loan Name{' '}
+          <div className="unitdetail-alignRow">
+            {/* BHK */}
+            <div className="unitdetail-inputFieldDiv form-group">
+              <label className="unitdetail-inputLabel ">
+                BHK <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                type="text"
+                name="BHK"
+                placeholder="BHK"
+                className="unitdetail-inputField"
+                id={error.bhk ? 'red-border' : ''}
+                onChange={handleBhkInputchange}
+              />
+            </div>
+            {/* Facing*/}
+            <div className="unitdetail-inputFieldDiv form-group">
+              <label className="unitdetail-inputLabel">
+                Facing{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="text"
-                name="Loan Name"
-                placeholder="Loan Name"
-                className="addloan-inputField"
-                id={error.name ? 'red-border' : ''}
-                onChange={handleInputchange('name')}
+                id={error.facing ? 'red-border' : ''}
+                name="Facing"
+                placeholder="Facing"
+                className="unitdetail-inputField"
+                onChange={handleInputchange('facing')}
               />
             </div>
-            {/* Interest*/}
-            <div className="addloan-inputFieldDiv form-group">
-              <label className="addloan-inputLabel">
-                Interest{' '}
+          </div>
+          {/* 2nd Row */}
+          <div className="unitdetail-alignRow">
+            {/* Price */}
+            <div className="unitdetail-inputFieldDiv form-group">
+              <label className="unitdetail-inputLabel">
+                Price (in L){' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="text"
-                id={error.interest ? 'red-border' : ''}
-                name="Title"
-                placeholder="Interest"
-                className="addloan-inputField"
-                onChange={handleInputchange('interest')}
+                id={error.price ? 'red-border' : ''}
+                name="Price"
+                placeholder="Price (in L)"
+                className="unitdetail-inputField"
+                onChange={handleInputchange('price')}
+              />
+            </div>
+
+            {/* Size*/}
+            <div className="unitdetail-inputFieldDiv form-group">
+              <label className="unitdetail-inputLabel">
+                Size <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                type="text"
+                id={error.size ? 'red-border' : ''}
+                name="Size"
+                placeholder="Size"
+                className="unitdetail-inputField"
+                onChange={handleInputchange('size')}
               />
             </div>
           </div>
-          {/* 2nd Row  */}
-          <div className="addloan-alignRow">
-            <div className="addloan-textFieldDiv">
-              <label className="addloan-inputLabel">
-                Description{' '}
+          {/* 3rd Row  */}
+          <div className="unitdetail-alignRow">
+            {/* Floor Plan */}
+            <div className="unitdetail-textFieldDiv form-group">
+              <label className="unitdetail-inputLabel ">
+                Floor Plan{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
-              <textarea
-                className="addloan-textField"
-                onChange={handleInputchange('description')}
-                name="description"
-                id={error.description ? 'red-border' : ''}
-              ></textarea>
+              <input
+                type="file"
+                name="Floor Plan"
+                placeholder="Floor Plan"
+                className="unitdetail-inputField"
+                id={error.floorPlan ? 'red-border' : ''}
+                onChange={handleFileInputchange('floorplan')}
+              />
             </div>
           </div>
-          {/* Submit */}
-          <div className="addloan-submitDetailDiv">
-            <button className="addloan-submitDetailBtn" onClick={handlesubmit}>
-              Add loan
+          {/* Submit */}`
+          <div className="unitdetail-submitDetailDiv">
+            <button
+              className="unitdetail-submitDetailBtn"
+              onClick={handlesubmit}
+            >
+              Add Unit
               {spinn ? (
                 <div
                   class="spinner-border spinner-border-sm text-white mx-2"
@@ -123,10 +206,11 @@ const AddTrendingLoansForm = () => {
               )}
             </button>
           </div>
+          `
         </div>
       </div>
     </form>
   );
 };
 
-export default AddTrendingLoansForm;
+export default AddUnitDetailsForm;
