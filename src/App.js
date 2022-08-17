@@ -24,6 +24,8 @@ import ContactUs from './new-components/ContactUs/ContactUs';
 import Experts from './new-components/Experts/Experts';
 import UnitDetails from './new-components/UnitDetails/UnitDetails';
 import AddUnitDetailsForm from './new-components/UnitDetails/AddUnitDetailsForm';
+import AddDeveloperForm from './new-components/Developer/AddDeveloperForm';
+import EditDeveloperForm from './new-components/Developer/EditDeveloperForm';
 export const history = createHistory();
 const App = () => {
   return (
@@ -43,6 +45,16 @@ const App = () => {
             path="/property/unitdetail/add/:id"
             exact
             component={AddUnitDetailsForm}
+          />
+          <Route
+            path="/property/adddev/:id"
+            exact
+            component={AddDeveloperForm}
+          />
+          <Route
+            path="/property/editdev/:id"
+            exact
+            component={EditDeveloperForm}
           />
           <Route path="/prop/req" exact component={Requirements} />
           <Route path="/career" exact component={Career} />

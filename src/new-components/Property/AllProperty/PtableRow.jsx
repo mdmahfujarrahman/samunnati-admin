@@ -7,7 +7,6 @@ import DeleteModal from '../../utils/DeleteModal';
 const PtableRow = ({ index, property, allproperty, setallproperty }) => {
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   const [ConfirmDelete, setConfirmDelete] = useState(false);
-
   const handleDeleteConfirm = () => {
     setdeleteModalOpen(false);
     setConfirmDelete(true);
@@ -45,26 +44,30 @@ const PtableRow = ({ index, property, allproperty, setallproperty }) => {
         <td>{property.unitsLeft}</td>
         <td>{property.price}</td>
         <td style={{ textAlign: 'center' }}>
-          <Link to={`/property/unitdetail/${property._id}`}>
-            {property.unitDetails.length ? (
+          {property.unitDetails.length ? (
+            <Link to={`/property/unitdetail/${property._id}`}>
               <button className="btn btn-outline-secondary btn-sm">View</button>
-            ) : (
+            </Link>
+          ) : (
+            <Link to={`/property/unitdetail/add/${property._id}`}>
               <button type="button" class="btn btn-outline-success btn-sm">
                 Add
               </button>
-            )}
-          </Link>
+            </Link>
+          )}
         </td>
         <td style={{ textAlign: 'center' }}>
-          <Link to={`/property/viewdev/${property._id}`}>
-            {property.developer ? (
+          {property.developer ? (
+            <Link to={`/property/editdev/${property._id}`}>
               <button className="btn btn-outline-secondary btn-sm">Edit</button>
-            ) : (
+            </Link>
+          ) : (
+            <Link to={`/property/adddev/${property._id}`}>
               <button type="button" class="btn btn-outline-success btn-sm">
                 Add
               </button>
-            )}
-          </Link>
+            </Link>
+          )}
         </td>
         <td className="text-right">
           <div

@@ -8,7 +8,7 @@ const UDtableRow = ({
   index,
   propid,
   bhk,
-  unitdetail,
+  detaildata,
   allUnitDetails,
   setallUnitDetails,
 }) => {
@@ -28,7 +28,17 @@ const UDtableRow = ({
   };
   const handleConfirmDelete = async (propid, bhk, did) => {
     try {
-      const updatedDetails = allUnitDetails.filter((b) => b._id !== did);
+      const updatedDetails = {
+        ...allUnitDetails,
+        unitDetails: allUnitDetails.unitDetails.map((unitdetail) => {
+          return {
+            ...unitdetail,
+            detail: unitdetail.detail.filter((d) => {
+              return d._id != did;
+            }),
+          };
+        }),
+      };
       setallUnitDetails(updatedDetails);
       await deleteUnitDetail(propid, bhk, did);
     } catch (err) {
@@ -37,7 +47,7 @@ const UDtableRow = ({
   };
   useEffect(() => {
     if (ConfirmDelete) {
-      handleConfirmDelete(propid, bhk, unitdetail._id);
+      handleConfirmDelete(propid, bhk, detaildata._id);
     }
   }, [ConfirmDelete]);
 
@@ -46,9 +56,9 @@ const UDtableRow = ({
       <tr>
         <td>{index + 1}</td>
         <td>{bhk}</td>
-        <td>{unitdetail.facing}</td>
-        <td>{unitdetail.size}</td>
-        <td>{unitdetail.price}</td>
+        <td>{detaildata.facing}</td>
+        <td>{detaildata.size}</td>
+        <td>{detaildata.price}</td>
         <td>
           <Link onClick={(e) => handleDeleteUnitDetail(e)} to={'#'}>
             <button className="delete-btn">

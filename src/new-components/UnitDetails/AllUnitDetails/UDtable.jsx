@@ -10,36 +10,45 @@ const UDtable = ({ unitDetailsData, propid }) => {
   }, [unitDetailsData]);
 
   return (
-    <div className="table-wrapper" id="#scrollBar">
-      <table className="fl-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>BHK</th>
-            <th>Facing</th>
-            <th>Size</th>
-            <th>Price</th>
-            <th style={{ textAlign: 'center' }}>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allUnitDetails.length &&
-            allUnitDetails.detail.map((unitdetail, index) => {
-              return (
-                <UDtableRow
-                  key={index}
-                  index={index}
-                  propid={propid}
-                  bhk={allUnitDetails.bhk}
-                  unitdetail={unitdetail}
-                  allUnitDetails={allUnitDetails}
-                  setallUnitDetails={setallUnitDetails}
-                />
-              );
-            })}
-        </tbody>
-      </table>
-    </div>
+    <>
+      {allUnitDetails && unitDetailsData.unitDetails ? (
+        <div className="table-wrapper" id="#scrollBar">
+          <table className="fl-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>BHK</th>
+                <th>Facing</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th style={{ textAlign: 'center' }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allUnitDetails &&
+                allUnitDetails.unitDetails &&
+                allUnitDetails.unitDetails.map((unitdetail, index) =>
+                  unitdetail.detail.map((detaildata, index) => {
+                    return (
+                      <UDtableRow
+                        key={index}
+                        index={index}
+                        propid={propid}
+                        bhk={unitdetail.bhk}
+                        detaildata={detaildata}
+                        allUnitDetails={allUnitDetails}
+                        setallUnitDetails={setallUnitDetails}
+                      />
+                    );
+                  })
+                )}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <h6 className="text-center">No details available</h6>
+      )}
+    </>
   );
 };
 

@@ -23,11 +23,7 @@ const UnitDetails = () => {
     try {
       const res = await getUnitDetailByPropertyId(id);
       const uddata = res.data.data;
-      setallUnitDetailsData({
-        //toBeChanged
-        bhk: '4',
-        detail: uddata.unitDetails,
-      });
+      setallUnitDetailsData(uddata);
       setLoading(false);
     } catch (error) {
       console.log(error);
