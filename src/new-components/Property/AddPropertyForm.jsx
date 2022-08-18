@@ -107,7 +107,7 @@ const AddPropertyForm = () => {
       ready: propertyData.ready == '' ? true : false,
       unitsLeft: propertyData.unitsLeft == '' ? true : false,
       amenities: propertyData.amenities == '' ? true : false,
-      pictures: !propertyData ? true : false,
+      pictures: !propertyData.pictures.length ? true : false,
       description: propertyData.description == '' ? true : false,
     };
     setError(updatedError);
