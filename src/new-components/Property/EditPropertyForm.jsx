@@ -3,35 +3,55 @@ import '../../styles/newstyles/addPropertyForm.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { getPropertyById, updateProperty } from '../../redux/api';
 import { storage } from '../../firebase';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import LoadingPage from '../utils/LoadingPage';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 const EditPropertyForm = () => {
   const history = useHistory();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const isFirstRender = useRef(true);
   const [spinn, setspinn] = useState(false);
-  const [blogData, setblogData] = useState({});
+  const [propertyData, setpropertyData] = useState({
+    name: '',
+    location: '',
+    lat: '',
+    lng: '',
+    city: '',
+    area: '',
+    BHK: '',
+    price: '',
+    ready: '',
+    unitsLeft: '',
+    amenities: '',
+    pictures: [],
+    description: '',
+  });
 
   const [error, setError] = useState({
-    title: false,
-    picture: false,
-    authorName: false,
-    authorPicture: false,
-    category: false,
-    timeToRead: false,
-    tags: false,
-    content: false,
+    name: false,
+    location: false,
+    lat: false,
+    lng: false,
+    city: false,
+    area: false,
+    BHK: false,
+    price: false,
+    ready: false,
+    unitsLeft: false,
+    amenities: false,
+    pictures: false,
+    description: false,
   });
   const getPropertyData = async () => {
     setLoading(true);
     try {
       const res = await getPropertyById(id);
-      const bdata = res.data.data;
-      setblogData({
-        ...bdata,
-        tags: bdata.tags.join(' '), //later change to tags array,
-        timeToRead: bdata.timeToRead.slice(0, -3),
+      const pdata = res.data.data;
+      setpropertyData({
+        ...pdata,
+        ready: pdata.ready === true ? 'YES' : 'NO',
+        amenities: pdata.amenities.join(''),
+        area: pdata.area.slice(0, -4),
       });
       setLoading(false);
     } catch (error) {
@@ -43,79 +63,105 @@ const EditPropertyForm = () => {
     getPropertyData(id);
   }, []);
 
+  const handleImageDelete = (event, imgurl) => {
+    setpropertyData({
+      ...propertyData,
+      pictures: propertyData.pictures.filter((img) => {
+        return img !== imgurl;
+      }),
+    });
+  };
   const handleInputchange = (name) => (event) => {
-    setblogData({ ...blogData, [name]: event.target.value });
+    setpropertyData({ ...propertyData, [name]: event.target.value });
   };
 
-  const handleFileInputchange = (name) => async (e) => {
+  async function uploadImageAsPromise(file) {
+    const storageRef = ref(storage, `PropertyPictures/${file.name}`);
+    return new Promise(function (resolve, reject) {
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        function error(err) {
+          reject(err);
+        },
+        async function complete() {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            resolve(url);
+          });
+        }
+      );
+    });
+  }
+  const handleFileInputchange = async (e) => {
     e.preventDefault();
-    const file = e.target.files[0];
-    if (!file) return;
-    const storageRef = ref(storage, `${name}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {},
-      (error) => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setblogData({ ...blogData, [name]: url });
-        });
-      }
-    );
+    const promises = [];
+    for (const file of e.target.files) {
+      promises.push(uploadImageAsPromise(file));
+    }
+    const data = await Promise.all(promises);
+    setpropertyData({
+      ...propertyData,
+      pictures: [...propertyData.pictures, ...data],
+    });
   };
 
   const handlerValidatedFormSubmit = async () => {
     try {
-      const payloaddata = {
-        ...blogData,
-        tags: blogData.tags.split(' ').filter((t) => t.length), //later change to tags array
-        timeToRead: blogData.timeToRead + 'min',
-        id: blogData._id,
-      };
-      await updateProperty(payloaddata);
-      history.push('/blogs');
-      console.log('update complete');
+      await updateProperty({
+        id: id,
+        ...propertyData,
+        ready: propertyData.ready === 'YES' ? true : false,
+        amenities: propertyData.amenities.split(' ').filter((t) => t.length),
+        area: propertyData.area + 'sqft',
+      });
+      // history.push('/property');
       setspinn(false);
     } catch (error) {
       console.log(error);
       setspinn(false);
     }
   };
-
   const handlesubmit = (e) => {
     e.preventDefault();
     const updatedError = {
-      title: blogData.title === '' ? true : false,
-      picture: blogData.picture === '' ? true : false,
-      authorName: blogData.authorName === '' ? true : false,
-      authorPicture: blogData.authorPicture === '' ? true : false,
-      category: blogData.category === '' ? true : false,
-      timeToRead: blogData.timeToRead === '' ? true : false,
-      tags: blogData.tags === '' ? true : false, //later change to tags array
-      content: blogData.content === '' ? true : false,
+      name: propertyData.name == '' ? true : false,
+      location: propertyData.location == '' ? true : false,
+      lat: propertyData.lat == '' ? true : false,
+      lng: propertyData.lng == '' ? true : false,
+      city: propertyData.city == '' ? true : false,
+      area: propertyData.area == '' ? true : false,
+      BHK: propertyData.BHK == '' ? true : false,
+      price: propertyData.price == '' ? true : false,
+      ready: propertyData.ready == '' ? true : false,
+      unitsLeft: propertyData.unitsLeft == '' ? true : false,
+      amenities: propertyData.amenities == '' ? true : false,
+      pictures: !propertyData.pictures.length ? true : false,
+      description: propertyData.description == '' ? true : false,
     };
+    console.log(updatedError);
     setError(updatedError);
   };
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
-      console.log('first render');
       return;
     } else {
       if (
-        !error.title &&
-        !error.picture &&
-        !error.authorName &&
-        !error.authorPicture &&
-        !error.category &&
-        !error.timeToRead &&
-        !error.tags &&
-        !error.content
+        !error.name &&
+        !error.location &&
+        !error.lat &&
+        !error.log &&
+        !error.city &&
+        !error.area &&
+        !error.BHK &&
+        !error.price &&
+        !error.ready &&
+        !error.unitsLeft &&
+        !error.amenities &&
+        !error.description &&
+        !error.pictures
       ) {
-        console.log('not first render-valid form');
         setspinn(true);
         handlerValidatedFormSubmit();
       }
@@ -124,175 +170,281 @@ const EditPropertyForm = () => {
 
   return (
     <form>
-      <div className="addblog-container">
+      <div className="addproperty-container">
         {loading ? (
           <LoadingPage />
         ) : (
-          <div className="addblog-personalDetails">
+          <div className="addproperty-personalDetails">
             {/* 1st row */}
-            <div className="addblog-alignRow">
-              {/* aUthor Name */}
-              <div className="addblog-inputFieldDiv form-group">
-                <label className="addblog-inputLabel ">
-                  Author Name{' '}
+            <div className="addproperty-alignRow">
+              {/* Property Name */}
+              <div className="addproperty-inputFieldDiv form-group">
+                <label className="addproperty-inputLabel ">
+                  Property Name{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <input
-                  value={blogData.authorName}
                   type="text"
-                  name="Author Name"
-                  placeholder="Full Name"
-                  className="addblog-inputField"
-                  id={error.authorName ? 'red-border' : ''}
-                  onChange={handleInputchange('authorName')}
+                  name="Property Name"
+                  placeholder="Property Name"
+                  className="addproperty-inputField"
+                  id={error.name ? 'red-border' : ''}
+                  onChange={handleInputchange('name')}
+                  value={propertyData.name}
                 />
               </div>
-              {/* Title */}
-              <div className="addblog-inputFieldDiv form-group">
-                <label className="addblog-inputLabel">
-                  Property Title{' '}
+              {/* Location */}
+              <div className="addproperty-inputFieldDiv form-group">
+                <label className="addproperty-inputLabel">
+                  Property Location{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <input
                   type="text"
-                  value={blogData.title}
-                  id={error.title ? 'red-border' : ''}
-                  name="Title"
-                  placeholder="Property Title"
-                  className="addblog-inputField"
-                  onChange={handleInputchange('title')}
+                  id={error.location ? 'red-border' : ''}
+                  name="Property Location"
+                  placeholder="Property Location"
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('location')}
+                  value={propertyData.location}
                 />
               </div>
             </div>
 
             {/* 2nd row */}
-            <div className="addblog-alignRow">
-              {/* Category */}
-              <div className="addblog-inputFieldDiv form-group">
-                <label className="addblog-inputLabel">
-                  Category{' '}
+            <div className="addproperty-alignRow">
+              {/* Location Latitude */}
+              <div className="addproperty-inputFieldDiv form-group">
+                <label className="addproperty-inputLabel">
+                  Location Latitude{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <input
                   type="text"
-                  value={blogData.category}
-                  name="title"
-                  id={error.category ? 'red-border' : ''}
-                  placeholder="Title Tagling"
-                  className="addblog-inputField"
-                  onChange={handleInputchange('category')}
+                  name="Location Latitude"
+                  id={error.lat ? 'red-border' : ''}
+                  placeholder="Location Latitude"
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('lat')}
+                  value={propertyData.lat}
                 />
               </div>
-              {/* TimetoRead */}
-              <div className="addblog-inputFieldDiv">
-                <label className="addblog-inputLabel">
-                  Time To Read (Minutes){' '}
+              {/* Location Longitude */}
+              <div className="addproperty-inputFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Location Longitude{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <input
-                  name="minutes"
-                  value={blogData.timeToRead}
-                  id={error.timeToRead ? 'red-border' : ''}
-                  onChange={handleInputchange('timeToRead')}
-                  className="addblog-inputField"
-                  type="number"
+                  name="Location Longitude"
+                  id={error.lng ? 'red-border' : ''}
+                  onChange={handleInputchange('lng')}
+                  placeholder="Location Longitude"
+                  className="addproperty-inputField"
+                  type="text"
+                  value={propertyData.lng}
+                />
+              </div>
+            </div>
+            {/* 3rd row */}
+            <div className="addproperty-alignRow">
+              {/* City */}
+              <div className="addproperty-inputFieldDiv">
+                <label className="addproperty-inputLabel">
+                  City{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
+                <input
+                  type="text"
+                  name="City"
+                  placeholder="City"
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('city')}
+                  id={error.city ? 'red-border' : ''}
+                  value={propertyData.city}
+                />
+              </div>
+              {/* Area */}
+              <div className="addproperty-inputFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Area{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
+                <input
+                  type="text"
+                  name="Area"
+                  placeholder="Area"
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('area')}
+                  id={error.area ? 'red-border' : ''}
+                  value={propertyData.area}
                 />
               </div>
             </div>
 
-            {/* 3rd row */}
-            <div className="addblog-alignRow">
-              {/* Author PIctue */}
-              <div className="addblog-inputFieldDiv">
-                <label className="addblog-inputLabel">
-                  Author Profile{' '}
+            {/* 4th row */}
+            <div className="addproperty-alignRow">
+              {/* BHK */}
+              <div className="addproperty-inputFieldDiv">
+                <label className="addproperty-inputLabel">
+                  BHK{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <input
-                  type="file"
-                  name="profilePic"
-                  placeholder="Author Profile"
-                  className="addblog-inputField"
-                  onChange={handleFileInputchange('authorPicture')}
-                  id={error.authorPicture ? 'red-border' : ''}
+                  type="number"
+                  name="BHK"
+                  placeholder="BHK"
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('BHK')}
+                  id={error.BHK ? 'red-border' : ''}
+                  value={propertyData.BHK}
                 />
-                <div className="addblog-inputFieldDiv-image">
-                  <img
-                    src={blogData.authorPicture}
-                    height="100px"
-                    width="100px"
-                    alt="product image"
-                  />
+              </div>
+              {/* Price */}
+              <div className="addproperty-inputFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Price{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
+                <input
+                  type="text"
+                  name="Price"
+                  placeholder="(xx L-yy L)"
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('price')}
+                  id={error.price ? 'red-border' : ''}
+                  value={propertyData.price}
+                />
+              </div>
+            </div>
+            {/* 5th row */}
+            <div className="addproperty-alignRow">
+              {/* Property Ready To Move In*/}
+              <div className="addproperty-inputFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Ready To Move In{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
+                <div onChange={handleInputchange('ready')}>
+                  <input
+                    type="radio"
+                    value="YES"
+                    name="city"
+                    checked={propertyData.ready === 'YES'}
+                  />{' '}
+                  YES &nbsp;&nbsp;&nbsp;&nbsp;
+                  <input
+                    type="radio"
+                    value="NO"
+                    name="city"
+                    checked={propertyData.ready === 'NO'}
+                  />{' '}
+                  NO
                 </div>
               </div>
-              {/* Property Picture */}
-              <div className="addblog-inputFieldDiv">
-                <label className="addblog-inputLabel">
-                  Property Picture{' '}
+              {/* Units Left */}
+              <div className="addproperty-inputFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Units Left{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
+                <input
+                  type="number"
+                  name="Units Left"
+                  placeholder="Units Left"
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('unitsLeft')}
+                  id={error.area ? 'red-border' : ''}
+                  value={propertyData.unitsLeft}
+                />
+              </div>
+            </div>
+
+            {/* 6th row */}
+            <div className="addproperty-alignRow">
+              {/* Amenities */}
+              <div className="addproperty-textFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Amenities{' '}
+                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                </label>
+                <input
+                  className="addproperty-inputField"
+                  onChange={handleInputchange('amenities')}
+                  type="text"
+                  name="amenities"
+                  id={error.amenities ? 'red-border' : ''}
+                  value={propertyData.amenities}
+                />
+              </div>
+            </div>
+            {/*7th row */}
+            <div className="addproperty-alignRow">
+              {/* Property  Pictures */}
+              <div className="addproperty-textFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Property Pictures{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <input
                   type="file"
                   name="thumbnail"
                   placeholder="Thumbnail"
-                  className="addblog-inputField"
-                  onChange={handleFileInputchange('picture')}
-                  id={error.picture ? 'red-border' : ''}
-                />
-                <div className="addblog-inputFieldDiv-image">
-                  <img
-                    src={blogData.picture}
-                    height="100px"
-                    width="100px"
-                    alt="product image"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* 4th row */}
-            <div className="addblog-alignRow">
-              {/* Tags */}
-              <div className="addblog-textFieldDiv">
-                <label className="addblog-inputLabel">
-                  Tags{' '}
-                  <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-                </label>
-                <input
-                  className="addblog-inputField"
-                  value={blogData.tags}
-                  onChange={handleInputchange('tags')}
-                  type="text"
-                  name="tag"
-                  id={error.tags ? 'red-border' : ''}
+                  className="addproperty-inputField"
+                  onChange={(e) => handleFileInputchange(e)}
+                  id={error.pictures ? 'red-border' : ''}
+                  multiple
                 />
               </div>
             </div>
+            {/* 8th row   :- Image Preview */}
+            <div className="addproperty-alignRow">
+              <div className="addproperty-textFieldDiv d-flex flex-wrap flex-row gap-5">
+                {propertyData.pictures.map((imgurl, index) => {
+                  return (
+                    <div className="d-flex flex-column align-items-end">
+                      <button
+                        type="button"
+                        class="btn-close"
+                        onClick={(event) => handleImageDelete(event, imgurl)}
+                      ></button>
+                      <img
+                        src={imgurl}
+                        height="100px"
+                        width="100px"
+                        alt="Developer image"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-            {/* 5th row */}
-            <div className="addblog-alignRow">
-              {/*content*/}
-              <div className="addblog-textFieldDiv">
-                <label className="addblog-inputLabel">
-                  Content{' '}
+            {/* 9th row */}
+            <div className="addproperty-alignRow">
+              {/*Description*/}
+              <div className="addproperty-textFieldDiv">
+                <label className="addproperty-inputLabel">
+                  Description{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
                 <textarea
-                  className="addblog-textField"
-                  value={blogData.content}
-                  onChange={handleInputchange('content')}
-                  name="caption"
-                  id={error.content ? 'red-border' : ''}
+                  className="addproperty-textField"
+                  onChange={handleInputchange('description')}
+                  name="Description"
+                  placeholder="Property Description"
+                  id={error.description ? 'red-border' : ''}
+                  value={propertyData.description}
                 ></textarea>
               </div>
             </div>
 
-            <div className="addblog-submitDetailDiv">
+            <div className="addproperty-submitDetailDiv">
               <button
-                className="addblog-submitDetailBtn"
+                className="addproperty-submitDetailBtn"
                 onClick={handlesubmit}
               >
-                Update Property
+                Edit Property
                 {spinn ? (
                   <div
                     class="spinner-border spinner-border-sm text-white mx-2"
