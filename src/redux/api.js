@@ -88,17 +88,3 @@ export const deleteContacts = (cid) =>
 //Experts
 
 export const getAllExperts = () => API.get('/cn/getAllExperts');
-//--------------------------------------------------------------------------------------
-API.interceptors.request.use((req) => {
-  if (Cookies.get('fanstarAdmin')) {
-    req.headers['authorization'] = `Bearer ${Cookies.get('fanstarAdmin')}`;
-  }
-  return req;
-});
-
-export const login = (loginData) =>
-  API.post('/api/admin/public/login', loginData);
-
-export const appVisits = () => API.get('/api/admin/private/gettotalappvisits');
-export const totalSubscriptions = () =>
-  API.get('/api/admin/private/gettotalsubscribers');

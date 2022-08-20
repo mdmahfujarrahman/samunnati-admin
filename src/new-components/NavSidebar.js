@@ -89,12 +89,22 @@ const NavSidebar = (props) => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
   const history = useHistory();
 
   const handleLogout = () => {
-    Cookies.remove('fanstarAdmin');
+    Cookies.remove('aspire');
+    localStorage.removeItem('aspire');
     history.push('/');
   };
+
+  let k = JSON.parse(localStorage.getItem('aspire'));
+  React.useEffect(() => {
+    if (!k) {
+      history.push('/');
+    }
+  }, []);
+
   const handleListClick = (url) => {
     history.push(url);
   };

@@ -4,6 +4,7 @@ import demoLogo from '../images/logo.svg';
 import LoadingPage from '../new-components/utils/LoadingPage';
 import { login } from '../redux/api';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 import '../styles/LoginPage.css';
 
@@ -21,17 +22,19 @@ const LoginPage = () => {
     const { name } = e.target;
     setFormData({ ...formData, [name]: e.target.value });
   };
-
   const handleLogin = async () => {
     if (formData.email && formData.password) {
       setLoading(true);
       try {
-        //   const { data } = await login(formData);
-        //   setLoading(false);
-        //   Cookies.set('fanstarAdmin', data);
+        const { data } = await axios.post(
+          'https://aspire0.herokuapp.com/auth/login',
+          formData
+        );
+        console.log(data);
+        setLoading(false);
+        localStorage.setItem('aspire', JSON.stringify(data?.data));
         history.push('/property');
       } catch (error) {
-        console.log(error);
         setLoading(false);
         alert('Something went wrong, please try later!');
       }
