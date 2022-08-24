@@ -55,6 +55,9 @@
 
 .fl-table td,
 .fl-table th {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-align: left;
   padding: 12px 10px;
 }

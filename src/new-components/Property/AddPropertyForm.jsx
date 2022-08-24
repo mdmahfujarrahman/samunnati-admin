@@ -3,12 +3,53 @@ import '../../styles/newstyles/addPropertyForm.css';
 import { useHistory } from 'react-router-dom';
 import { addProperty } from '../../redux/api';
 import { storage } from '../../firebase';
+import Select from 'react-select';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 const AddPropertyForm = () => {
   const isFirstRender = useRef(true);
   const [spinn, setspinn] = useState(false);
+  const [selectedAmenities, setselectedAmenities] = useState([]);
   const history = useHistory();
-
+  const amenitiesoptions = [
+    { value: 'Car parking', label: 'Car parking' },
+    { value: 'Security services', label: 'Security services' },
+    { value: 'CCTV', label: 'CCTV' },
+    { value: 'Water supply', label: 'Water supply' },
+    { value: 'Elevators', label: 'Elevators' },
+    { value: 'Power backup', label: 'Power backup' },
+    { value: '24-hour maintenance', label: '24-hour maintenance' },
+    { value: 'Walking/Jogging track', label: 'Walking/Jogging track' },
+    { value: 'Play area', label: 'Play area' },
+    { value: 'Clubhouse', label: 'Clubhouse' },
+    { value: 'Swimming pool', label: 'Swimming pool' },
+    { value: 'Gym', label: 'Gym' },
+    { value: 'Rooftop garden/Terrace', label: 'Rooftop garden/Terrace' },
+    { value: 'Private Terrace', label: 'Private Terrace' },
+    { value: 'Balcony', label: 'Balcony' },
+    { value: 'Indoor Games', label: 'Indoor Games' },
+    { value: 'Outdoor Play area', label: 'Outdoor Play area' },
+    { value: 'Kids Play area', label: 'Kids Play area' },
+    { value: 'Basketball court', label: 'Basketball court' },
+    { value: 'Badminton Court', label: 'Badminton Court' },
+    { value: 'Elderly Sitting Area', label: 'Elderly Sitting Area' },
+    { value: 'Open deck', label: 'Open deck' },
+    { value: 'Sky lounge', label: 'Sky lounge' },
+    { value: 'Spa/salon', label: 'Spa/salon' },
+    { value: 'Cafeteria', label: 'Cafeteria' },
+    { value: 'Restaurant', label: 'Restaurant' },
+    { value: 'Party hall', label: 'Party hall' },
+    { value: 'Multi-purpose Hall', label: 'Multi-purpose Hall' },
+    {
+      value: 'Temple and religious activity place',
+      label: 'Temple and religious activity place',
+    },
+    { value: 'Cinema hal', label: 'Cinema hal' },
+    { value: 'Amphitheater', label: 'Amphitheater' },
+    { value: 'Wi-Fi connectivity', label: 'Wi-Fi connectivity' },
+    { value: 'Provision Shops', label: 'Provision Shops' },
+    { value: 'Kids Swimming Pool', label: 'Kids Swimming Pool' },
+    { value: 'Others', label: 'Others' },
+  ];
   const [propertyData, setpropertyData] = useState({
     name: '',
     location: '',
@@ -16,7 +57,6 @@ const AddPropertyForm = () => {
     lng: '',
     city: '',
     area: '',
-    BHK: '',
     price: '',
     ready: '',
     unitsLeft: '',
@@ -32,7 +72,6 @@ const AddPropertyForm = () => {
     lng: false,
     city: false,
     area: false,
-    BHK: false,
     price: false,
     ready: false,
     unitsLeft: false,
@@ -44,7 +83,9 @@ const AddPropertyForm = () => {
   const handleInputchange = (name) => (event) => {
     setpropertyData({ ...propertyData, [name]: event.target.value });
   };
-
+  const handleInputAmenitieschange = (value) => {
+    setselectedAmenities(value);
+  };
   async function uploadImageAsPromise(file) {
     const storageRef = ref(storage, `PropertyPictures/${file.name}`);
     return new Promise(function (resolve, reject) {
@@ -57,6 +98,7 @@ const AddPropertyForm = () => {
         },
         async function complete() {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log(url);
             resolve(url);
           });
         }
@@ -71,6 +113,7 @@ const AddPropertyForm = () => {
     }
     const data = await Promise.all(promises);
     setpropertyData({ ...propertyData, pictures: data });
+    setError({ ...error, pictures: false });
   };
 
   const handlerValidatedFormSubmit = async () => {
@@ -78,7 +121,7 @@ const AddPropertyForm = () => {
       const payloaddata = {
         ...propertyData,
         ready: propertyData.ready === 'YES' ? true : false,
-        amenities: propertyData.amenities.split(' ').filter((t) => t.length),
+        amenities: selectedAmenities.map((amen) => amen.value),
         area: propertyData.area + 'sqft',
         developer: {},
         unitDetails: [],
@@ -102,11 +145,10 @@ const AddPropertyForm = () => {
       lng: propertyData.lng == '' ? true : false,
       city: propertyData.city == '' ? true : false,
       area: propertyData.area == '' ? true : false,
-      BHK: propertyData.BHK == '' ? true : false,
       price: propertyData.price == '' ? true : false,
       ready: propertyData.ready == '' ? true : false,
       unitsLeft: propertyData.unitsLeft == '' ? true : false,
-      amenities: propertyData.amenities == '' ? true : false,
+      amenities: !selectedAmenities.length ? true : false,
       pictures: !propertyData.pictures.length ? true : false,
       description: propertyData.description == '' ? true : false,
     };
@@ -124,7 +166,6 @@ const AddPropertyForm = () => {
         !error.log &&
         !error.city &&
         !error.area &&
-        !error.BHK &&
         !error.price &&
         !error.ready &&
         !error.unitsLeft &&
@@ -244,18 +285,19 @@ const AddPropertyForm = () => {
 
           {/* 4th row */}
           <div className="addproperty-alignRow">
-            {/* BHK */}
+            {/* Units Left */}
             <div className="addproperty-inputFieldDiv">
               <label className="addproperty-inputLabel">
-                BHK <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                Units Left{' '}
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="number"
-                name="BHK"
-                placeholder="BHK"
+                name="Units Left"
+                placeholder="Units Left"
                 className="addproperty-inputField"
-                onChange={handleInputchange('BHK')}
-                id={error.BHK ? 'red-border' : ''}
+                onChange={handleInputchange('unitsLeft')}
+                id={error.area ? 'red-border' : ''}
               />
             </div>
             {/* Price */}
@@ -288,40 +330,6 @@ const AddPropertyForm = () => {
                 <input type="radio" value="NO" name="city" /> NO
               </div>
             </div>
-            {/* Units Left */}
-            <div className="addproperty-inputFieldDiv">
-              <label className="addproperty-inputLabel">
-                Units Left{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="number"
-                name="Units Left"
-                placeholder="Units Left"
-                className="addproperty-inputField"
-                onChange={handleInputchange('unitsLeft')}
-                id={error.area ? 'red-border' : ''}
-              />
-            </div>
-          </div>
-
-          {/* 6th row */}
-          <div className="addproperty-alignRow">
-            {/* Amenities */}
-            <div className="addproperty-inputFieldDiv">
-              <label className="addproperty-inputLabel">
-                Amenities{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                className="addproperty-inputField"
-                onChange={handleInputchange('amenities')}
-                type="text"
-                name="amenities"
-                id={error.amenities ? 'red-border' : ''}
-              />
-            </div>
-
             {/* Property  Pictures */}
             <div className="addproperty-inputFieldDiv">
               <label className="addproperty-inputLabel">
@@ -336,6 +344,24 @@ const AddPropertyForm = () => {
                 onChange={(e) => handleFileInputchange(e)}
                 id={error.pictures ? 'red-border' : ''}
                 multiple
+              />
+            </div>
+          </div>
+
+          {/* 6th row */}
+          <div className="addproperty-alignRow">
+            {/* Amenities */}
+            <div className="addproperty-textFieldDiv">
+              <label className="addproperty-inputLabel">
+                Amenities{' '}
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <Select
+                options={amenitiesoptions}
+                isMulti
+                className="addproperty-inputField"
+                id={error.amenities ? 'red-border' : ''}
+                onChange={(e) => handleInputAmenitieschange(e)}
               />
             </div>
           </div>

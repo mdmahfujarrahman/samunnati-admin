@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getPropertyById, updateProperty } from '../../redux/api';
 import { storage } from '../../firebase';
 import LoadingPage from '../utils/LoadingPage';
+import Select from 'react-select';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 const EditPropertyForm = () => {
   const history = useHistory();
@@ -11,6 +12,47 @@ const EditPropertyForm = () => {
   const [loading, setLoading] = useState(false);
   const isFirstRender = useRef(true);
   const [spinn, setspinn] = useState(false);
+  const [selectedAmenities, setselectedAmenities] = useState([]);
+  const amenitiesoptions = [
+    { value: 'Car parking', label: 'Car parking' },
+    { value: 'Security services', label: 'Security services' },
+    { value: 'CCTV', label: 'CCTV' },
+    { value: 'Water supply', label: 'Water supply' },
+    { value: 'Elevators', label: 'Elevators' },
+    { value: 'Power backup', label: 'Power backup' },
+    { value: '24-hour maintenance', label: '24-hour maintenance' },
+    { value: 'Walking/Jogging track', label: 'Walking/Jogging track' },
+    { value: 'Play area', label: 'Play area' },
+    { value: 'Clubhouse', label: 'Clubhouse' },
+    { value: 'Swimming pool', label: 'Swimming pool' },
+    { value: 'Gym', label: 'Gym' },
+    { value: 'Rooftop garden/Terrace', label: 'Rooftop garden/Terrace' },
+    { value: 'Private Terrace', label: 'Private Terrace' },
+    { value: 'Balcony', label: 'Balcony' },
+    { value: 'Indoor Games', label: 'Indoor Games' },
+    { value: 'Outdoor Play area', label: 'Outdoor Play area' },
+    { value: 'Kids Play area', label: 'Kids Play area' },
+    { value: 'Basketball court', label: 'Basketball court' },
+    { value: 'Badminton Court', label: 'Badminton Court' },
+    { value: 'Elderly Sitting Area', label: 'Elderly Sitting Area' },
+    { value: 'Open deck', label: 'Open deck' },
+    { value: 'Sky lounge', label: 'Sky lounge' },
+    { value: 'Spa/salon', label: 'Spa/salon' },
+    { value: 'Cafeteria', label: 'Cafeteria' },
+    { value: 'Restaurant', label: 'Restaurant' },
+    { value: 'Party hall', label: 'Party hall' },
+    { value: 'Multi-purpose Hall', label: 'Multi-purpose Hall' },
+    {
+      value: 'Temple and religious activity place',
+      label: 'Temple and religious activity place',
+    },
+    { value: 'Cinema hal', label: 'Cinema hal' },
+    { value: 'Amphitheater', label: 'Amphitheater' },
+    { value: 'Wi-Fi connectivity', label: 'Wi-Fi connectivity' },
+    { value: 'Provision Shops', label: 'Provision Shops' },
+    { value: 'Kids Swimming Pool', label: 'Kids Swimming Pool' },
+    { value: 'Others', label: 'Others' },
+  ];
   const [propertyData, setpropertyData] = useState({
     name: '',
     location: '',
@@ -50,9 +92,15 @@ const EditPropertyForm = () => {
       setpropertyData({
         ...pdata,
         ready: pdata.ready === true ? 'YES' : 'NO',
-        amenities: pdata.amenities.join(''),
         area: pdata.area.slice(0, -4),
       });
+      console.log(pdata);
+      console.log(
+        pdata.amenities.map((amen) => ({ value: amen, label: amen }))
+      );
+      setselectedAmenities(
+        pdata.amenities.map((amen) => ({ value: amen, label: amen }))
+      );
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -62,7 +110,9 @@ const EditPropertyForm = () => {
   useEffect(() => {
     getPropertyData(id);
   }, []);
-
+  const handleInputAmenitieschange = (value) => {
+    setselectedAmenities(value);
+  };
   const handleImageDelete = (event, imgurl) => {
     setpropertyData({
       ...propertyData,
@@ -112,7 +162,7 @@ const EditPropertyForm = () => {
         id: id,
         ...propertyData,
         ready: propertyData.ready === 'YES' ? true : false,
-        amenities: propertyData.amenities.split(' ').filter((t) => t.length),
+        amenities: selectedAmenities.map((amen) => amen.value),
         area: propertyData.area + 'sqft',
       });
       // history.push('/property');
@@ -135,7 +185,7 @@ const EditPropertyForm = () => {
       price: propertyData.price == '' ? true : false,
       ready: propertyData.ready == '' ? true : false,
       unitsLeft: propertyData.unitsLeft == '' ? true : false,
-      amenities: propertyData.amenities == '' ? true : false,
+      amenities: !selectedAmenities.length ? true : false,
       pictures: !propertyData.pictures.length ? true : false,
       description: propertyData.description == '' ? true : false,
     };
@@ -368,13 +418,13 @@ const EditPropertyForm = () => {
                   Amenities{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
-                <input
+                <Select
+                  options={amenitiesoptions}
+                  isMulti
                   className="addproperty-inputField"
-                  onChange={handleInputchange('amenities')}
-                  type="text"
-                  name="amenities"
                   id={error.amenities ? 'red-border' : ''}
-                  value={propertyData.amenities}
+                  onChange={(e) => handleInputAmenitieschange(e)}
+                  value={selectedAmenities}
                 />
               </div>
             </div>
