@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { addBlog } from '../../redux/api';
 import { storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 const AddBlogForm = () => {
   const isFirstRender = useRef(true);
   const [spinn, setspinn] = useState(false);
@@ -30,7 +32,9 @@ const AddBlogForm = () => {
     tags: false,
     content: false,
   });
-
+  const handleInputContentchange = (value) => {
+    setblogData({ ...blogData, content: value });
+  };
   const handleInputchange = (name) => (event) => {
     setblogData({ ...blogData, [name]: event.target.value });
   };
@@ -237,12 +241,13 @@ const AddBlogForm = () => {
                 Content{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
-              <textarea
+              <ReactQuill
                 className="addblog-textField"
-                onChange={handleInputchange('content')}
-                name="caption"
+                onChange={(e) => handleInputContentchange(e)}
+                placeholder="Add Blog Content here"
                 id={error.content ? 'red-border' : ''}
-              ></textarea>
+                theme="snow"
+              />
             </div>
           </div>
 

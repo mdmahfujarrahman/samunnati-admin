@@ -5,6 +5,9 @@ import { getBlogById, updateBlog } from '../../redux/api';
 import { storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import LoadingPage from '../../new-components/utils/LoadingPage';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const EditBlogForm = () => {
   const history = useHistory();
   const { id } = useParams();
@@ -35,14 +38,15 @@ const EditBlogForm = () => {
       });
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
   useEffect(() => {
     getBlogData(id);
   }, []);
-
+  const handleInputContentchange = (value) => {
+    setblogData({ ...blogData, content: value });
+  };
   const handleInputchange = (name) => (event) => {
     setblogData({ ...blogData, [name]: event.target.value });
   };
@@ -102,7 +106,6 @@ const EditBlogForm = () => {
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
-      console.log('first render');
       return;
     } else {
       if (
@@ -115,7 +118,6 @@ const EditBlogForm = () => {
         !error.tags &&
         !error.content
       ) {
-        console.log('not first render-valid form');
         setspinn(true);
         handlerValidatedFormSubmit();
       }
@@ -277,13 +279,14 @@ const EditBlogForm = () => {
                   Content{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
-                <textarea
+                <ReactQuill
                   className="addblog-textField"
-                  value={blogData.content}
-                  onChange={handleInputchange('content')}
-                  name="caption"
+                  onChange={(e) => handleInputContentchange(e)}
+                  placeholder="Add Blog Content here"
                   id={error.content ? 'red-border' : ''}
-                ></textarea>
+                  theme="snow"
+                  value={blogData.content}
+                />
               </div>
             </div>
 
