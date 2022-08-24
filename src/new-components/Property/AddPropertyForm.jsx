@@ -113,7 +113,6 @@ const AddPropertyForm = () => {
     }
     const data = await Promise.all(promises);
     setpropertyData({ ...propertyData, pictures: data });
-    setError({ ...error, pictures: false });
   };
 
   const handlerValidatedFormSubmit = async () => {
