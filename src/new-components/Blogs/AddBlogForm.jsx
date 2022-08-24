@@ -5,6 +5,7 @@ import { addBlog } from '../../redux/api';
 import { storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import ReactQuill from 'react-quill';
+import Form from 'react-bootstrap/Form';
 import 'react-quill/dist/quill.snow.css';
 const AddBlogForm = () => {
   const isFirstRender = useRef(true);
@@ -158,14 +159,18 @@ const AddBlogForm = () => {
                 Category{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
-              <input
-                type="text"
-                name="title"
+              <Form.Select
+                aria-label="Select Category"
                 id={error.category ? 'red-border' : ''}
                 placeholder="Title Tagling"
                 className="addblog-inputField"
                 onChange={handleInputchange('category')}
-              />
+              >
+                <option>Select Category</option>
+                <option value="Knowledge Seriess">Knowledge Series</option>
+                <option value="News & Updates">News & Updates</option>
+                <option value="Locality Bytes">Locality Bytes</option>
+              </Form.Select>
             </div>
             {/* TimetoRead */}
             <div className="addblog-inputFieldDiv">

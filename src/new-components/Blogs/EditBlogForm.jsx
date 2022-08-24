@@ -7,6 +7,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import LoadingPage from '../../new-components/utils/LoadingPage';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import Form from 'react-bootstrap/Form';
 
 const EditBlogForm = () => {
   const history = useHistory();
@@ -175,15 +176,18 @@ const EditBlogForm = () => {
                   Category{' '}
                   <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
                 </label>
-                <input
-                  type="text"
-                  value={blogData.category}
-                  name="title"
+                <Form.Select
+                  aria-label="Select Category"
                   id={error.category ? 'red-border' : ''}
                   placeholder="Title Tagling"
                   className="addblog-inputField"
                   onChange={handleInputchange('category')}
-                />
+                >
+                  <option>Select Category</option>
+                  <option value="Knowledge Seriess">Knowledge Series</option>
+                  <option value="News & Updates">News & Updates</option>
+                  <option value="Locality Bytes">Locality Bytes</option>
+                </Form.Select>
               </div>
               {/* TimetoRead */}
               <div className="addblog-inputFieldDiv">
