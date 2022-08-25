@@ -3,6 +3,8 @@ import '../../styles/newstyles/addCareerForm.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { getCareerById, updateCareer } from '../../redux/api';
 import LoadingPage from '../utils/LoadingPage';
+import { storage } from '../../firebase';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 const EditCareerForm = () => {
   const history = useHistory();
   const { id } = useParams();
@@ -18,6 +20,7 @@ const EditCareerForm = () => {
     name: false,
     experience: false,
     salary: false,
+    bannerUrl: false,
   });
   const getCareerData = async () => {
     setLoading(true);
@@ -41,7 +44,26 @@ const EditCareerForm = () => {
   const handleInputchange = (name) => (event) => {
     setCareerData({ ...careerData, [name]: event.target.value });
   };
-
+  const handleFileInputchange = (name) => async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) return;
+    const storageRef = ref(storage, `${name}/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {},
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          setCareerData({ ...careerData, bannerUrl: url });
+        });
+      }
+    );
+  };
   const handlerValidatedFormSubmit = async () => {
     try {
       await updateCareer({
@@ -66,6 +88,7 @@ const EditCareerForm = () => {
       name: careerData.name === '' ? true : false,
       experience: careerData.experience === '' ? true : false,
       salary: careerData.salary === '' ? true : false,
+      bannerUrl: careerData.bannerUrl === '' ? true : false,
     };
     setError(updatedError);
   };
@@ -81,7 +104,8 @@ const EditCareerForm = () => {
         !error.department &&
         !error.name &&
         !error.experience &&
-        !error.salary
+        !error.salary &&
+        !error.bannerUrl
       ) {
         setspinn(true);
         handlerValidatedFormSubmit();
@@ -196,6 +220,33 @@ const EditCareerForm = () => {
                       className="addcareer-inputField"
                       value={careerData.experience}
                       onChange={handleInputchange('experience')}
+                    />
+                  </div>
+                  <div className="addcareer-inputFieldDiv form-group">
+                    <label className="addcareer-inputLabel">
+                      Banner Image
+                      <span style={{ color: 'red', fontSize: '1.2rem' }}>
+                        *
+                      </span>{' '}
+                    </label>
+                    <input
+                      type="file"
+                      name="Banner Image"
+                      placeholder="Banner Image"
+                      className="addcareer-inputField"
+                      onChange={handleFileInputchange('CareerBanner')}
+                      id={error.bannerUrl ? 'red-border' : ''}
+                    />
+                  </div>
+                </div>
+                {/* Banner Image Preview */}
+                <div className="addcareer-alignRow">
+                  <div className="addcareer-inputFieldDiv-image">
+                    <img
+                      src={careerData.bannerUrl}
+                      className="border border-dark p-2 rounded"
+                      height="200px"
+                      alt="product image"
                     />
                   </div>
                 </div>

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../../styles/newstyles/addCareerForm.css';
 import { useHistory } from 'react-router-dom';
 import { addCareer } from '../../redux/api';
+import { storage } from '../../firebase';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
 const AddCareerForm = () => {
   const isFirstRender = useRef(true);
@@ -15,6 +17,7 @@ const AddCareerForm = () => {
     name: '',
     experience: '',
     salary: '',
+    bannerUrl: '',
   });
 
   const [error, setError] = useState({
@@ -24,6 +27,7 @@ const AddCareerForm = () => {
     name: false,
     experience: false,
     salary: false,
+    bannerUrl: false,
   });
 
   const handleInputchange = (name) => (event) => {
@@ -32,7 +36,26 @@ const AddCareerForm = () => {
   const handleSalaryInputChange = (event) => {
     setCareerData({ ...careerData, salary: event.target.value + 'L' });
   };
-
+  const handleFileInputchange = (name) => async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) return;
+    const storageRef = ref(storage, `${name}/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {},
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          setCareerData({ ...careerData, bannerUrl: url });
+        });
+      }
+    );
+  };
   const handlerValidatedFormSubmit = async () => {
     try {
       await addCareer(careerData);
@@ -53,6 +76,7 @@ const AddCareerForm = () => {
       name: careerData.name === '' ? true : false,
       experience: careerData.experience === '' ? true : false,
       salary: careerData.salary === '' ? true : false,
+      bannerUrl: careerData.bannerUrl === '' ? true : false,
     };
     setError(updatedError);
   };
@@ -67,7 +91,8 @@ const AddCareerForm = () => {
         !error.department &&
         !error.name &&
         !error.experience &&
-        !error.salary
+        !error.salary &&
+        !error.bannerUrl
       ) {
         setspinn(true);
         handlerValidatedFormSubmit();
@@ -149,7 +174,7 @@ const AddCareerForm = () => {
           {/* 3rd row */}
 
           <div className="addcareer-alignRow">
-            {/* Author PIctue */}
+            {/* Experience*/}
             <div className="addcareer-inputFieldDiv form-group">
               <label className="addcareer-inputLabel">
                 Experience{' '}
@@ -162,6 +187,21 @@ const AddCareerForm = () => {
                 placeholder="Experience"
                 className="addcareer-inputField"
                 onChange={handleInputchange('experience')}
+              />
+            </div>
+            {/* banner Image */}
+            <div className="addcareer-inputFieldDiv form-group">
+              <label className="addcareer-inputLabel">
+                Banner Image
+                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+              </label>
+              <input
+                type="file"
+                name="Banner Image"
+                placeholder="Banner Image"
+                className="addcareer-inputField"
+                onChange={handleFileInputchange('CareerBanner')}
+                id={error.bannerUrl ? 'red-border' : ''}
               />
             </div>
           </div>
