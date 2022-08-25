@@ -4,13 +4,27 @@
 
 .loginPage-formDiv {
   background-color: #1c1b4d;
-  width: 30%;
+  width: 80%;
   margin: auto;
   margin-top: 8%;
   border: 1px solid #cdcdcd;
   border-radius: 8px;
 }
-
+@media only screen and (min-width: 600px) {
+  .loginPage-formDiv {
+    width: 60%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .loginPage-formDiv {
+    width: 45%;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .loginPage-formDiv {
+    width: 30%;
+  }
+}
 .loginPage-formHeaderDiv {
   text-align: center;
   margin: 2rem auto;
@@ -23,8 +37,7 @@
   align-items: center;
 }
 .logoImage {
-  height: 48px;
-  width: 70px;
+  height: 100px;
   object-fit: cover;
   margin-bottom: 10px;
 }

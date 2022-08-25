@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import demoLogo from '../images/logo.svg';
 import LoadingPage from '../new-components/utils/LoadingPage';
-import { login } from '../redux/api';
-import Cookies from 'js-cookie';
 import axios from 'axios';
-
+import logo from '../images/logo.png';
 import '../styles/LoginPage.css';
 
 const initialData = {
@@ -51,8 +48,7 @@ const LoginPage = () => {
         <div className="loginPage-formDiv">
           <div className="loginPage-formHeaderDiv">
             <div className="logoContainer">
-              {/* <img src={demoLogo} alt='logo' className='logoImage' /> */}
-              <span className="brandName">Aspire </span>
+              <img src={logo} alt="logo" className="logoImage" />
             </div>
             <div className="loginPage-headerContent">
               <h3 className="loginPage-headerTitle">Log In to Dashboard </h3>

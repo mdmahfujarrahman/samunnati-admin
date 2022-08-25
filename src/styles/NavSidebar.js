@@ -11,6 +11,8 @@ export default makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    marginLeft: '2rem',
+    padding: '1.5rem 1.5rem 1rem 1.5rem',
   },
   iconColor: {
     // color: '#C4C4C4',

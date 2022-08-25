@@ -28,6 +28,8 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import Accordion from 'react-bootstrap/Accordion';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import './NavSidebar.css';
+import logo from '../images/logo.png';
+
 const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -158,7 +160,7 @@ const NavSidebar = (props) => {
             }}
           >
             <div className={classes.navHeader}>
-              <h3>Aspire</h3>
+              <img src={logo}></img>
             </div>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon className={classes.closeDrawer} />
