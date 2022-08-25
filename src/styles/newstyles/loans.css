@@ -18,7 +18,7 @@
 .loan-searchDiv {
   width: 50%;
   padding: 8px 15px;
-  border: 2px solid #1c7ebf;
+  border: 2px solid #1c1b4d;
   border-radius: 31px;
   display: flex;
   flex-direction: row;
@@ -42,7 +42,7 @@
   font-family: Montserrat;
   font-weight: 500;
   font-size: 16px;
-  color: #1c7ebf;
+  color: #1c1b4d;
 }
 
 #searchInput:before {
@@ -51,7 +51,7 @@
 }
 
 .loan-searchInput::placeholder {
-  color: #1c7ebf;
+  color: #1c1b4d;
   font-family: Montserrat;
   font-weight: 500;
   font-size: 16px;
@@ -70,7 +70,7 @@
   justify-content: center;
   align-items: center;
   outline: none;
-  background: #1c7ebf;
+  background: #1c1b4d;
   border: none;
   border-radius: 31px;
   padding: 8px 10px;

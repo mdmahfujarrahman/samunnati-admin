@@ -48,7 +48,7 @@
 
 /* Input field Input*/
 .addcareer-inputField {
-  border: 0.5px solid #155b89;
+  border: 0.5px solid #1c1b4d;
   box-sizing: border-box;
   width: 100%;
   border-radius: 5px;
@@ -77,7 +77,7 @@
 
 /* Text Area Input Filed*/
 .addcareer-textField {
-  border: 0.5px solid #155b89;
+  border: 0.5px solid #1c1b4d;
   box-sizing: border-box;
   width: 100%;
   min-height: 200px;
@@ -103,7 +103,7 @@
   width: 100%;
   border: none;
   outline: none;
-  background: #155b89;
+  background: #1c1b4d;
   padding: 15px;
   box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
   border-radius: 8px;
