@@ -38,7 +38,7 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   backgroundColor: '#fff',
-  color: '#1C7EBF',
+  color: '#f47e20',
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -66,7 +66,7 @@ const Drawer = styled(MuiDrawer, {
     }),
     boxSizing: 'border-box',
     fontFamily: 'Montserrat',
-    backgroundColor: '#155B89',
+    backgroundColor: '#1c1b4d',
     color: '#C4C4C4',
     ...(!open && {
       overflowX: 'hidden',
@@ -270,13 +270,10 @@ const NavSidebar = (props) => {
               <ListItemText primary="Trending Loans" />
             </ListItem>
 
-            <Accordion
-              defaultActiveKey="1"
-              style={{ backgroundColor: '#155B8' }}
-            >
+            <Accordion defaultActiveKey="1">
               <Accordion.Item
                 eventKey="0"
-                style={{ backgroundColor: '#155B89' }}
+                style={{ backgroundColor: '#1c1b4d' }}
               >
                 <Accordion.Header>
                   <ListItemIcon>

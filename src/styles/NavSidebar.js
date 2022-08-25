@@ -35,7 +35,7 @@ export default makeStyles((theme) => ({
     margin: 'auto !important',
     padding: '5px 14px !important',
     borderRadius: '8px !important',
-    backgroundColor: '#1C7EBF !important',
+    backgroundColor: '#f47e20 !important',
     color: '#fff !important',
   },
   profileImgDiv: {
@@ -54,10 +54,10 @@ export default makeStyles((theme) => ({
   logoutBtn: {
     padding: '8px 15px',
     outline: 'none',
-    border: '1px solid #155B89',
+    border: '1px solid #1c1b4d',
     backgroundColor: '#fff',
     borderRadius: '8px',
-    color: '#155B89',
+    color: '#1c1b4d',
     fontFamily: 'Montserrat',
     fontWeight: '500',
     fontSize: '15px',

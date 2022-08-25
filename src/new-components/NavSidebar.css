@@ -8,10 +8,15 @@
   box-shadow: none !important;
 }
 .accordion-button:focus {
-  border-color: inherit !important;
+  border-color: #1c1b4d !important;
   border: none !important;
+  box-shadow: none !important;
 }
+
 .accordion-item {
   background-color: '#155B8' !important;
   border: none !important;
+}
+.accordion-body ul {
+  margin-top: 0px !important;
 }
