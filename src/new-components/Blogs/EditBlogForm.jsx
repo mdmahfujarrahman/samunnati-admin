@@ -51,7 +51,41 @@ const EditBlogForm = () => {
   const handleInputchange = (name) => (event) => {
     setblogData({ ...blogData, [name]: event.target.value });
   };
-
+  EditBlogForm.formats = [
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+    'video',
+  ];
+  EditBlogForm.modules = {
+    toolbar: [
+      [{ header: '1' }, { header: '2' }, { font: [] }],
+      [{ size: [] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
+      ],
+      ['link', 'image', 'video'],
+      ['clean'],
+    ],
+    clipboard: {
+      // toggle to add extra line breaks when pasting HTML:
+      matchVisual: false,
+    },
+  };
   const handleFileInputchange = (name) => async (e) => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -286,10 +320,14 @@ const EditBlogForm = () => {
                 </label>
                 <ReactQuill
                   className="addblog-textField"
-                  onChange={(e) => handleInputContentchange(e)}
                   placeholder="Add Blog Content here"
                   id={error.content ? 'red-border' : ''}
+                  modules={EditBlogForm.modules}
+                  formats={EditBlogForm.formats}
                   theme="snow"
+                  onChange={(content, delta, source, editor) => {
+                    setblogData({ ...blogData, content: editor.getHTML() });
+                  }}
                   value={blogData.content}
                 />
               </div>
