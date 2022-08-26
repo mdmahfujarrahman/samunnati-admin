@@ -170,6 +170,7 @@ const AddBlogForm = () => {
                 <option value="Knowledge Seriess">Knowledge Series</option>
                 <option value="News & Updates">News & Updates</option>
                 <option value="Locality Bytes">Locality Bytes</option>
+                <option value="Others">Others</option>
               </Form.Select>
             </div>
             {/* TimetoRead */}
