@@ -48,7 +48,7 @@ const LoginPage = () => {
         <div className="loginPage-formDiv">
           <div className="loginPage-formHeaderDiv">
             <div className="logoContainer">
-              <img src={logo} alt="logo" className="logoImage" />
+              {/* <img src={logo} alt="logo" className="logoImage" /> */}
             </div>
             <div className="loginPage-headerContent">
               <h3 className="loginPage-headerTitle">Log In to Dashboard </h3>

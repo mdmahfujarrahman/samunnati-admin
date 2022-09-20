@@ -65,10 +65,10 @@ const Property = () => {
             <div className="property-addpropertyDiv">
               <button
                 className="property-addBtn"
-                onClick={() => history.push('/property/add')}
+                onClick={() => history.push('/all/add')}
               >
                 <img src={addIcon} alt="add" className="property-addIcon" />
-                <span>Add Property</span>
+                <span>Add Video</span>
               </button>
             </div>
           </div>

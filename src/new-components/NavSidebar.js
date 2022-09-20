@@ -28,8 +28,12 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import Accordion from 'react-bootstrap/Accordion';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import './NavSidebar.css';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import logo from '../images/logo.png';
-
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+import CategoryIcon from '@mui/icons-material/Category';
+import PersonIcon from '@mui/icons-material/Person';
 const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -159,7 +163,7 @@ const NavSidebar = (props) => {
               px: [1],
             }}
           >
-            <div className={classes.navHeader}>
+            <div >
               <img src={logo}></img>
             </div>
             <IconButton onClick={toggleDrawer}>
@@ -171,24 +175,61 @@ const NavSidebar = (props) => {
             <ListItem
               button
               className={
-                props.location.pathname.includes('/property')
+                props.location.pathname.includes('/all')
                   ? classes.selectedList
                   : ''
               }
-              onClick={() => handleListClick('/property')}
+              onClick={() => handleListClick('/all')}
             >
               <ListItemIcon>
-                {props.location.pathname.includes('/property') ? (
-                  <LocationCityIcon
+                {props.location.pathname.includes('/all') ? (
+                  <OndemandVideoIcon
                     style={{ color: 'white', fontSize: '1.8rem' }}
                   />
                 ) : (
-                  <LocationCityIcon
+                  <OndemandVideoIcon
                     style={{ color: 'white', fontSize: '1.8rem' }}
                   />
                 )}
               </ListItemIcon>
-              <ListItemText primary="Property" />
+              <ListItemText primary="All Videos" />
+            </ListItem>
+
+            <ListItem
+              button
+              className={
+                props.location.pathname.includes('/playlist')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/playlist')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/playlist') ? (
+                  <SubscriptionsIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                ) : (
+                  <SubscriptionsIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Playlists" />
+            </ListItem>
+            <ListItem
+              button
+              className={
+                props.location.pathname.includes('/category')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/category')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/category') ? (
+                  <CategoryIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                ) : (
+                  <CategoryIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Category" />
             </ListItem>
 
             <ListItem
@@ -202,161 +243,65 @@ const NavSidebar = (props) => {
             >
               <ListItemIcon>
                 {props.location.pathname.includes('/blogs') ? (
-                  <ArticleIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                  <ArticleIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
                 ) : (
-                  <ArticleIcon style={{ color: 'white', fontSize: '1.8rem' }} />
+                  <ArticleIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
                 )}
               </ListItemIcon>
               <ListItemText primary="Blogs" />
             </ListItem>
+
             <ListItem
               button
               className={
-                props.location.pathname.includes('/career')
+                props.location.pathname.includes('/query')
                   ? classes.selectedList
                   : ''
               }
-              onClick={() => handleListClick('/career')}
+              onClick={() => handleListClick('/query')}
             >
               <ListItemIcon>
-                {props.location.pathname.includes('/career') ? (
-                  <WorkIcon style={{ color: 'white', fontSize: '1.8rem' }} />
-                ) : (
-                  <WorkIcon style={{ color: 'white', fontSize: '1.8rem' }} />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Career" />
-            </ListItem>
-            <ListItem
-              button
-              className={
-                props.location.pathname.includes('/featuredprojects')
-                  ? classes.selectedList
-                  : ''
-              }
-              onClick={() => handleListClick('/featuredprojects')}
-            >
-              <ListItemIcon>
-                {props.location.pathname.includes('/featuredprojects') ? (
-                  <MapsHomeWorkOutlinedIcon
+                {props.location.pathname.includes('/query') ? (
+                  <ContactSupportIcon
                     style={{ color: 'white', fontSize: '1.8rem' }}
                   />
                 ) : (
-                  <MapsHomeWorkOutlinedIcon
+                  <ContactSupportIcon
                     style={{ color: 'white', fontSize: '1.8rem' }}
                   />
                 )}
               </ListItemIcon>
-              <ListItemText primary="Featured Projects" />
-            </ListItem>
-            <ListItem
-              button
-              className={
-                props.location.pathname.includes('/trendingloans')
-                  ? classes.selectedList
-                  : ''
-              }
-              onClick={() => handleListClick('/trendingloans')}
-            >
-              <ListItemIcon>
-                {props.location.pathname.includes('/trendingloans') ? (
-                  <AccountBalanceOutlinedIcon
-                    style={{ color: 'white', fontSize: '1.8rem' }}
-                  />
-                ) : (
-                  <AccountBalanceOutlinedIcon
-                    style={{ color: 'white', fontSize: '1.8rem' }}
-                  />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Trending Loans" />
+              <ListItemText primary="Query Form" />
             </ListItem>
 
-            <Accordion defaultActiveKey="1">
-              <Accordion.Item
-                eventKey="0"
-                style={{ backgroundColor: '#1c1b4d' }}
-              >
-                <Accordion.Header>
-                  <ListItemIcon>
-                    <ContactPageIcon
-                      style={{ color: 'white', fontSize: '1.8rem' }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary="Contact Forms" />
-                </Accordion.Header>
-                <Accordion.Body className="p-0 ">
-                  <List className={classes.listDiv} class="mt-0">
-                    <ListItem
-                      button
-                      className={
-                        props.location.pathname.includes('/prop/req')
-                          ? classes.selectedList
-                          : ''
-                      }
-                      onClick={() => handleListClick('/prop/req')}
-                    >
-                      <ListItemIcon>
-                        {props.location.pathname.includes('/prop/req') ? (
-                          <ListAltIcon
-                            style={{ color: 'white', fontSize: '1.8rem' }}
-                          />
-                        ) : (
-                          <ListAltIcon
-                            style={{ color: 'white', fontSize: '1.8rem' }}
-                          />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary="Requirement" />
-                    </ListItem>
-                    <ListItem
-                      button
-                      className={
-                        props.location.pathname.includes('/contacts')
-                          ? classes.selectedList
-                          : ''
-                      }
-                      onClick={() => handleListClick('/contacts')}
-                    >
-                      <ListItemIcon>
-                        {props.location.pathname.includes('/contacts') ? (
-                          <PeopleOutlineIcon
-                            style={{ color: 'white', fontSize: '1.8rem' }}
-                          />
-                        ) : (
-                          <PeopleOutlineIcon
-                            style={{ color: 'white', fontSize: '1.8rem' }}
-                          />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary="Contact" />
-                    </ListItem>
-                    <ListItem
-                      button
-                      className={
-                        props.location.pathname.includes('/experts')
-                          ? classes.selectedList
-                          : ''
-                      }
-                      onClick={() => handleListClick('/experts')}
-                    >
-                      <ListItemIcon>
-                        {props.location.pathname.includes('/experts') ? (
-                          <PeopleAltIcon
-                            style={{ color: 'white', fontSize: '1.8rem' }}
-                          />
-                        ) : (
-                          <PeopleAltIcon
-                            style={{ color: 'white', fontSize: '1.8rem' }}
-                          />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary="Experts" />
-                    </ListItem>
-                  </List>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+            <ListItem
+              button
+              className={
+                props.location.pathname.includes('/users')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/users')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/users') ? (
+                  <PersonIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                ) : (
+                  <PersonIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItem>
+
+
           </List>
         </Drawer>
         <Box

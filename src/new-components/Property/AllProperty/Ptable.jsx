@@ -14,30 +14,28 @@ const Btable = ({ propertyData }) => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Area</th>
-            <th>Ready To Move</th>
-            <th>Units Left</th>
-            <th>Price Range</th>
-            <th style={{ textAlign: 'center' }}>Unit Details</th>
-            <th style={{ textAlign: 'center' }}>Developer</th>
+            <th>Title</th>
+            <th>Likes</th>
+            <th>Dislikes</th>
+            <th>Category</th>
+            <th>Playlist</th>
+            <th>Uploaded by</th>
             <th style={{ textAlign: 'center' }}>Action</th>
           </tr>
         </thead>
         <tbody>
-          {propertyData &&
+          {/* {propertyData &&
             allproperty.map((property, index) => {
-              return (
+              return ( */}
                 <PtableRow
-                  key={index}
-                  index={index}
-                  property={property}
-                  allproperty={allproperty}
-                  setallproperty={setallproperty}
+                  // key={index}
+                  // index={index}
+                  // property={property}
+                  // allproperty={allproperty}
+                  // setallproperty={setallproperty}
                 />
-              );
-            })}
+              {/* );
+            })} */}
         </tbody>
       </table>
     </div>

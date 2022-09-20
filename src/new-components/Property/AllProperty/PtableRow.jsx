@@ -4,52 +4,49 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteProperty } from '../../../redux/api';
 import DeleteModal from '../../utils/DeleteModal';
-const PtableRow = ({ index, property, allproperty, setallproperty }) => {
-  const [deleteModalOpen, setdeleteModalOpen] = useState(false);
-  const [ConfirmDelete, setConfirmDelete] = useState(false);
-  const handleDeleteConfirm = () => {
-    setdeleteModalOpen(false);
-    setConfirmDelete(true);
-  };
-  const handleDeleteCancel = () => {
-    setdeleteModalOpen(false);
-  };
-  const handleDeleteProperty = (e) => {
-    e.preventDefault();
-    setdeleteModalOpen(true);
-  };
-  const handleConfirmDeleteProperty = async (id) => {
-    try {
-      const updatedproperty = allproperty.filter((b) => b._id !== id);
-      setallproperty(updatedproperty);
-      await deleteProperty(id);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    if (ConfirmDelete) {
-      handleConfirmDeleteProperty(property._id);
-    }
-  }, [ConfirmDelete]);
+const PtableRow = () => {
+  // const [deleteModalOpen, setdeleteModalOpen] = useState(false);
+  // const [ConfirmDelete, setConfirmDelete] = useState(false);
+  // const handleDeleteConfirm = () => {
+  //   setdeleteModalOpen(false);
+  //   setConfirmDelete(true);
+  // };
+  // const handleDeleteCancel = () => {
+  //   setdeleteModalOpen(false);
+  // };
+  // const handleDeleteProperty = (e) => {
+  //   e.preventDefault();
+  //   setdeleteModalOpen(true);
+  // };
+  // const handleConfirmDeleteProperty = async (id) => {
+  //   try {
+  //     const updatedproperty = allproperty.filter((b) => b._id !== id);
+  //     setallproperty(updatedproperty);
+  //     await deleteProperty(id);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (ConfirmDelete) {
+  //     handleConfirmDeleteProperty(property._id);
+  //   }
+  // }, [ConfirmDelete]);
 
   return (
     <>
       <tr>
-        <td>{index + 1}</td>
-        <td>{property.name}</td>
-        <td>{property.location}</td>
-        <td>{property.area}</td>
-        <td>{property.ready ? 'Yes' : 'No'}</td>
-        <td>{property.unitsLeft}</td>
-        <td>{property.price}</td>
-        <td style={{ textAlign: 'center' }}>
+        <td>1</td>
+        <td>New</td>
+        <td>ok</td>
+        <td>Ghazibad</td>
+        {/* <td style={{ textAlign: 'center' }}>
           {property.unitDetails.length ? (
-            <Link to={`/property/unitdetail/${property._id}`}>
+            <Link to={`#`}>
               <button className="btn btn-outline-secondary btn-sm">View</button>
             </Link>
           ) : (
-            <Link to={`/property/unitdetail/add/${property._id}`}>
+            <Link to={`#`}>
               <button type="button" class="btn btn-outline-success btn-sm">
                 Add
               </button>
@@ -58,11 +55,11 @@ const PtableRow = ({ index, property, allproperty, setallproperty }) => {
         </td>
         <td style={{ textAlign: 'center' }}>
           {property.developer ? (
-            <Link to={`/property/editdev/${property._id}`}>
+            <Link to={`#`}>
               <button className="btn btn-outline-secondary btn-sm">Edit</button>
             </Link>
           ) : (
-            <Link to={`/property/adddev/${property._id}`}>
+            <Link to={`#`}>
               <button type="button" class="btn btn-outline-success btn-sm">
                 Add
               </button>
@@ -74,28 +71,28 @@ const PtableRow = ({ index, property, allproperty, setallproperty }) => {
             className="actions"
             style={{ display: 'flex', justifyContent: 'space-evenly' }}
           >
-            <Link to={`/property/edit/${property._id}`}>
+            <Link to={'#'}>
               {' '}
               <button className="edit-btn">
                 <ModeEditIcon />{' '}
               </button>
             </Link>
-            <Link onClick={(e) => handleDeleteProperty(e)} to={'#'}>
+            <Link  to={'#'}>
               <button className="delete-btn">
                 <DeleteIcon />{' '}
               </button>
             </Link>
           </div>
-        </td>
+        </td> */}
       </tr>
-      {deleteModalOpen && (
+      {/* {deleteModalOpen && (
         <DeleteModal
           show={deleteModalOpen}
           handleConfirm={handleDeleteConfirm}
           handleCancel={handleDeleteCancel}
           categorytag="Property"
         />
-      )}
+      )} */}
     </>
   );
 };

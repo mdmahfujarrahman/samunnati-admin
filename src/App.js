@@ -33,8 +33,8 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={LoginPage} />
         <NavSidebar>
-          <Route path="/property" exact component={Property} />
-          <Route path="/property/add" exact component={AddPropertyForm} />
+          <Route path="/all" exact component={Property} />
+          <Route path="/all/add" exact component={AddPropertyForm} />
           <Route path="/property/edit/:id/" component={EditPropertyForm} />
           <Route
             path="/property/unitdetail/:id"

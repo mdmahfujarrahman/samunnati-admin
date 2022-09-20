@@ -187,13 +187,13 @@ const AddPropertyForm = () => {
             {/* Property Name */}
             <div className="addproperty-inputFieldDiv form-group">
               <label className="addproperty-inputLabel ">
-                Property Name{' '}
+                Video Title{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="text"
-                name="Property Name"
-                placeholder="Property Name"
+                name="title"
+                placeholder="Video Title"
                 className="addproperty-inputField"
                 id={error.name ? 'red-border' : ''}
                 onChange={handleInputchange('name')}
@@ -202,63 +202,30 @@ const AddPropertyForm = () => {
             {/* Location */}
             <div className="addproperty-inputFieldDiv form-group">
               <label className="addproperty-inputLabel">
-                Property Location{' '}
+                Uploaded By{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="text"
                 id={error.location ? 'red-border' : ''}
                 name="Property Location"
-                placeholder="Property Location"
+                placeholder="Uploaded By"
                 className="addproperty-inputField"
                 onChange={handleInputchange('location')}
               />
             </div>
           </div>
 
-          {/* 2nd row */}
-          <div className="addproperty-alignRow">
-            {/* Location Latitude */}
-            <div className="addproperty-inputFieldDiv form-group">
-              <label className="addproperty-inputLabel">
-                Location Latitude{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="text"
-                name="Location Latitude"
-                id={error.lat ? 'red-border' : ''}
-                placeholder="Location Latitude"
-                className="addproperty-inputField"
-                onChange={handleInputchange('lat')}
-              />
-            </div>
-            {/* Location Longitude */}
-            <div className="addproperty-inputFieldDiv">
-              <label className="addproperty-inputLabel">
-                Location Longitude{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                name="Location Longitude"
-                id={error.lng ? 'red-border' : ''}
-                onChange={handleInputchange('lng')}
-                placeholder="Location Longitude"
-                className="addproperty-inputField"
-                type="text"
-              />
-            </div>
-          </div>
           {/* 3rd row */}
 
           <div className="addproperty-alignRow">
             {/* City */}
             <div className="addproperty-inputFieldDiv">
               <label className="addproperty-inputLabel">
-                City <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                Date <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
-                type="text"
+                type="date"
                 name="City"
                 placeholder="City"
                 className="addproperty-inputField"
@@ -269,90 +236,46 @@ const AddPropertyForm = () => {
             {/* Area */}
             <div className="addproperty-inputFieldDiv">
               <label className="addproperty-inputLabel">
-                Area <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+                Length <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="text"
-                name="Area"
-                placeholder="Area"
+                name="City"
+                placeholder="Length"
                 className="addproperty-inputField"
-                onChange={handleInputchange('area')}
-                id={error.area ? 'red-border' : ''}
+                onChange={handleInputchange('city')}
+                id={error.city ? 'red-border' : ''}
               />
             </div>
+ 
           </div>
 
-          {/* 4th row */}
           <div className="addproperty-alignRow">
-            {/* Units Left */}
-            <div className="addproperty-inputFieldDiv">
-              <label className="addproperty-inputLabel">
-                Units Left{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="number"
-                name="Units Left"
-                placeholder="Units Left"
-                className="addproperty-inputField"
-                onChange={handleInputchange('unitsLeft')}
-                id={error.area ? 'red-border' : ''}
-              />
-            </div>
-            {/* Price */}
-            <div className="addproperty-inputFieldDiv">
-              <label className="addproperty-inputLabel">
-                Price{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="text"
-                name="Price"
-                placeholder="(xx L-yy L)"
-                className="addproperty-inputField"
-                onChange={handleInputchange('price')}
-                id={error.price ? 'red-border' : ''}
-              />
-            </div>
-          </div>
-          {/* 5th row */}
-          <div className="addproperty-alignRow">
-            {/* Property Ready To Move In*/}
-            <div className="addproperty-inputFieldDiv">
-              <label className="addproperty-inputLabel">
-                Ready To Move In{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <div onChange={handleInputchange('ready')}>
-                <input type="radio" value="YES" name="city" /> YES
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" value="NO" name="city" /> NO
-              </div>
-            </div>
-            {/* Property  Pictures */}
-            <div className="addproperty-inputFieldDiv">
-              <label className="addproperty-inputLabel">
-                Property Pictures{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
+            {/* Amenities */}
+            <div className="addproperty-textFieldDiv">
+            <label className="addproperty-inputLabel">
+                File <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <input
                 type="file"
-                name="thumbnail"
-                placeholder="Thumbnail"
+                name="City"
+                placeholder="Upload Video"
                 className="addproperty-inputField"
-                onChange={(e) => handleFileInputchange(e)}
-                id={error.pictures ? 'red-border' : ''}
-                multiple
+                onChange={handleInputchange('city')}
+                id={error.city ? 'red-border' : ''}
               />
             </div>
+ 
           </div>
+
+
 
           {/* 6th row */}
           <div className="addproperty-alignRow">
             {/* Amenities */}
             <div className="addproperty-textFieldDiv">
               <label className="addproperty-inputLabel">
-                Amenities{' '}
+                Categories{' '}
                 <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
               </label>
               <Select
@@ -377,7 +300,7 @@ const AddPropertyForm = () => {
                 className="addproperty-textField"
                 onChange={handleInputchange('description')}
                 name="Description"
-                placeholder="Property Description"
+                placeholder="Video Description"
                 id={error.description ? 'red-border' : ''}
               ></textarea>
             </div>
