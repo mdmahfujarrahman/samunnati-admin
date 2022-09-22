@@ -34,6 +34,8 @@ import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import CategoryIcon from '@mui/icons-material/Category';
 import PersonIcon from '@mui/icons-material/Person';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+
 const drawerWidth = 240;
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -44,7 +46,7 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   backgroundColor: '#fff',
-  color: '#f47e20',
+  color: 'white',
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -72,8 +74,8 @@ const Drawer = styled(MuiDrawer, {
     }),
     boxSizing: 'border-box',
     fontFamily: 'Montserrat',
-    backgroundColor: '#1c1b4d',
-    color: '#C4C4C4',
+    backgroundColor: 'rgb(129,192,96)',
+    color: 'white',
     ...(!open && {
       overflowX: 'hidden',
       transition: theme.transitions.create('width', {
@@ -172,6 +174,31 @@ const NavSidebar = (props) => {
           </Toolbar>
           <Divider />
           <List className={classes.listDiv}>
+          <ListItem
+              button
+              className={
+                props.location.pathname.includes('/dashboard')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/dashboard')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/dashboard') ? (
+                  <DashboardIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                ) : (
+                  <DashboardIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+
+
+
             <ListItem
               button
               className={

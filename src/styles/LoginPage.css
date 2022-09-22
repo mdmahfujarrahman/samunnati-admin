@@ -3,7 +3,7 @@
 }
 
 .loginPage-formDiv {
-  background-color: #1c1b4d;
+  background-color: rgb(129,192,96);
   width: 80%;
   margin: auto;
   margin-top: 5%;
@@ -57,7 +57,7 @@
   text-align: center;
   letter-spacing: 0.3px;
   margin-bottom: 10px;
-  color: #9fa2b4;
+  color: white;
 }
 .loginPage-headerSub {
   margin: 0;
@@ -65,7 +65,7 @@
   font-size: 14px;
   text-align: center;
   letter-spacing: 0.3px;
-  color: #9fa2b4;
+  color: white;
 }
 
 .loginPage-formContent {
@@ -89,7 +89,7 @@
   font-size: 12px;
   letter-spacing: 0.3px;
   text-transform: uppercase;
-  color: #9fa2b4;
+  color: white;
   margin: 0px 5px;
   margin-bottom: 3px;
 }

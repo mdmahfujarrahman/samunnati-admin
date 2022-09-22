@@ -26,6 +26,7 @@ import UnitDetails from './new-components/UnitDetails/UnitDetails';
 import AddUnitDetailsForm from './new-components/UnitDetails/AddUnitDetailsForm';
 import AddDeveloperForm from './new-components/Developer/AddDeveloperForm';
 import EditDeveloperForm from './new-components/Developer/EditDeveloperForm';
+import Dashboard from './new-components/Dashboard/Dashboard';
 export const history = createHistory();
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/" exact component={LoginPage} />
         <NavSidebar>
           <Route path="/all" exact component={Property} />
+          <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/all/add" exact component={AddPropertyForm} />
           <Route path="/property/edit/:id/" component={EditPropertyForm} />
           <Route
