@@ -21,12 +21,12 @@ import AddPropertyForm from './new-components/Property/AddPropertyForm';
 import EditPropertyForm from './new-components/Property/EditPropertyForm';
 import Requirements from './new-components/Requirements/Requirements';
 import ContactUs from './new-components/ContactUs/ContactUs';
-import Experts from './new-components/Experts/Experts';
 import UnitDetails from './new-components/UnitDetails/UnitDetails';
 import AddUnitDetailsForm from './new-components/UnitDetails/AddUnitDetailsForm';
 import AddDeveloperForm from './new-components/Developer/AddDeveloperForm';
 import EditDeveloperForm from './new-components/Developer/EditDeveloperForm';
 import Dashboard from './new-components/Dashboard/Dashboard';
+import User from './new-components/Experts/User';
 export const history = createHistory();
 const App = () => {
   return (
@@ -35,6 +35,7 @@ const App = () => {
         <Route path="/" exact component={LoginPage} />
         <NavSidebar>
           <Route path="/all" exact component={Property} />
+          <Route path="/users" exact component={User} />
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/all/add" exact component={AddPropertyForm} />
           <Route path="/property/edit/:id/" component={EditPropertyForm} />
@@ -86,7 +87,6 @@ const App = () => {
             component={EditTrendingLoansForm}
           />
           <Route path="/contacts" exact component={ContactUs} />
-          <Route path="/experts" exact component={Experts} />
         </NavSidebar>
       </Switch>
     </Router>

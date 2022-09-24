@@ -1,8 +1,8 @@
 import React from 'react';
-import EtableRow from './EtableRow';
+import UtableRow from './UtableRow';
 import '../../../styles/newstyles/table.css';
 
-const Etable = ({ expertData }) => {
+const Utable = ({ expertData }) => {
   return (
     <div className="table-wrapper" id="#scrollBar">
       <table className="fl-table">
@@ -17,7 +17,7 @@ const Etable = ({ expertData }) => {
         <tbody>
           {expertData &&
             expertData.map((expert, index) => {
-              return <EtableRow key={index} index={index} expert={expert} />;
+              return <UtableRow key={index} index={index} expert={expert} />;
             })}
         </tbody>
       </table>
@@ -25,4 +25,4 @@ const Etable = ({ expertData }) => {
   );
 };
 
-export default Etable;
+export default Utable;

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import LoadingPage from '../utils/LoadingPage';
 import searchIcon from '../../images/searchIcon.svg';
 import '../../styles/newstyles/expert.css';
-import Etable from './AllExperts/Etable';
-import { getAllExperts } from '../../redux/api';
+import Utable from './AllExperts/Utable';
+import { getAllExperts, GetUsers } from '../../redux/api';
 
-const Experts = () => {
+const User = () => {
   const [allexpertData, setallexpertData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchInput, setsearchInput] = useState('');
@@ -14,12 +14,11 @@ const Experts = () => {
   const fetchexpertList = async () => {
     setLoading(true);
     try {
-      const res = await getAllExperts();
+      const res = await GetUsers();
+      console.log(res)
       setallexpertData(res.data.data);
-      setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
   useEffect(() => {
@@ -62,9 +61,9 @@ const Experts = () => {
           </div>
           <div className="expert-tableSection">
             {searchInput.length ? (
-              <Etable expertData={filterData} />
+              <Utable expertData={filterData} />
             ) : (
-              <Etable expertData={allexpertData} />
+              <Utable expertData={allexpertData} />
             )}
           </div>
         </>
@@ -72,4 +71,4 @@ const Experts = () => {
     </div>
   );
 };
-export default Experts;
+export default User;

@@ -1,5 +1,5 @@
 import React from 'react';
-const EtableRow = ({ index, expert }) => {
+const UtableRow = ({ index, expert }) => {
   return (
     <>
       <tr>
@@ -12,4 +12,4 @@ const EtableRow = ({ index, expert }) => {
   );
 };
 
-export default EtableRow;
+export default UtableRow;

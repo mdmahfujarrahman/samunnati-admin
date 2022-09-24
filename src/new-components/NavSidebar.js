@@ -173,7 +173,34 @@ const NavSidebar = (props) => {
             </IconButton>
           </Toolbar>
           <Divider />
+       
+       
+       
           <List className={classes.listDiv}>
+       
+          <ListItem
+              button
+              className={
+                props.location.pathname.includes('/users')
+                  ? classes.selectedList
+                  : ''
+              }
+              onClick={() => handleListClick('/users')}
+            >
+              <ListItemIcon>
+                {props.location.pathname.includes('/users') ? (
+                  <PersonIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                ) : (
+                  <PersonIcon
+                    style={{ color: 'white', fontSize: '1.8rem' }}
+                  />
+                )}
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItem>
+       
           <ListItem
               button
               className={
@@ -305,28 +332,7 @@ const NavSidebar = (props) => {
               <ListItemText primary="Query Form" />
             </ListItem>
 
-            <ListItem
-              button
-              className={
-                props.location.pathname.includes('/users')
-                  ? classes.selectedList
-                  : ''
-              }
-              onClick={() => handleListClick('/users')}
-            >
-              <ListItemIcon>
-                {props.location.pathname.includes('/users') ? (
-                  <PersonIcon
-                    style={{ color: 'white', fontSize: '1.8rem' }}
-                  />
-                ) : (
-                  <PersonIcon
-                    style={{ color: 'white', fontSize: '1.8rem' }}
-                  />
-                )}
-              </ListItemIcon>
-              <ListItemText primary="Users" />
-            </ListItem>
+       
 
 
           </List>

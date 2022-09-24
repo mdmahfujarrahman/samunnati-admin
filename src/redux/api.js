@@ -6,6 +6,16 @@ const API = axios.create({
   baseURL: 'https://aspire0.herokuapp.com/',
 });
 
+const NewAPI = axios.create({
+  baseURL: 'https://samunnatibackend.herokuapp.com',
+});
+
+
+
+
+export const GetUsers = () => NewAPI.get('/api/admin/query');
+
+
 // Property
 
 export const getAllProperty = () => API.get('/prop/getAllProperty');
