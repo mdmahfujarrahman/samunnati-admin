@@ -12,9 +12,9 @@ const Qtable = ({ QueryData}) => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>BHK</th>
-                <th>Facing</th>
-                <th style={{ textAlign: 'center' }}>Action</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th >Query</th>
               </tr>
             </thead>
             <tbody>
