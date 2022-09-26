@@ -1,35 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import LoadingPage from '../utils/LoadingPage';
+import addIcon from '../../images/addIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
-import '../../styles/newstyles/contact.css';
-import Ctable from './AllContactUs/Ctable';
-import { getAllContacts } from '../../redux/api';
+import '../../styles/newstyles/unitdetails.css';
+import Qtable from './AllQuery/Qtable';
+import { GetQuery } from '../../redux/api';
 
-const ContactUs = () => {
-  const [allcontactData, setallcontactData] = useState([]);
+const Query = () => {
+  const history = useHistory();
+  const { id } = useParams();
+  const [QueryData, setQueryData] = useState([])
   const [loading, setLoading] = useState(false);
   const [searchInput, setsearchInput] = useState('');
   const [filterData, setfilterData] = useState([]);
 
-  const fetchcontactList = async () => {
-    setLoading(true);
+  useEffect(() => {
+    Query()
+  }, []);
+
+  // api call
+
+  const Query = async () => {
     try {
-      const res = await getAllContacts();
-      setallcontactData(res.data.data);
+      const data = await GetQuery()
+      setQueryData(data?.data?.data)
+      console.log(data)
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchcontactList();
-  }, []);
 
   const searchItems = (searchValue) => {
     setsearchInput(searchValue);
     if (searchValue !== '') {
-      let filteredData = allcontactData.filter((item) => {
+      let filteredData = QueryData.filter((item) => {
         return Object.values(item)
           .join('')
           .toLowerCase()
@@ -37,39 +43,40 @@ const ContactUs = () => {
       });
       setfilterData(filteredData);
     } else {
-      setfilterData(allcontactData);
+      setfilterData(QueryData);
     }
   };
 
   return (
-    <div className="contact-container">
+    <div className="unitdetails-container">
       {loading ? (
         <LoadingPage />
       ) : (
         <>
-          <div className="contact-firstSection">
-            <div className="contact-searchDiv">
+          <div className="unitdetails-firstSection">
+            <div className="unitdetails-searchDiv">
               <img src={searchIcon} alt="search" className="searchIcon" />
               <input
                 type="text"
-                placeholder="Enter a Title , Author or Category"
-                className="contact-searchInput"
+                placeholder="Enter a Name , Description or More"
+                className="unitdetails-searchInput"
                 id="searchInput"
                 value={searchInput}
                 onChange={(e) => searchItems(e.target.value)}
               />
             </div>
           </div>
-          <div className="contact-tableSection">
+          <div className="unitdetails-tableSection">
             {searchInput.length ? (
-              <Ctable contactData={filterData} />
+              <Qtable QueryData={filterData} />
             ) : (
-              <Ctable contactData={allcontactData} />
-            )}
+              <Qtable QueryData={QueryData} />
+            )
+            }
           </div>
         </>
       )}
     </div>
   );
 };
-export default ContactUs;
+export default Query;

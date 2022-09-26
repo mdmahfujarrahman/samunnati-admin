@@ -13,7 +13,7 @@ const NewAPI = axios.create({
 
 
 
-export const GetUsers = () => NewAPI.get('/api/admin/query');
+export const GetQuery = () => NewAPI.get('/api/admin/query');
 
 
 // Property

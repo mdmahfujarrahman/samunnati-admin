@@ -20,13 +20,12 @@ import EditTrendingLoansForm from './new-components/TrendingLoans/EditTrendingLo
 import AddPropertyForm from './new-components/Property/AddPropertyForm';
 import EditPropertyForm from './new-components/Property/EditPropertyForm';
 import Requirements from './new-components/Requirements/Requirements';
-import ContactUs from './new-components/ContactUs/ContactUs';
-import UnitDetails from './new-components/UnitDetails/UnitDetails';
-import AddUnitDetailsForm from './new-components/UnitDetails/AddUnitDetailsForm';
+import UnitDetails from './new-components/Query/Query';
 import AddDeveloperForm from './new-components/Developer/AddDeveloperForm';
 import EditDeveloperForm from './new-components/Developer/EditDeveloperForm';
 import Dashboard from './new-components/Dashboard/Dashboard';
-import User from './new-components/Experts/User';
+import User from './new-components/User/User';
+import Query from './new-components/Query/Query';
 export const history = createHistory();
 const App = () => {
   return (
@@ -36,6 +35,7 @@ const App = () => {
         <NavSidebar>
           <Route path="/all" exact component={Property} />
           <Route path="/users" exact component={User} />
+          <Route path="/Query" exact component={Query} />
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/all/add" exact component={AddPropertyForm} />
           <Route path="/property/edit/:id/" component={EditPropertyForm} />
@@ -44,11 +44,11 @@ const App = () => {
             exact
             component={UnitDetails}
           />
-          <Route
+          {/* <Route
             path="/property/unitdetail/add/:id"
             exact
             component={AddUnitDetailsForm}
-          />
+          /> */}
           <Route
             path="/property/adddev/:id"
             exact
@@ -59,13 +59,13 @@ const App = () => {
             exact
             component={EditDeveloperForm}
           />
-          <Route path="/prop/req" exact component={Requirements} />
+          {/* <Route path="/prop/req" exact component={Requirements} />
           <Route path="/career" exact component={Career} />
           <Route path="/career/add" exact component={AddCareerForm} />
-          <Route path="/career/edit/:id" exact component={EditCareerForm} />
+          <Route path="/career/edit/:id" exact component={EditCareerForm} /> */}
           <Route path="/blogs" exact component={Blogs} />
           <Route path="/blog/add" exact component={AddBlogForm} />
-          <Route path="/blog/edit/:id/" component={EditBlogForm} />
+          {/* <Route path="/blog/edit/:id/" component={EditBlogForm} />
           <Route path="/featuredprojects" exact component={FeaturedProject} />
           <Route
             path="/featuredprojects/add"
@@ -86,7 +86,7 @@ const App = () => {
             path="/trendingloans/edit/:id"
             component={EditTrendingLoansForm}
           />
-          <Route path="/contacts" exact component={ContactUs} />
+          <Route path="/contacts" exact component={ContactUs} /> */}
         </NavSidebar>
       </Switch>
     </Router>
