@@ -4,10 +4,10 @@ import LoadingPage from '../utils/LoadingPage';
 import addIcon from '../../images/addIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import '../../styles/newstyles/property.css';
-import Ptable from './AllProperty/Ptable';
+import Ptable from './AllVideos/AVtable';
 import { getAllProperty } from '../../redux/api';
 
-const Property = () => {
+const Allvideos = () => {
   const history = useHistory();
   const [allpropertyData, setallpropertyData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -65,7 +65,7 @@ const Property = () => {
             <div className="property-addpropertyDiv">
               <button
                 className="property-addBtn"
-                onClick={() => history.push('/all/add')}
+                onClick={() => history.push('/allvideos/add')}
               >
                 <img src={addIcon} alt="add" className="property-addIcon" />
                 <span>Add Video</span>
@@ -84,4 +84,4 @@ const Property = () => {
     </div>
   );
 };
-export default Property;
+export default Allvideos;

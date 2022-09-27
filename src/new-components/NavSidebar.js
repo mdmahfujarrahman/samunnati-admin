@@ -229,14 +229,14 @@ const NavSidebar = (props) => {
             <ListItem
               button
               className={
-                props.location.pathname.includes('/all')
+                props.location.pathname.includes('/allvideos')
                   ? classes.selectedList
                   : ''
               }
-              onClick={() => handleListClick('/all')}
+              onClick={() => handleListClick('/allvideos')}
             >
               <ListItemIcon>
-                {props.location.pathname.includes('/all') ? (
+                {props.location.pathname.includes('/allvideos') ? (
                   <OndemandVideoIcon
                     style={{ color: 'white', fontSize: '1.8rem' }}
                   />

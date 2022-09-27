@@ -6,7 +6,8 @@ import { storage } from '../../firebase';
 import LoadingPage from '../utils/LoadingPage';
 import Select from 'react-select';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-const EditPropertyForm = () => {
+
+const EditVideoForm = () => {
   const history = useHistory();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
@@ -514,4 +515,4 @@ const EditPropertyForm = () => {
   );
 };
 
-export default EditPropertyForm;
+export default EditVideoForm;

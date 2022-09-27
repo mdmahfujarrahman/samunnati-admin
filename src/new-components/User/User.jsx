@@ -1,34 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import LoadingPage from '../utils/LoadingPage';
+import addIcon from '../../images/addIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
-import '../../styles/newstyles/expert.css';
+import '../../styles/newstyles/unitdetails.css';
 import Utable from './AllUser/Utable';
-// import { getAllExperts, GetUsers } from '../../redux/api';
+import { GetQuery, GetUsers } from '../../redux/api';
 
 const User = () => {
-  const [allexpertData, setallexpertData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const { id } = useParams();
+  const [UserData, setUserData] = useState([])
+  const [loading, setLoading] = useState(true);
   const [searchInput, setsearchInput] = useState('');
   const [filterData, setfilterData] = useState([]);
 
-  const fetchexpertList = async () => {
-    setLoading(true);
+  useEffect(() => {
+    getAllUser()
+  }, []);
+
+  // api call
+
+  const getAllUser = async () => {
     try {
-      // const res = await GetUsers();
-      // console.log(res)
-      // setallexpertData(res.data.data);
+      const data = await GetUsers()
+      setUserData(data?.data?.data)
+      console.log(data)
+      setLoading(false);
     } catch (error) {
-      console.log(error);
+      setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchexpertList();
-  }, []);
 
   const searchItems = (searchValue) => {
     setsearchInput(searchValue);
     if (searchValue !== '') {
-      let filteredData = allexpertData.filter((item) => {
+      let filteredData = UserData.filter((item) => {
         return Object.values(item)
           .join('')
           .toLowerCase()
@@ -36,35 +43,36 @@ const User = () => {
       });
       setfilterData(filteredData);
     } else {
-      setfilterData(allexpertData);
+      setfilterData(UserData);
     }
   };
 
   return (
-    <div className="expert-container">
+    <div className="unitdetails-container">
       {loading ? (
         <LoadingPage />
       ) : (
         <>
-          <div className="expert-firstSection">
-            <div className="expert-searchDiv">
+          <div className="unitdetails-firstSection">
+            <div className="unitdetails-searchDiv">
               <img src={searchIcon} alt="search" className="searchIcon" />
               <input
                 type="text"
-                placeholder="Enter a Title , Author or Category"
-                className="expert-searchInput"
+                placeholder="Enter a Name , Description or More"
+                className="unitdetails-searchInput"
                 id="searchInput"
                 value={searchInput}
                 onChange={(e) => searchItems(e.target.value)}
               />
             </div>
           </div>
-          <div className="expert-tableSection">
+          <div className="unitdetails-tableSection">
             {searchInput.length ? (
-              <Utable expertData={filterData} />
+              <Utable UserData={filterData} />
             ) : (
-              <Utable expertData={allexpertData} />
-            )}
+              <Utable UserData={UserData} />
+            )
+            }
           </div>
         </>
       )}

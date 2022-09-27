@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import LoadingPage from '../utils/LoadingPage';
 import addIcon from '../../images/addIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
-import '../../styles/newstyles/featuredproject.css';
-import FPtable from './AllProjects/FPtable';
-import { getAllProject } from '../../redux/api';
+import '../../styles/newstyles/unitdetails.css';
+import Ctable from './AllCategory/Ctable';
+import { GetQuery } from '../../redux/api';
 
-const FeaturedProject = () => {
+const Category = () => {
   const history = useHistory();
-  const [allProjectData, setallProjectData] = useState([]);
+  const { id } = useParams();
+  const [QueryData, setQueryData] = useState([])
   const [loading, setLoading] = useState(false);
   const [searchInput, setsearchInput] = useState('');
   const [filterData, setfilterData] = useState([]);
 
-  const fetchProjectList = async () => {
-    setLoading(true);
+  useEffect(() => {
+    Query()
+  }, []);
+
+  // api call
+
+  const Query = async () => {
     try {
-      const res = await getAllProject();
-      setallProjectData(res.data.data);
+      const data = await GetQuery()
+      setQueryData(data?.data?.data)
+      console.log(data)
       setLoading(false);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchProjectList();
-  }, []);
 
   const searchItems = (searchValue) => {
     setsearchInput(searchValue);
     if (searchValue !== '') {
-      let filteredData = allProjectData.filter((item) => {
+      let filteredData = QueryData.filter((item) => {
         return Object.values(item)
           .join('')
           .toLowerCase()
@@ -40,48 +43,49 @@ const FeaturedProject = () => {
       });
       setfilterData(filteredData);
     } else {
-      setfilterData(allProjectData);
+      setfilterData(QueryData);
     }
   };
 
   return (
-    <div className="project-container">
+    <div className="unitdetails-container">
       {loading ? (
         <LoadingPage />
       ) : (
         <>
-          <div className="project-firstSection">
-            <div className="project-searchDiv">
+          <div className="unitdetails-firstSection">
+            <div className="unitdetails-searchDiv">
               <img src={searchIcon} alt="search" className="searchIcon" />
               <input
                 type="text"
                 placeholder="Enter a Name , Description or More"
-                className="project-searchInput"
+                className="unitdetails-searchInput"
                 id="searchInput"
                 value={searchInput}
                 onChange={(e) => searchItems(e.target.value)}
               />
             </div>
-            <div className="project-addprojectDiv">
+            <div className="property-addpropertyDiv">
               <button
-                className="project-addBtn"
-                onClick={() => history.push('/featuredprojects/add')}
+                className="property-addBtn"
+                onClick={() => history.push('/category/add')}
               >
-                <img src={addIcon} alt="add" className="project-addIcon" />
-                <span>Add Project</span>
+                <img src={addIcon} alt="add" className="property-addIcon" />
+                <span>Add Category</span>
               </button>
             </div>
           </div>
-          <div className="project-tableSection">
+          <div className="unitdetails-tableSection">
             {searchInput.length ? (
-              <FPtable projectData={filterData} />
+              <Ctable QueryData={filterData} />
             ) : (
-              <FPtable projectData={allProjectData} />
-            )}
+              <Ctable QueryData={QueryData} />
+            )
+            }
           </div>
         </>
       )}
     </div>
   );
 };
-export default FeaturedProject;
+export default Category;

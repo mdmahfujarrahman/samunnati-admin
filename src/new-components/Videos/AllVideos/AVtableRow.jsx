@@ -4,7 +4,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteProperty } from '../../../redux/api';
 import DeleteModal from '../../utils/DeleteModal';
-const PtableRow = () => {
+const AVtableRow = () => {
   // const [deleteModalOpen, setdeleteModalOpen] = useState(false);
   // const [ConfirmDelete, setConfirmDelete] = useState(false);
   // const handleDeleteConfirm = () => {
@@ -97,4 +97,4 @@ const PtableRow = () => {
   );
 };
 
-export default PtableRow;
+export default AVtableRow;

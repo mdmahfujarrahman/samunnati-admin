@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PtableRow from './PtableRow';
+import PtableRow from './AVtableRow';
 import '../../../styles/newstyles/table.css';
 
-const Btable = ({ propertyData }) => {
+const AVtable = ({ propertyData }) => {
   useEffect(() => {
     setallproperty(propertyData);
   }, [propertyData]);
@@ -42,4 +42,4 @@ const Btable = ({ propertyData }) => {
   );
 };
 
-export default Btable;
+export default AVtable;

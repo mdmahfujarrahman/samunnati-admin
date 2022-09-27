@@ -6,25 +6,33 @@ import { storage } from '../../firebase';
 import Select from 'react-select';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import axios from 'axios';
-const AddPropertyForm = () => {
+const AddVideoForm = () => {
   const isFirstRender = useRef(true);
   const [spinn, setspinn] = useState(false);
   const [videoData, setvideoData] = useState({
-    video:""
-  })
-  const handleInputchange=()=>{
+    title:"",
+    uploadedBy:"",
+    url:"",
+    category:[],
+    description:"",
+    date:"",
+    duration:""
 
+  })
+  const handleInputchange=(e)=>{
+    const {name,value}=e.target;
+    setvideoData({...videoData,[name]:value})
   }
   const handleFile =(e)=>{
     setvideoData({...videoData, video: e.target.files[0]});
   }
-  // https://samunnati.s3.ap-south-1.amazonaws.com/
-  console.log(videoData)
+
   const handlesubmit = async(e)=>{
     e.preventDefault()
     const formdata = new FormData();
     formdata.append('file', videoData.video);
     try {
+
       const data =await axios.post("https://aws-file-upload-v1.herokuapp.com/api/v2/samunnati/upload/file",formdata)
       console.log(data)
     } catch (error) {
@@ -47,7 +55,7 @@ const AddPropertyForm = () => {
                 name="title"
                 placeholder="Video Title"
                 className="addproperty-inputField"
-                onChange={handleInputchange('name')}
+                onChange={handleInputchange}
               />
             </div>
             <div className="addproperty-inputFieldDiv form-group">
@@ -57,10 +65,10 @@ const AddPropertyForm = () => {
               </label>
               <input
                 type="text"
-                name="Property Location"
+                name="uploadedBy"
                 placeholder="Uploaded By"
                 className="addproperty-inputField"
-                onChange={handleInputchange('location')}
+                onChange={handleInputchange}
               />
             </div>
           </div>
@@ -74,10 +82,10 @@ const AddPropertyForm = () => {
               </label>
               <input
                 type="date"
-                name="City"
+                name="date"
                 placeholder="City"
                 className="addproperty-inputField"
-                onChange={handleInputchange('city')}
+                onChange={handleInputchange}
               />
             </div>
 
@@ -87,10 +95,10 @@ const AddPropertyForm = () => {
               </label>
               <input
                 type="text"
-                name="City"
+                name="length"
                 placeholder="Length"
                 className="addproperty-inputField"
-                onChange={handleInputchange('city')}
+                onChange={handleInputchange}
               />
             </div>
  
@@ -140,7 +148,7 @@ const AddPropertyForm = () => {
               </label>
               <textarea
                 className="addproperty-textField"
-                onChange={handleInputchange('description')}
+                onChange={handleInputchange}
                 name="Description"
                 placeholder="Video Description"
               ></textarea>
@@ -171,4 +179,4 @@ const AddPropertyForm = () => {
   );
 };
 
-export default AddPropertyForm;
+export default AddVideoForm

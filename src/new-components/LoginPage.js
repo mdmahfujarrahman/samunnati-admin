@@ -30,7 +30,7 @@ const LoginPage = () => {
         console.log(data);
         setLoading(false);
         localStorage.setItem('aspire', JSON.stringify(data?.data));
-        history.push('/property');
+        history.push('/users');
       } catch (error) {
         setLoading(false);
         alert('Something went wrong, please try later!');
