@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 // for live server
 const API = axios.create({
@@ -9,6 +8,18 @@ const API = axios.create({
 const NewAPI = axios.create({
   baseURL: 'https://samunnatibackend.herokuapp.com',
 });
+
+const newAPI = axios.create({
+    baseURL: "https://samunnati-backend.herokuapp.com/",
+});
+
+export const CreateUser = (data) => newAPI.post('/user', data);
+export const getSingleUser = (userId) => newAPI.get(`/user?userId=${userId}`);
+export const GetUser = () => newAPI.get("/user/userAll");
+export const UpdateUser = (userId, data) =>
+    newAPI.patch(`/user/one?userId=${userId}`, data);
+export const DeleteUser = (userId) =>
+    newAPI.patch("/user/one?type=DELETE-USER", { userId: userId });
 
 
 

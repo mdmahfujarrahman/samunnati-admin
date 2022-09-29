@@ -1,30 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { createBrowserHistory as createHistory } from 'history';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginPage from './new-components/LoginPage';
-import NavSidebar from './new-components/NavSidebar';
-import Allvideos from './new-components/Videos/Allvideos';
-import Career from './new-components/Career/Career';
-import Blogs from './new-components/Blogs/Blogs';
+import { createBrowserHistory as createHistory } from 'history';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AddBlogForm from './new-components/Blogs/AddBlogForm';
-import EditBlogForm from './new-components/Blogs/EditBlogForm';
-import AddCareerForm from './new-components/Career/AddCareerForm';
-import EditCareerForm from './new-components/Career/EditCareerForm';
-import TrendingLoans from './new-components/TrendingLoans/TrendingLoans';
-import AddTrendingLoansForm from './new-components/TrendingLoans/AddTrendingLoansForm';
-import EditTrendingLoansForm from './new-components/TrendingLoans/EditTrendingLoansForm';
-import AddVideoForm from './new-components/Videos/AddVideoForm';
-import EditVideoForm from './new-components/Videos/EditVideoForm';
-import Requirements from './new-components/Requirements/Requirements';
-import UnitDetails from './new-components/Query/Query';
+import Blogs from './new-components/Blogs/Blogs';
+import AddCategory from './new-components/Category/AddCategory';
+import Category from './new-components/Category/Category';
+import Dashboard from './new-components/Dashboard/Dashboard';
 import AddDeveloperForm from './new-components/Developer/AddDeveloperForm';
 import EditDeveloperForm from './new-components/Developer/EditDeveloperForm';
-import Dashboard from './new-components/Dashboard/Dashboard';
+import LoginPage from './new-components/LoginPage';
+import NavSidebar from './new-components/NavSidebar';
+import { default as Query, default as UnitDetails } from './new-components/Query/Query';
+import AddUser from './new-components/User/AddUser';
+import EditUser from './new-components/User/EditUser';
 import User from './new-components/User/User';
-import Query from './new-components/Query/Query';
-import Category from './new-components/Category/Category';
-import AddCategory from './new-components/Category/AddCategory';
+import AddVideoForm from './new-components/Videos/AddVideoForm';
+import Allvideos from './new-components/Videos/Allvideos';
+import EditVideoForm from './new-components/Videos/EditVideoForm';
 export const history = createHistory();
 const App = () => {
   return (
@@ -33,6 +26,8 @@ const App = () => {
         <Route path="/" exact component={LoginPage} />
         <NavSidebar>
           <Route exact path="/users"  component={User} />
+          <Route exact path="/users/add"  component={AddUser} />
+          <Route exact path="/user/:id"  component={EditUser} />
           <Route path="/Query" exact component={Query} />
           <Route path="/category" exact component={Category} />
           <Route path="/category/add" exact component={AddCategory} />
