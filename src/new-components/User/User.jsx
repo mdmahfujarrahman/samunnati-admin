@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import addIcon from "../../images/addIcon.svg";
 import searchIcon from "../../images/searchIcon.svg";
 import { GetUser } from "../../redux/api";
+import "../../styles/newstyles/property.css";
 import "../../styles/newstyles/unitdetails.css";
 import LoadingPage from "../utils/LoadingPage";
 import Utable from "./AllUser/Utable";

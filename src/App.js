@@ -29,8 +29,7 @@ const App = () => {
           <Route
             path="/property/unitdetail/:id"
             exact
-            component={UnitDetails}
-          /> */}
+            component={UnitDetails} */}
           {/* <Route
             path="/property/unitdetail/add/:id"
             exact
@@ -49,10 +48,10 @@ const App = () => {
           {/* <Route path="/prop/req" exact component={Requirements} />
           <Route path="/career" exact component={Career} />
           <Route path="/career/add" exact component={AddCareerForm} />
-          <Route path="/career/edit/:id" exact component={EditCareerForm} /> */}
-          {/* <Route path="/blogs" exact component={Blogs} />
-          <Route path="/blog/add" exact component={AddBlogForm} /> */}
-          {/* <Route path="/blog/edit/:id/" component={EditBlogForm} />
+          <Route path="/career/edit/:id" exact component={EditCareerForm} />
+          <Route path="/blogs" exact component={Blogs} />
+          <Route path="/blog/add" exact component={AddBlogForm} />
+          <Route path="/blog/edit/:id/" component={EditBlogForm} />
           <Route path="/featuredprojects" exact component={FeaturedProject} />
           <Route
             path="/featuredprojects/add"

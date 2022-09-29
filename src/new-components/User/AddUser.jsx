@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CreateUser } from "../../redux/api";
+import "../../styles/newstyles/addPropertyForm.css";
 
 const AddUser = () => {
     const [spinn, setSpinn] = useState(false);
