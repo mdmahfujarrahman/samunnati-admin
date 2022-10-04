@@ -30,6 +30,7 @@ const AddUser = () => {
     };
 
     const createUser = async (newData) => {
+        console.log();
         try {
             const data = await CreateUser(newData);
             setUserData(data?.data?.data);

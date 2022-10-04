@@ -25,13 +25,15 @@ const User = () => {
         try {
             const data = await GetUser();
             setUserData(data?.data?.result.users);
-            console.log(data);
+            console.log(data?.data?.result);
+            console.log(data?.data?.result.users);
+
             setLoading(false);
         } catch (error) {
             setLoading(false);
         }
     };
-
+    console.log(UserData);
     const searchItems = (searchValue) => {
         setsearchInput(searchValue);
         if (searchValue !== "") {

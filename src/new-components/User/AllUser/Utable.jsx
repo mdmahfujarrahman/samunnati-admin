@@ -24,24 +24,26 @@ const Utable = ({ UserData, setUserData }) => {
                 </thead>
                 <tbody>
                     {UserData &&
-                        UserData.map((item, index) => {
+                        UserData?.map((item, index) => {
                             return (
                                 <UtableRow
                                     key={index}
                                     UserData={UserData}
-                                    fatherName={item.fatherName}
+                                    fatherName={item.userInfoEng.fatherName}
                                     userId={item._id}
                                     index={index}
-                                    occupation={item.occupation}
-                                    email={item.email}
-                                    name={item.name}
-                                    phoneNumber={item.phoneNumber}
-                                    age={item.age}
-                                    village={item.village}
-                                    gotra={item.gotra}
-                                    residenceNumber={item.residenceNumber}
-                                    address={item.address}
-                                    imgUrl={item.imgUrl}
+                                    occupation={item.userInfoEng.occupation}
+                                    email={item.userInfoEng.email}
+                                    name={item.userInfoEng.name}
+                                    phoneNumber={item.userInfoEng.phoneNumber}
+                                    age={item.userInfoEng.age}
+                                    village={item.userInfoEng.village}
+                                    gotra={item.userInfoEng.gotra}
+                                    residenceNumber={
+                                        item.userInfoEng.residenceNumber
+                                    }
+                                    address={item.userInfoEng.address}
+                                    imgUrl={item.userInfoEng.imgUrl}
                                     setUserData={setUserData}
                                 />
                             );

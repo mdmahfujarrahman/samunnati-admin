@@ -1,9 +1,11 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { DeleteUser } from "../../../redux/api";
+import { DeleteUser, getSingleUser } from "../../../redux/api";
 import DeleteModal from "../../utils/DeleteModal";
+import ViewProfileModal from "../../utils/ViewProfileModal";
 const UtableRow = ({
     index,
     name,
@@ -22,8 +24,9 @@ const UtableRow = ({
     UserData,
 }) => {
     const [deleteModalOpen, setdeleteModalOpen] = useState(false);
+    const [profileModalOpen, setProfileModalOpen] = useState(false);
     const [ConfirmDelete, setConfirmDelete] = useState(false);
-
+    const [singleUserData, setSingleUserData] = useState();
     const handleDeleteConfirm = () => {
         setdeleteModalOpen(false);
         setConfirmDelete(true);
@@ -31,12 +34,14 @@ const UtableRow = ({
     const handleDeleteCancel = () => {
         setdeleteModalOpen(false);
     };
+    const handleProfileCancel = () => {
+        setProfileModalOpen(false);
+    };
     const handleDeleteUser = (e, id) => {
         e.preventDefault();
         setdeleteModalOpen(true);
     };
     const handleConfirmDeleteBlog = async (id) => {
-        console.log(id);
         try {
             const updateUser = UserData.filter((b) => b._id !== id);
             setUserData(updateUser);
@@ -50,6 +55,15 @@ const UtableRow = ({
             handleConfirmDeleteBlog(userId);
         }
     }, [ConfirmDelete]);
+
+    const handleViewProfile = async (id) => {
+        if (id) {
+            const userData = await getSingleUser(id);
+            setSingleUserData(userData.data.result);
+            setProfileModalOpen(true);
+            console.log(userData.data.result);
+        }
+    };
 
     return (
         <>
@@ -66,6 +80,12 @@ const UtableRow = ({
                 <td>{residenceNumber}</td>
                 <td>{address}</td>
                 <td>
+                    <button
+                        onClick={() => handleViewProfile(userId)}
+                        className="edit-btn"
+                    >
+                        <VisibilityIcon />{" "}
+                    </button>
                     <Link to={`/user/${userId}`}>
                         <button className="edit-btn">
                             <ModeEditIcon />{" "}
@@ -73,7 +93,7 @@ const UtableRow = ({
                     </Link>
                     <button
                         onClick={(e) => handleDeleteUser(e)}
-                        className="delete-btn ms-3"
+                        className="delete-btn"
                     >
                         <DeleteIcon />{" "}
                     </button>
@@ -85,6 +105,13 @@ const UtableRow = ({
                     handleConfirm={handleDeleteConfirm}
                     handleCancel={handleDeleteCancel}
                     categorytag={name}
+                />
+            )}
+            {profileModalOpen && (
+                <ViewProfileModal
+                    show={profileModalOpen}
+                    handleCancel={handleProfileCancel}
+                    userData={singleUserData}
                 />
             )}
         </>
