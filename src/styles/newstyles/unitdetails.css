@@ -84,6 +84,9 @@
 .unitdetails-addBtn span {
     margin-left: 10px;
 }
+.profile-modal {
+    margin-top: 30px;
+}
 .profile-img {
     position: relative;
     display: flex;

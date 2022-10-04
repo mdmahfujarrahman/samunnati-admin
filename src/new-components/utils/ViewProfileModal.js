@@ -18,6 +18,7 @@ const ViewProfileModal = ({
                 show={show}
                 onHide={handleCancel}
                 size="md"
+                className="profile-modal"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
