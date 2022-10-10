@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import addIcon from "../../images/addIcon.svg";
 import searchIcon from "../../images/searchIcon.svg";
 import { GetUser } from "../../redux/api";
@@ -10,11 +10,11 @@ import Utable from "./AllUser/Utable";
 
 const User = () => {
     const history = useHistory();
-    const { id } = useParams();
     const [UserData, setUserData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchInput, setsearchInput] = useState("");
-    const [filterData, setfilterData] = useState([]);
+    const [filterData, setFilterData] = useState([]);
+    const [engData, setEngData] = useState([]);
 
     useEffect(() => {
         getAllUser();
@@ -25,27 +25,36 @@ const User = () => {
         try {
             const data = await GetUser();
             setUserData(data?.data?.result.users);
-            console.log(data?.data?.result);
-            console.log(data?.data?.result.users);
 
             setLoading(false);
         } catch (error) {
             setLoading(false);
         }
     };
-    console.log(UserData);
+
+    useEffect(() => {
+        const newData = UserData.map(({ userInfoHindi, userInfoEng, _id }) => {
+            return {
+                userInfoHindi: { ...userInfoHindi, id: _id },
+                userInfoEng: { ...userInfoEng, id: _id },
+            };
+        });
+        const userEngData = newData.map((user) => user.userInfoEng);
+        setEngData(userEngData);
+    }, [UserData]);
+
     const searchItems = (searchValue) => {
         setsearchInput(searchValue);
         if (searchValue !== "") {
-            let filteredData = UserData.filter((item) => {
+            let filteredData = engData.filter((item) => {
                 return Object.values(item)
                     .join("")
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
             });
-            setfilterData(filteredData);
+            setFilterData(filteredData);
         } else {
-            setfilterData(UserData);
+            setFilterData(UserData);
         }
     };
 
@@ -64,14 +73,14 @@ const User = () => {
                             />
                             <input
                                 type="text"
-                                placeholder="Enter a Name , Description or More"
+                                placeholder="Enter a Name , Occupation or More"
                                 className="unitdetails-searchInput"
                                 id="searchInput"
                                 value={searchInput}
                                 onChange={(e) => searchItems(e.target.value)}
                             />
                         </div>
-                        <div className="property-addpropertyDiv">
+                        <div className="add_user_button">
                             <button
                                 className="property-addBtn"
                                 onClick={() => history.push("/users/add")}
@@ -83,11 +92,27 @@ const User = () => {
                                 />
                                 <span>Add New User</span>
                             </button>
+                            <button
+                                className="property-addBtn"
+                                onClick={() => history.push("/users/bulk-add")}
+                            >
+                                <img
+                                    src={addIcon}
+                                    alt="add"
+                                    className="property-addIcon"
+                                />
+                                <span>Add Bulk User</span>
+                            </button>
                         </div>
                     </div>
                     <div className="unitdetails-tableSection">
                         {searchInput.length ? (
-                            <Utable UserData={filterData} />
+                            <Utable
+                                filterData={filterData}
+                                setUserData={setUserData}
+                                setFilterData={setFilterData}
+                                UserData={UserData}
+                            />
                         ) : (
                             <Utable
                                 UserData={UserData}

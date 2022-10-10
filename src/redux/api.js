@@ -20,6 +20,7 @@ export const UpdateUser = (userId, data) =>
     newAPI.patch(`/user/one?userId=${userId}`, data);
 export const DeleteUser = (userId) =>
     newAPI.patch("/user/one?type=DELETE-USER", { userId: userId });
+export const BulkUserUpload = (data) => newAPI.post("/user/bulk-add", data);
 
 
 

@@ -22,11 +22,14 @@ const UtableRow = ({
     userId,
     setUserData,
     UserData,
+    setFilterData,
+    filterData,
 }) => {
     const [deleteModalOpen, setdeleteModalOpen] = useState(false);
     const [profileModalOpen, setProfileModalOpen] = useState(false);
     const [ConfirmDelete, setConfirmDelete] = useState(false);
     const [singleUserData, setSingleUserData] = useState();
+
     const handleDeleteConfirm = () => {
         setdeleteModalOpen(false);
         setConfirmDelete(true);
@@ -42,12 +45,24 @@ const UtableRow = ({
         setdeleteModalOpen(true);
     };
     const handleConfirmDeleteBlog = async (id) => {
-        try {
-            const updateUser = UserData.filter((b) => b._id !== id);
-            setUserData(updateUser);
-            await DeleteUser(id);
-        } catch (err) {
-            console.log(err);
+        if (setFilterData) {
+            try {
+                const updateUser = filterData?.filter((b) => b.id !== id);
+                setFilterData(updateUser);
+                const newData = UserData?.filter((b) => b._id !== id);
+                setUserData(newData);
+                await DeleteUser(id);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            try {
+                const updateUser = UserData?.filter((b) => b._id !== id);
+                setUserData(updateUser);
+                await DeleteUser(id);
+            } catch (err) {
+                console.log(err);
+            }
         }
     };
     useEffect(() => {
@@ -61,7 +76,6 @@ const UtableRow = ({
             const userData = await getSingleUser(id);
             setSingleUserData(userData.data.result);
             setProfileModalOpen(true);
-            console.log(userData.data.result);
         }
     };
 
@@ -69,16 +83,16 @@ const UtableRow = ({
         <>
             <tr>
                 <td>{index + 1}</td>
-                <td>{name}</td>
-                <td>{age}</td>
-                <td>{fatherName}</td>
-                <td>{occupation}</td>
-                <td>{village}</td>
-                <td>{gotra}</td>
-                <td>{phoneNumber}</td>
-                <td>{email}</td>
-                <td>{residenceNumber}</td>
-                <td>{address}</td>
+                <td>{name ? name : "-"}</td>
+                <td>{age ? age : "-"}</td>
+                <td>{fatherName ? fatherName : "-"}</td>
+                <td>{occupation ? occupation : "-"}</td>
+                <td>{village ? village : "-"}</td>
+                <td>{gotra ? gotra : "-"}</td>
+                <td>{phoneNumber ? phoneNumber : "-"}</td>
+                <td>{email ? email : "-"}</td>
+                <td>{residenceNumber ? residenceNumber : "-"}</td>
+                <td>{address ? address : "-"}</td>
                 <td>
                     <button
                         onClick={() => handleViewProfile(userId)}

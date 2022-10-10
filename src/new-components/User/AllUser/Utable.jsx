@@ -2,7 +2,7 @@ import React from "react";
 import "../../../styles/newstyles/table.css";
 import UtableRow from "./UtableRow";
 
-const Utable = ({ UserData, setUserData }) => {
+const Utable = ({ UserData, setUserData, filterData, setFilterData }) => {
     return (
         <div className="table-wrapper" id="#scrollBar">
             <table className="fl-table">
@@ -23,31 +23,59 @@ const Utable = ({ UserData, setUserData }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {UserData &&
-                        UserData?.map((item, index) => {
-                            return (
-                                <UtableRow
-                                    key={index}
-                                    UserData={UserData}
-                                    fatherName={item.userInfoEng.fatherName}
-                                    userId={item._id}
-                                    index={index}
-                                    occupation={item.userInfoEng.occupation}
-                                    email={item.userInfoEng.email}
-                                    name={item.userInfoEng.name}
-                                    phoneNumber={item.userInfoEng.phoneNumber}
-                                    age={item.userInfoEng.age}
-                                    village={item.userInfoEng.village}
-                                    gotra={item.userInfoEng.gotra}
-                                    residenceNumber={
-                                        item.userInfoEng.residenceNumber
-                                    }
-                                    address={item.userInfoEng.address}
-                                    imgUrl={item.userInfoEng.imgUrl}
-                                    setUserData={setUserData}
-                                />
-                            );
-                        })}
+                    {filterData
+                        ? filterData &&
+                          filterData?.map((item, index) => {
+                              return (
+                                  <UtableRow
+                                      key={index}
+                                      UserData={UserData}
+                                      filterData={filterData}
+                                      fatherName={item.fatherName}
+                                      userId={item?.id}
+                                      index={index}
+                                      occupation={item.occupation}
+                                      email={item.email}
+                                      name={item.name}
+                                      phoneNumber={item.phoneNumber}
+                                      age={item.age}
+                                      village={item.village}
+                                      gotra={item.gotra}
+                                      residenceNumber={item.residenceNumber}
+                                      address={item.address}
+                                      imgUrl={item.imgUrl}
+                                      setFilterData={setFilterData}
+                                      setUserData={setUserData}
+                                  />
+                              );
+                          })
+                        : UserData &&
+                          UserData?.map((item, index) => {
+                              return (
+                                  <UtableRow
+                                      key={index}
+                                      UserData={UserData}
+                                      fatherName={item.userInfoEng?.fatherName}
+                                      userId={item?._id}
+                                      index={index}
+                                      occupation={item.userInfoEng?.occupation}
+                                      email={item.userInfoEng?.email}
+                                      name={item.userInfoEng?.name}
+                                      phoneNumber={
+                                          item.userInfoEng?.phoneNumber
+                                      }
+                                      age={item.userInfoEng?.age}
+                                      village={item.userInfoEng?.village}
+                                      gotra={item.userInfoEng?.gotra}
+                                      residenceNumber={
+                                          item.userInfoEng?.residenceNumber
+                                      }
+                                      address={item.userInfoEng?.address}
+                                      imgUrl={item.userInfoEng?.imgUrl}
+                                      setUserData={setUserData}
+                                  />
+                              );
+                          })}
                 </tbody>
             </table>
         </div>

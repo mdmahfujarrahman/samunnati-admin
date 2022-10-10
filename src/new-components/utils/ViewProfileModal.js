@@ -84,16 +84,56 @@ const ViewProfileModal = ({
                                     <p>Address:</p>
                                 </div>
                                 <div className="col-6">
-                                    <p>{userInfoEng.name}</p>
-                                    <p>{userInfoEng.age}</p>
-                                    <p>{userInfoEng.fatherName}</p>
-                                    <p>{userInfoEng.occupation}</p>
-                                    <p>{userInfoEng.village}</p>
-                                    <p>{userInfoEng.gotra}</p>
-                                    <p>{userInfoEng.phoneNumber}</p>
-                                    <p>{userInfoEng.residenceNumber}</p>
-                                    <p>{userInfoEng.email}</p>
-                                    <p>{userInfoEng.address}</p>
+                                    <p>
+                                        {userInfoEng.name
+                                            ? userInfoEng.name
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.age
+                                            ? userInfoEng.age
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.fatherName
+                                            ? userInfoEng.fatherName
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.occupation
+                                            ? userInfoEng.occupation
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.village
+                                            ? userInfoEng.village
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.gotra
+                                            ? userInfoEng.gotra
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.phoneNumber
+                                            ? userInfoEng.phoneNumber
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.residenceNumber
+                                            ? userInfoEng.residenceNumber
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.email
+                                            ? userInfoEng.email
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.address
+                                            ? userInfoEng.address
+                                            : "-"}
+                                    </p>
                                 </div>
                             </div>
                         </Show>
@@ -113,15 +153,51 @@ const ViewProfileModal = ({
                                 </div>
                                 <div className="col-6">
                                     <p>{userInfoHindi.name}</p>
-                                    <p>{userInfoHindi.age}</p>
-                                    <p>{userInfoHindi.fatherName}</p>
-                                    <p>{userInfoHindi.occupation}</p>
-                                    <p>{userInfoHindi.village}</p>
-                                    <p>{userInfoHindi.gotra}</p>
-                                    <p>{userInfoHindi.phoneNumber}</p>
-                                    <p>{userInfoHindi.residenceNumber}</p>
-                                    <p>{userInfoHindi.email}</p>
-                                    <p>{userInfoHindi.address}</p>
+                                    <p>
+                                        {userInfoHindi.age
+                                            ? userInfoHindi.age
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.fatherName
+                                            ? userInfoHindi.fatherName
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.occupation
+                                            ? userInfoHindi.occupation
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.village
+                                            ? userInfoHindi.village
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.gotra
+                                            ? userInfoHindi.gotra
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.phoneNumber
+                                            ? userInfoHindi.phoneNumber
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.residenceNumber
+                                            ? userInfoHindi.residenceNumber
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.email
+                                            ? userInfoHindi.email
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.address
+                                            ? userInfoHindi.address
+                                            : "-"}
+                                    </p>
                                 </div>
                             </div>
                         </Show>
