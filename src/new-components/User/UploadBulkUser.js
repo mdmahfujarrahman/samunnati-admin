@@ -1,6 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useCsvUpload } from '../../hooks/useCsvUpload';
+import examplefile from '../../images/directory-example.xlsx';
+import downloadIcon from "../../images/downloadIcon.png";
+import uploadImage from '../../images/file.png';
 import { BulkUserUpload } from '../../redux/api';
 
 const UploadBulkUser = () => {
@@ -13,8 +16,6 @@ const UploadBulkUser = () => {
         const [file] = ref.current.files;
         if (file) {
             handleFileReader(file, (data) => {
-                console.log(data.pop());
-                console.log(data);
                 setList(data);
             });
         }
@@ -47,36 +48,49 @@ const UploadBulkUser = () => {
             });
         }
     };
-
+    const onButtonClick = () => {
+        // `current` points to the mounted file input element
+        ref.current.click();
+    };
 
     return (
         <div className="addbulk-container">
             <div className="addbulkuser">
+                <a href={examplefile} download className="exampleDownload">
+                    <img src={downloadIcon} alt="" /> Sample File
+                </a>
                 <div className="addbulk-alignRow">
                     <div className="addproperty-inputFieldDiv">
-                        <label className="addproperty-inputLabel">
-                            Upload CSV/Excel File{" "}
-                            <span style={{ color: "red", fontSize: "1.2rem" }}>
-                                *
-                            </span>{" "}
-                        </label>
-                        <input
-                            type="file"
-                            ref={ref}
-                            accepted={sheetAccepted}
-                            onChange={handleChange}
-                            className="addproperty-inputField"
-                        />
+                        <div
+                            className="upload-container"
+                            onClick={onButtonClick}
+                        >
+                            <img src={uploadImage} alt="" />
+                            <p>{list? "Add Bulk User": `Import Bulk User Excel/CSV`}</p>
+                            <input
+                                style={{ display: "none" }}
+                                type="file"
+                                ref={ref}
+                                id="file"
+                                accepted={sheetAccepted}
+                                onChange={handleChange}
+                                className="addproperty-inputField"
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="addproperty-submitDetailDiv">
                     <button
-                        className="addproperty-submitDetailBtn"
+                        disabled={!list}
+                        className={`addproperty-submitDetailBtn ${
+                            list ? "" : "disabled-color"
+                        }`}
                         onClick={bulkUpload}
                     >
-                        Add New User
+                        Add Bulk User
                     </button>
                 </div>
+                <p className="note-bulk">* import maximum 200 users One file</p>
             </div>
             <ToastContainer />
         </div>
