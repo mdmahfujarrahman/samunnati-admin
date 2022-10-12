@@ -16,6 +16,7 @@ const UploadBulkUser = () => {
         const [file] = ref.current.files;
         if (file) {
             handleFileReader(file, (data) => {
+                data.pop()
                 setList(data);
             });
         }
