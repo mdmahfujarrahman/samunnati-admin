@@ -67,7 +67,11 @@ const UploadBulkUser = () => {
                             onClick={onButtonClick}
                         >
                             <img src={uploadImage} alt="" />
-                            <p>{list? "Add Bulk User": `Import Bulk User Excel/CSV`}</p>
+                            <p>
+                                {list
+                                    ? "Now Add Bulk User"
+                                    : `Import Bulk User Excel/CSV`}
+                            </p>
                             <input
                                 style={{ display: "none" }}
                                 type="file"
@@ -89,6 +93,16 @@ const UploadBulkUser = () => {
                         onClick={bulkUpload}
                     >
                         Add Bulk User
+                        {loading ? (
+                            <div
+                                class="spinner-border spinner-border-sm text-white mx-2"
+                                role="status"
+                            >
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        ) : (
+                            ""
+                        )}
                     </button>
                 </div>
                 <p className="note-bulk">* import maximum 200 users One file</p>
