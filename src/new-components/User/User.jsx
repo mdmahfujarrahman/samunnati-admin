@@ -25,7 +25,7 @@ const User = () => {
         try {
             const data = await GetUser();
             setUserData(data?.data?.result.users);
-
+            console.log(data?.data?.result.users);
             setLoading(false);
         } catch (error) {
             setLoading(false);
