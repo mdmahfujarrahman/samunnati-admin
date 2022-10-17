@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserHistory as createHistory } from 'history';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginPage from './new-components/LoginPage';
 import NavSidebar from './new-components/NavSidebar';
@@ -19,7 +20,11 @@ const App = () => {
               <NavSidebar>
                   <Route exact path="/users" component={User} />
                   <Route exact path="/users/add" component={AddUser} />
-                  <Route exact path="/users/bulk-add" component={UploadBulkUser}/>
+                  <Route
+                      exact
+                      path="/users/bulk-add"
+                      component={UploadBulkUser}
+                  />
                   <Route exact path="/user/:id" component={EditUser} />
                   <Route path="/adds" exact component={Query} />
                   {/* <Route path="/Query" exact component={Query} />
@@ -76,6 +81,15 @@ const App = () => {
             component={EditTrendingLoansForm}
           />
           <Route path="/contacts" exact component={ContactUs} /> */}
+                  <ToastContainer
+                      position="top-right"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      closeOnClick={true}
+                      pauseOnHover={true}
+                      draggable={true}
+                      progress={undefined}
+                  />
               </NavSidebar>
           </Switch>
       </Router>

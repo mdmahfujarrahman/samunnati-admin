@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getSingleUser, UpdateUser } from "../../redux/api";
 
 const EditUser = () => {
@@ -48,6 +49,9 @@ const EditUser = () => {
             const data = await UpdateUser(id, newData);
             setUserData(data?.data?.data);
             if (data.status === 200) {
+                toast.success(
+                    `${data?.data?.result.userInfoEng.name} info successfully update`
+                );
                 history.push("/users");
             }
             setSpinn(false);
