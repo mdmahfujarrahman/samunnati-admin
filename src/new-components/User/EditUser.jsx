@@ -5,6 +5,7 @@ import { getSingleUser, UpdateUser } from "../../redux/api";
 
 const EditUser = () => {
     const { id } = useParams();
+    console.log(id);
     const [spinn, setSpinn] = useState(false);
     const history = useHistory();
     const [userData, setUserData] = useState({
@@ -24,7 +25,8 @@ const EditUser = () => {
     const getUserDate = async (id) => {
         try {
             const data = await getSingleUser(id);
-            setUserData(data?.data?.result);
+            console.log(data);
+            setUserData(data?.data?.result.userInfoEng);
         } catch (error) {
             console.log(error);
         }

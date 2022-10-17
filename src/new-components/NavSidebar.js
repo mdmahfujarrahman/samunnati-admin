@@ -154,7 +154,7 @@ const NavSidebar = (props) => {
                             px: [1],
                         }}
                     >
-                        <div>
+                        <div className="sidebar-logo">
                             <img src={logo}></img>
                         </div>
                         <IconButton onClick={toggleDrawer}>

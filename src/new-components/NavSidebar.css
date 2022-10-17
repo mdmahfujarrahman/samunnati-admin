@@ -1,23 +1,30 @@
 .accordion-button {
-  background-color: inherit !important;
-  color: inherit !important;
+    background-color: inherit !important;
+    color: inherit !important;
 }
 .accordion-button:not(.collapsed) {
-  background-color: inherit !important;
-  color: inherit !important;
-  box-shadow: none !important;
+    background-color: inherit !important;
+    color: inherit !important;
+    box-shadow: none !important;
 }
 .accordion-button:focus {
-  border-color: #1c1b4d !important;
-  border: none !important;
-  box-shadow: none !important;
+    border-color: #1c1b4d !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .accordion-item {
-  background-color: '#155B8' !important;
-  border: none !important;
+    background-color: "#155B8" !important;
+    border: none !important;
 }
 .accordion-body ul {
-  margin-top: 0px !important;
-  padding-left: 0px !important;
+    margin-top: 0px !important;
+    padding-left: 0px !important;
+}
+.sidebar-logo {
+    display: flex;
+    justify-content: center;
+}
+.sidebar-logo img {
+    width: 20% !important;
 }
