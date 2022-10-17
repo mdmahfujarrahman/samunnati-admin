@@ -11,6 +11,7 @@ import AddUser from './new-components/User/AddUser';
 import EditUser from './new-components/User/EditUser';
 import UploadBulkUser from './new-components/User/UploadBulkUser';
 import User from './new-components/User/User';
+
 export const history = createHistory();
 const App = () => {
   return (

@@ -59,3 +59,6 @@
     background-color: #81c060 !important;
     border-color: #81c060 !important;
 }
+.action-btn {
+    text-overflow: visible !important;
+}

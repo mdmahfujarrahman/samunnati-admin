@@ -93,7 +93,7 @@ const UtableRow = ({
                 <td>{email ? email : "-"}</td>
                 <td>{residenceNumber ? residenceNumber : "-"}</td>
                 <td>{address ? address : "-"}</td>
-                <td>
+                <td className="action-btn">
                     <button
                         onClick={() => handleViewProfile(userId)}
                         className="edit-btn"

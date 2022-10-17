@@ -61,6 +61,10 @@
     text-align: left;
     padding: 12px 10px;
 }
+.action-btn {
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
 
 .fl-table td {
     border-right: 1px solid #f8f8f8;
