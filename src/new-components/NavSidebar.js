@@ -156,6 +156,10 @@ const NavSidebar = (props) => {
                     >
                         <div className="sidebar-logo">
                             <img src={logo}></img>
+                            <p>
+                                Directory
+                                Pitampura
+                            </p>
                         </div>
                         <IconButton onClick={toggleDrawer}>
                             <ChevronLeftIcon className={classes.closeDrawer} />

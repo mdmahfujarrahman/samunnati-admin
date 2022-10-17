@@ -23,8 +23,11 @@
 }
 .sidebar-logo {
     display: flex;
-    justify-content: center;
+    align-items: center;
 }
 .sidebar-logo img {
     width: 20% !important;
+}
+.sidebar-logo p {
+    margin-top: 15px !important;
 }
