@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import LoadingPage from '../new-components/utils/LoadingPage';
-import axios from 'axios';
-import logo from '../images/logo.png';
+import { Login } from '../redux/api';
 import '../styles/LoginPage.css';
 
 const initialData = {
@@ -23,13 +22,14 @@ const LoginPage = () => {
     if (formData.email && formData.password) {
       setLoading(true);
       try {
-        const { data } = await axios.post(
-          'https://aspire0.herokuapp.com/auth/login',
-          formData
-        );
-        console.log(data);
-        setLoading(false);
-        localStorage.setItem('aspire', JSON.stringify(data?.data));
+        const loginInfo = {
+          email: formData.email,
+          password: formData.password,
+        }
+        const user = await Login(loginInfo);
+        console.log(user?.data?.authToken);
+        localStorage.setItem("userInfo", JSON.stringify(user?.data.result));
+        localStorage.setItem("token", JSON.stringify(user?.data?.authToken));
         history.push('/users');
       } catch (error) {
         setLoading(false);

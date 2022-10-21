@@ -15,9 +15,9 @@ import ListItemText from "@mui/material/ListItemText";
 import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Cookies from "js-cookie";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import logo from "../images/logo.png";
 import useStyles from "../styles/NavSidebar";
 import "./NavSidebar.css";
@@ -79,6 +79,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 const NavSidebar = (props) => {
+    const {auth, user} = useAuth()
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
@@ -88,14 +89,14 @@ const NavSidebar = (props) => {
     const history = useHistory();
 
     const handleLogout = () => {
-        Cookies.remove("aspire");
-        localStorage.removeItem("aspire");
+        localStorage.removeItem("token");
+        localStorage.removeItem("userInfo");
         history.push("/");
     };
 
-    let k = JSON.parse(localStorage.getItem("aspire"));
+
     useEffect(() => {
-        if (!k) {
+        if (!auth && !user) {
             history.push("/");
         }
     }, []);

@@ -13,6 +13,7 @@ const newAPI = axios.create({
     baseURL: "https://samunnati-backend.herokuapp.com/",
 });
 
+export const Login = (data) => newAPI.put("/auth/login", data);
 export const CreateUser = (data) => newAPI.post('/user', data);
 export const getSingleUser = (userId) => newAPI.get(`/user?userId=${userId}`);
 export const GetUser = () => newAPI.get("/user/userAll");
