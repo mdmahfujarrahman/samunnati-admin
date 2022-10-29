@@ -1,5 +1,4 @@
 import React from 'react';
-// import loaderPage from '../images/loaderPage.gif';
 import loaderGif from '../../images/loaderGif.gif';
 
 const LoadingPage = () => {

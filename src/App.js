@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginPage from './new-components/LoginPage';
 import NavSidebar from './new-components/NavSidebar';
-import { default as Query } from './new-components/Query/Query';
 import AddUser from './new-components/User/AddUser';
 import EditUser from './new-components/User/EditUser';
 import UploadBulkUser from './new-components/User/UploadBulkUser';
@@ -27,7 +26,7 @@ const App = () => {
                           component={UploadBulkUser}
                       />
                       <Route exact path="/user/:id" component={EditUser} />
-                      <Route path="/adds" exact component={Query} />
+                      {/* <Route path="/adds" exact component={Query} /> */}
                       {/* <Route path="/Query" exact component={Query} />
           <Route path="/category" exact component={Category} />
           <Route path="/category/add" exact component={AddCategory} />

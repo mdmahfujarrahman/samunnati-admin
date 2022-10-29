@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { CreateUser } from "../../redux/api";
 import "../../styles/newstyles/addPropertyForm.css";
 
@@ -30,13 +31,14 @@ const AddUser = () => {
     };
 
     const createUser = async (newData) => {
-        console.log();
         try {
+            debugger;
             const data = await CreateUser(newData);
             setUserData(data?.data?.data);
             if (data.status === 200) {
                 history.push("/users");
             }
+            toast.success(`${newData.name} added successfully`);
             setSpinn(false);
         } catch (error) {
             setSpinn(false);
