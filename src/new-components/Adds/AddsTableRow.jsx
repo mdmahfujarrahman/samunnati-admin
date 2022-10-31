@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { DeleteUser, GetSingleCompany } from "../../redux/api";
 import DeleteModal from "../utils/DeleteModal";
-import ViewProfileModal from "../utils/ViewProfileModal";
+import ViewCompany from "./ViewCompany";
 
 const AddsTableRow = ({
     index,
@@ -119,7 +119,7 @@ const AddsTableRow = ({
                 />
             )}
             {profileModalOpen && (
-                <ViewProfileModal
+                <ViewCompany
                     show={profileModalOpen}
                     handleCancel={handleProfileCancel}
                     userData={companyData}

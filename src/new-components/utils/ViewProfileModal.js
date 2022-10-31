@@ -7,9 +7,10 @@ const ViewProfileModal = ({
     show,
     handleConfirm,
     userData,
-    handleCancel,
-    companyData,
+    handleCancel
 }) => {
+    const [language,  setLanguage] = useState(false);
+    const { userInfoEng, userInfoHindi } = userData;
     return (
         <>
             <Modal
@@ -22,7 +23,7 @@ const ViewProfileModal = ({
             >
                 <Modal.Body>
                     <div>
-                        {/* <div className="toggle-container">
+                        <div className="toggle-container">
                             <p>
                                 {language
                                     ? userInfoHindi.name
@@ -54,73 +55,175 @@ const ViewProfileModal = ({
                                     </label>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                         <div className="profile-img">
                             <div className="img-container">
                                 <img
                                     src={
-                                        companyData.imgUrl
-                                            ? companyData.imgUrl
+                                        userInfoEng.imgUrl
+                                            ? userInfoEng.imgUrl
                                             : noImage
                                     }
-                                    alt={companyData.companyName}
+                                    alt={userInfoEng.name}
                                 />
                             </div>
                         </div>
+                        <Show condition={!language}>
                             <div className="row profile-content">
                                 <div className="col-6">
-                                    <p>Company Name:</p>
-                                    <p>Owner Name:</p>
-                                    <p>Phone Number:</p>
+                                    <p>Name:</p>
+                                    <p>Age:</p>
+                                    <p>Father's Name:</p>
+                                    <p>Occupation:</p>
+                                    <p>Village:</p>
+                                    <p>Gotra:</p>
+                                    <p>Mobile Number:</p>
+                                    <p>Residence Number:</p>
                                     <p>Email:</p>
-                                    <p>Website:</p>
-                                    <p>Template:</p>
                                     <p>Address:</p>
-                                    <p>Description:</p>
+                                    <p>Marital Status:</p>
+                                    <p>Wife Name:</p>
                                 </div>
                                 <div className="col-6">
                                     <p>
-                                        {companyData.companyName
-                                            ? companyData.name
+                                        {userInfoEng.name
+                                            ? userInfoEng.name
                                             : "-"}
                                     </p>
                                     <p>
-                                        {companyData.ownerName
-                                            ? companyData.ownerName
+                                        {userInfoEng.age
+                                            ? userInfoEng.age
                                             : "-"}
                                     </p>
                                     <p>
-                                        {companyData.phoneNumber
-                                            ? companyData.phoneNumber
+                                        {userInfoEng.fatherName
+                                            ? userInfoEng.fatherName
                                             : "-"}
                                     </p>
                                     <p>
-                                        {companyData.email
-                                            ? companyData.email
+                                        {userInfoEng.occupation
+                                            ? userInfoEng.occupation
                                             : "-"}
                                     </p>
                                     <p>
-                                        {companyData.website
-                                            ? companyData.website
+                                        {userInfoEng.village
+                                            ? userInfoEng.village
                                             : "-"}
                                     </p>
                                     <p>
-                                        {companyData.Template
-                                            ? companyData.Template
+                                        {userInfoEng.gotra
+                                            ? userInfoEng.gotra
                                             : "-"}
                                     </p>
                                     <p>
-                                        {companyData.address
-                                            ? companyData.address
+                                        {userInfoEng.phoneNumber
+                                            ? userInfoEng.phoneNumber
                                             : "-"}
                                     </p>
                                     <p>
-                                        {companyData.description
-                                            ? companyData.description
+                                        {userInfoEng.residenceNumber
+                                            ? userInfoEng.residenceNumber
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.email
+                                            ? userInfoEng.email
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.address
+                                            ? userInfoEng.address
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.maritalStatus
+                                            ? userInfoEng.maritalStatus
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.wifeName
+                                            ? userInfoEng.wifeName
                                             : "-"}
                                     </p>
                                 </div>
                             </div>
+                        </Show>
+                        <Show condition={language}>
+                            <div className="row profile-content">
+                                <div className="col-6">
+                                    <p>Name:</p>
+                                    <p>Age:</p>
+                                    <p>Father's Name:</p>
+                                    <p>Occupation:</p>
+                                    <p>Village:</p>
+                                    <p>Gotra:</p>
+                                    <p>Mobile Number:</p>
+                                    <p>Residence Number:</p>
+                                    <p>Email:</p>
+                                    <p>Address:</p>
+                                    <p>Marital Status:</p>
+                                    <p>Wife Name:</p>
+                                </div>
+                                <div className="col-6">
+                                    <p>{userInfoHindi.name}</p>
+                                    <p>
+                                        {userInfoHindi.age
+                                            ? userInfoHindi.age
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.fatherName
+                                            ? userInfoHindi.fatherName
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.occupation
+                                            ? userInfoHindi.occupation
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.village
+                                            ? userInfoHindi.village
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.gotra
+                                            ? userInfoHindi.gotra
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.phoneNumber
+                                            ? userInfoHindi.phoneNumber
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.residenceNumber
+                                            ? userInfoHindi.residenceNumber
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.email
+                                            ? userInfoHindi.email
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.address
+                                            ? userInfoHindi.address
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.maritalStatus
+                                            ? userInfoHindi.maritalStatus
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.wifeName
+                                            ? userInfoHindi.wifeName
+                                            : "-"}
+                                    </p>
+                                </div>
+                            </div>
+                        </Show>
                     </div>
                 </Modal.Body>
             </Modal>
