@@ -9,6 +9,8 @@ const ViewCompany = ({
     handleCancel,
     companyData,
 }) => {
+
+    console.log(companyData);
     return (
         <>
             <Modal
@@ -58,11 +60,11 @@ const ViewCompany = ({
                             <div className="img-container">
                                 <img
                                     src={
-                                        companyData.imgUrl
-                                            ? companyData.imgUrl
+                                        companyData?.imgUrl
+                                            ? companyData?.imgUrl
                                             : noImage
                                     }
-                                    alt={companyData.companyName}
+                                    alt={companyData?.companyName}
                                 />
                             </div>
                         </div>
@@ -79,43 +81,43 @@ const ViewCompany = ({
                             </div>
                             <div className="col-6">
                                 <p>
-                                    {companyData.companyName
-                                        ? companyData.name
+                                    {companyData?.companyName
+                                        ? companyData?.companyName
                                         : "-"}
                                 </p>
                                 <p>
-                                    {companyData.ownerName
-                                        ? companyData.ownerName
+                                    {companyData?.ownerName
+                                        ? companyData?.ownerName
                                         : "-"}
                                 </p>
                                 <p>
-                                    {companyData.phoneNumber
-                                        ? companyData.phoneNumber
+                                    {companyData?.phoneNumber
+                                        ? companyData?.phoneNumber
                                         : "-"}
                                 </p>
                                 <p>
-                                    {companyData.email
-                                        ? companyData.email
+                                    {companyData?.email
+                                        ? companyData?.email
                                         : "-"}
                                 </p>
                                 <p>
-                                    {companyData.website
-                                        ? companyData.website
+                                    {companyData?.website
+                                        ? companyData?.website
                                         : "-"}
                                 </p>
                                 <p>
-                                    {companyData.Template
-                                        ? companyData.Template
+                                    {companyData?.template
+                                        ? companyData?.template
                                         : "-"}
                                 </p>
                                 <p>
-                                    {companyData.address
-                                        ? companyData.address
+                                    {companyData?.address
+                                        ? companyData?.address
                                         : "-"}
                                 </p>
                                 <p>
-                                    {companyData.description
-                                        ? companyData.description
+                                    {companyData?.companyDescription
+                                        ? companyData?.companyDescription
                                         : "-"}
                                 </p>
                             </div>

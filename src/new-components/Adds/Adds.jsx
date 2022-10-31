@@ -25,7 +25,6 @@ const Adds = () => {
         try {
             const data = await GetAllAdds();
             setAddsData(data?.data?.result?.result);
-            console.log(data?.data?.result.users);
             setLoading(false);
         } catch (error) {
             setLoading(false);

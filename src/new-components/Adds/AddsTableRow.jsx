@@ -122,7 +122,7 @@ const AddsTableRow = ({
                 <ViewCompany
                     show={profileModalOpen}
                     handleCancel={handleProfileCancel}
-                    userData={companyData}
+                    companyData={companyData}
                 />
             )}
         </>
