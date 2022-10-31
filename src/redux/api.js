@@ -14,8 +14,14 @@ export const UpdateUser = (userId, data) =>
 export const DeleteUser = (userId) =>
     newAPI.patch("/user/one?type=DELETE-USER", { userId: userId });
 export const BulkUserUpload = (data) => newAPI.post("/user/bulk-add", data);
+export const GetUserByName = () => newAPI.get("/user/userName");
 
 
+// Adds
+
+export const CreateAdds = (data) => newAPI.post("/adds", data)
+export const GetAllAdds = (data) => newAPI.get("/adds/allAdds");
+export const GetSingleCompany = (id) => newAPI.get(`/adds?companyId=${id}`);
 
 
 // export const GetQuery = () => NewAPI.get('/api/admin/query?queryIndex=0');

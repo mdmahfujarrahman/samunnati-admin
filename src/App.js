@@ -4,6 +4,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddAdds from './new-components/Adds/AddAdds';
+import Adds from './new-components/Adds/Adds';
 import LoginPage from './new-components/LoginPage';
 import NavSidebar from './new-components/NavSidebar';
 import AddUser from './new-components/User/AddUser';
@@ -17,17 +19,18 @@ const App = () => {
       <Router>
           <Switch>
               <Route path="/" exact component={LoginPage} />
-                  <NavSidebar>
-                      <Route exact path="/users" component={User} />
-                      <Route exact path="/users/add" component={AddUser} />
-                      <Route
-                          exact
-                          path="/users/bulk-add"
-                          component={UploadBulkUser}
-                      />
-                      <Route exact path="/user/:id" component={EditUser} />
-                      {/* <Route path="/adds" exact component={Query} /> */}
-                      {/* <Route path="/Query" exact component={Query} />
+              <NavSidebar>
+                  <Route exact path="/users" component={User} />
+                  <Route exact path="/users/add" component={AddUser} />
+                  <Route
+                      exact
+                      path="/users/bulk-add"
+                      component={UploadBulkUser}
+                  />
+                  <Route exact path="/user/:id" component={EditUser} />
+                  <Route path="/adds" exact component={Adds} />
+                  <Route exact path="/adds/add" component={AddAdds} />
+                  {/* <Route path="/Query" exact component={Query} />
           <Route path="/category" exact component={Category} />
           <Route path="/category/add" exact component={AddCategory} />
           <Route path="/dashboard" exact component={Dashboard} />
@@ -38,12 +41,12 @@ const App = () => {
             path="/property/unitdetail/:id"
             exact
             component={UnitDetails} */}
-                      {/* <Route
+                  {/* <Route
             path="/property/unitdetail/add/:id"
             exact
             component={AddUnitDetailsForm}
           /> */}
-                      {/* <Route
+                  {/* <Route
             path="/property/adddev/:id"
             exact
             component={AddDeveloperForm}
@@ -53,7 +56,7 @@ const App = () => {
             exact
             component={EditDeveloperForm}
           /> */}
-                      {/* <Route path="/prop/req" exact component={Requirements} />
+                  {/* <Route path="/prop/req" exact component={Requirements} />
           <Route path="/career" exact component={Career} />
           <Route path="/career/add" exact component={AddCareerForm} />
           <Route path="/career/edit/:id" exact component={EditCareerForm} />
@@ -81,16 +84,16 @@ const App = () => {
             component={EditTrendingLoansForm}
           />
           <Route path="/contacts" exact component={ContactUs} /> */}
-                      <ToastContainer
-                          position="top-right"
-                          autoClose={5000}
-                          hideProgressBar={false}
-                          closeOnClick={true}
-                          pauseOnHover={true}
-                          draggable={true}
-                          progress={undefined}
-                      />
-                  </NavSidebar>
+                  <ToastContainer
+                      position="top-right"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      closeOnClick={true}
+                      pauseOnHover={true}
+                      draggable={true}
+                      progress={undefined}
+                  />
+              </NavSidebar>
           </Switch>
       </Router>
   );
