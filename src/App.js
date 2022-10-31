@@ -14,7 +14,7 @@ import User from './new-components/User/User';
 export const history = createHistory();
 const App = () => {
   return (
-      <Router history={history}>
+      <Router>
           <Switch>
               <Route path="/" exact component={LoginPage} />
                   <NavSidebar>

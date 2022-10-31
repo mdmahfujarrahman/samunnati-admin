@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CreateUser } from "../../redux/api";
@@ -8,6 +8,7 @@ import "../../styles/newstyles/addPropertyForm.css";
 const AddUser = () => {
     const [spinn, setSpinn] = useState(false);
     const history = useHistory();
+    const [childMarid, setChildMarid] = useState("");
     const [userData, setUserData] = useState({
         name: "",
         age: "",
@@ -20,15 +21,40 @@ const AddUser = () => {
         residenceNumber: "",
         address: "",
         imgUrl: "",
+        maritalStatus: "",
+        wifeName: "",
+        children: [],
+    });
+    const [isMarried, setIsMarried] = useState(false);
+    const [childrenData, setChildrenData] = useState({
+        name: "",
+        phoneNumber: "",
+        maritalStatus: "",
     });
 
     const handleInputchange = (e) => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value });
     };
+
+    const handleChildInput = (e) => {
+        const { name, value } = e.target;
+        setChildrenData({ ...childrenData, [name]: value });
+    };
+
     const handleFile = (e) => {
         setUserData({ ...userData, imgUrl: e.target.files[0] });
     };
+
+    useEffect(() => {
+        if (userData?.maritalStatus === "Married") {
+            setIsMarried(true);
+        } else {
+            setIsMarried(false);
+        }
+    }, [userData?.maritalStatus]);
+
+    console.log(isMarried);
 
     const createUser = async (newData) => {
         try {
@@ -48,22 +74,40 @@ const AddUser = () => {
     const handlesubmit = async (e) => {
         setSpinn(true);
         e.preventDefault();
-        const formdata = new FormData();
-        formdata.append("file", userData.imgUrl);
         let data;
-        try {
-            data = await axios.post(
-                "https://aws-file-upload-v1.herokuapp.com/api/v2/samunnati/upload/file",
-                formdata
-            );
-        } catch (error) {
-            console.log(error);
+        if (userData.imgUrl) {
+            const formdata = new FormData();
+            formdata.append("file", userData.imgUrl);
+
+            try {
+                data = await axios.post(
+                    "https://aws-file-upload-v1.herokuapp.com/api/v2/samunnati/upload/file",
+                    formdata
+                );
+            } catch (error) {
+                console.log(error);
+            }
         }
-        const newData = {
-            ...userData,
-            imgUrl: data?.data?.link || "",
-        };
-        createUser(newData);
+
+        if (userData.maritalStatus === "single") {
+            const newData = {
+                ...userData,
+                wifeName: "",
+                children: [],
+                imgUrl: data?.data?.link || "",
+            };
+
+            console.log(newData);
+            createUser(newData);
+        } else {
+            const newData = {
+                ...userData,
+                children: [{ ...childrenData, childMarid }],
+                imgUrl: data?.data?.link || "",
+            };
+            console.log("inside Else:", newData);
+            createUser(newData);
+        }
     };
     return (
         <form>
@@ -256,6 +300,132 @@ const AddUser = () => {
                         </div>
                     </div>
                     <div className="addproperty-alignRow">
+                        <div className="addproperty-inputFieldDiv">
+                            <label className="addproperty-inputLabel">
+                                Marital Status{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <select
+                                name="maritalStatus"
+                                onChange={handleInputchange}
+                                className="addproperty-inputField"
+                            >
+                                <option hidden>Choose Marital Status</option>
+                                <option value="Married">Married</option>
+                                <option value="Single">Single</option>
+                            </select>
+                        </div>
+                        {isMarried && (
+                            <div className="addproperty-inputFieldDiv">
+                                <label className="addproperty-inputLabel">
+                                    Wife Name{" "}
+                                    <span
+                                        style={{
+                                            color: "red",
+                                            fontSize: "1.2rem",
+                                        }}
+                                    >
+                                        *
+                                    </span>{" "}
+                                </label>
+                                <input
+                                    type="tel"
+                                    name="wifeName"
+                                    placeholder="Wife Name"
+                                    className="addproperty-inputField"
+                                    onChange={handleInputchange}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    {isMarried && (
+                        <>
+                            <div className="addproperty-alignRow">
+                                <div className="addproperty-inputFieldDiv">
+                                    <label className="addproperty-inputLabel">
+                                        Children Name{" "}
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                fontSize: "1.2rem",
+                                            }}
+                                        >
+                                            *
+                                        </span>{" "}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        placeholder="Children Name"
+                                        className="addproperty-inputField"
+                                        onChange={handleChildInput}
+                                    />
+                                </div>
+                                <div className="addproperty-inputFieldDiv">
+                                    <label className="addproperty-inputLabel">
+                                        Children Phone Number{" "}
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                fontSize: "1.2rem",
+                                            }}
+                                        >
+                                            *
+                                        </span>{" "}
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        name="phoneNumber"
+                                        placeholder="Children Phone Number"
+                                        className="addproperty-inputField"
+                                        onChange={handleChildInput}
+                                    />
+                                </div>
+                            </div>
+                            <div className="addproperty-alignRowChildren">
+                                <div className="addproperty-inputFieldDiv">
+                                    <label className="addproperty-inputLabel">
+                                        Children Marital Status{" "}
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                fontSize: "1.2rem",
+                                            }}
+                                        >
+                                            *
+                                        </span>{" "}
+                                    </label>
+                                    <select
+                                        onChange={(e) =>
+                                            setChildMarid(e.target.value)
+                                        }
+                                        className="addproperty-inputField"
+                                    >
+                                        <option value="">
+                                            Choose Marital Status
+                                        </option>
+                                        <option value="Married">Married</option>
+                                        <option value="Single">Single</option>
+                                    </select>
+                                </div>
+                                {/* <div className="addproperty-inputFieldDivChildren">
+                                    <button className="add-childrenBtn">
+                                        {" "}
+                                        Add more children
+                                    </button>
+                                    <button className="add-childrenBtn">
+                                        {" "}
+                                        Add children
+                                    </button>
+                                </div> */}
+                            </div>{" "}
+                        </>
+                    )}
+                    <div className="addproperty-alignRow">
                         <div className="addproperty-textFieldDiv">
                             <label className="addproperty-inputLabel">
                                 Address{" "}
@@ -282,10 +452,10 @@ const AddUser = () => {
                             Add New User
                             {spinn ? (
                                 <div
-                                    class="spinner-border spinner-border-sm text-white mx-2"
+                                    className="spinner-border spinner-border-sm text-white mx-2"
                                     role="status"
                                 >
-                                    <span class="visually-hidden">
+                                    <span className="visually-hidden">
                                         Loading...
                                     </span>
                                 </div>

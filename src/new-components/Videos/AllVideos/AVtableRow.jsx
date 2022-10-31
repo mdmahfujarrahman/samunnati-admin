@@ -1,53 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteProperty } from '../../../redux/api';
-import DeleteModal from '../../utils/DeleteModal';
+import React from "react";
 const AVtableRow = () => {
-  // const [deleteModalOpen, setdeleteModalOpen] = useState(false);
-  // const [ConfirmDelete, setConfirmDelete] = useState(false);
-  // const handleDeleteConfirm = () => {
-  //   setdeleteModalOpen(false);
-  //   setConfirmDelete(true);
-  // };
-  // const handleDeleteCancel = () => {
-  //   setdeleteModalOpen(false);
-  // };
-  // const handleDeleteProperty = (e) => {
-  //   e.preventDefault();
-  //   setdeleteModalOpen(true);
-  // };
-  // const handleConfirmDeleteProperty = async (id) => {
-  //   try {
-  //     const updatedproperty = allproperty.filter((b) => b._id !== id);
-  //     setallproperty(updatedproperty);
-  //     await deleteProperty(id);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // useEffect(() => {
-  //   if (ConfirmDelete) {
-  //     handleConfirmDeleteProperty(property._id);
-  //   }
-  // }, [ConfirmDelete]);
+    // const [deleteModalOpen, setdeleteModalOpen] = useState(false);
+    // const [ConfirmDelete, setConfirmDelete] = useState(false);
+    // const handleDeleteConfirm = () => {
+    //   setdeleteModalOpen(false);
+    //   setConfirmDelete(true);
+    // };
+    // const handleDeleteCancel = () => {
+    //   setdeleteModalOpen(false);
+    // };
+    // const handleDeleteProperty = (e) => {
+    //   e.preventDefault();
+    //   setdeleteModalOpen(true);
+    // };
+    // const handleConfirmDeleteProperty = async (id) => {
+    //   try {
+    //     const updatedproperty = allproperty.filter((b) => b._id !== id);
+    //     setallproperty(updatedproperty);
+    //     await deleteProperty(id);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    // useEffect(() => {
+    //   if (ConfirmDelete) {
+    //     handleConfirmDeleteProperty(property._id);
+    //   }
+    // }, [ConfirmDelete]);
 
-  return (
-    <>
-      <tr>
-        <td>1</td>
-        <td>New</td>
-        <td>ok</td>
-        <td>Ghazibad</td>
-        {/* <td style={{ textAlign: 'center' }}>
+    return (
+        <>
+            <tr>
+                <td>1</td>
+                <td>New</td>
+                <td>ok</td>
+                <td>Ghazibad</td>
+                {/* <td style={{ textAlign: 'center' }}>
           {property.unitDetails.length ? (
             <Link to={`#`}>
               <button className="btn btn-outline-secondary btn-sm">View</button>
             </Link>
           ) : (
             <Link to={`#`}>
-              <button type="button" class="btn btn-outline-success btn-sm">
+              <button type="button" className="btn btn-outline-success btn-sm">
                 Add
               </button>
             </Link>
@@ -60,7 +55,7 @@ const AVtableRow = () => {
             </Link>
           ) : (
             <Link to={`#`}>
-              <button type="button" class="btn btn-outline-success btn-sm">
+              <button type="button" className="btn btn-outline-success btn-sm">
                 Add
               </button>
             </Link>
@@ -84,8 +79,8 @@ const AVtableRow = () => {
             </Link>
           </div>
         </td> */}
-      </tr>
-      {/* {deleteModalOpen && (
+            </tr>
+            {/* {deleteModalOpen && (
         <DeleteModal
           show={deleteModalOpen}
           handleConfirm={handleDeleteConfirm}
@@ -93,8 +88,8 @@ const AVtableRow = () => {
           categorytag="Property"
         />
       )} */}
-    </>
-  );
+        </>
+    );
 };
 
 export default AVtableRow;

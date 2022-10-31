@@ -309,10 +309,10 @@ const EditUser = () => {
                             Update
                             {spinn ? (
                                 <div
-                                    class="spinner-border spinner-border-sm text-white mx-2"
+                                    className="spinner-border spinner-border-sm text-white mx-2"
                                     role="status"
                                 >
-                                    <span class="visually-hidden">
+                                    <span className="visually-hidden">
                                         Loading...
                                     </span>
                                 </div>

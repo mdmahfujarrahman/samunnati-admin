@@ -43,6 +43,12 @@
     justify-content: space-between;
     align-items: center;
 }
+.addproperty-alignRowChildren {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .addbulk-alignRow {
     width: 100%;
     display: flex;
@@ -57,7 +63,15 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
+    margin-top: 1.5rem;
+}
+.addproperty-inputFieldDivChildren {
+    width: 46%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: flex-end;
     margin-top: 1.5rem;
 }
 
@@ -127,6 +141,22 @@
 /* Submit btn Detail */
 .addproperty-submitDetailBtn {
     width: 100%;
+    border: none;
+    outline: none;
+    background: #1c1b4d;
+    padding: 15px;
+    box-shadow: 0px 4px 12px rgba(55, 81, 255, 0.24);
+    border-radius: 8px;
+    font-family: Mulish;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 0.2px;
+    color: #ffffff;
+    cursor: pointer;
+}
+.add-childrenBtn {
+    width: 50%;
     border: none;
     outline: none;
     background: #1c1b4d;

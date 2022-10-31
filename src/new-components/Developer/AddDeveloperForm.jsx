@@ -1,242 +1,270 @@
-import React, { useEffect, useRef, useState } from 'react';
-import '../../styles/newstyles/addDeveloperForm.css';
-import { useParams, useHistory } from 'react-router-dom';
-import { updateProperty } from '../../redux/api';
-import { storage } from '../../firebase';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { storage } from "../../firebase";
+import { updateProperty } from "../../redux/api";
+import "../../styles/newstyles/addDeveloperForm.css";
 
 const AddDeveloperForm = () => {
-  const isFirstRender = useRef(true);
-  const [spinn, setspinn] = useState(false);
-  const history = useHistory();
-  const { id } = useParams();
+    const isFirstRender = useRef(true);
+    const [spinn, setspinn] = useState(false);
+    const history = useHistory();
+    const { id } = useParams();
 
-  const [developerData, setdeveloperData] = useState({
-    name: '',
-    picture: '',
-    description: '',
-    area: '',
-    possessions: '',
-    totalProjects: '',
-  });
+    const [developerData, setdeveloperData] = useState({
+        name: "",
+        picture: "",
+        description: "",
+        area: "",
+        possessions: "",
+        totalProjects: "",
+    });
 
-  const [error, setError] = useState({
-    name: false,
-    picture: false,
-    description: false,
-    area: false,
-    possessions: false,
-    totalProjects: false,
-  });
+    const [error, setError] = useState({
+        name: false,
+        picture: false,
+        description: false,
+        area: false,
+        possessions: false,
+        totalProjects: false,
+    });
 
-  const handleInputchange = (name) => (event) => {
-    setdeveloperData({ ...developerData, [name]: event.target.value });
-  };
-
-  const handlerValidatedFormSubmit = async () => {
-    try {
-      const payloaddata = {
-        id: id,
-        developer: developerData,
-      };
-      await updateProperty(payloaddata);
-      history.push(`/property/`);
-      setspinn(false);
-    } catch (error) {
-      console.log(error);
-      setspinn(false);
-    }
-  };
-  const handleFileInputchange = (name) => async (e) => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    if (!file) return;
-    const storageRef = ref(storage, `${name}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {},
-      (error) => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setdeveloperData({ ...developerData, picture: url });
-        });
-      }
-    );
-  };
-
-  const handlesubmit = (e) => {
-    e.preventDefault();
-    const updatedError = {
-      name: developerData.name === '' ? true : false,
-      picture: developerData.picture === '' ? true : false,
-      description: developerData.description === '' ? true : false,
-      area: developerData.area === '' ? true : false,
-      possessions: developerData.possessions === '' ? true : false,
-      totalProjects: developerData.totalProjects === '' ? true : false,
+    const handleInputchange = (name) => (event) => {
+        setdeveloperData({ ...developerData, [name]: event.target.value });
     };
-    setError(updatedError);
-  };
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    } else {
-      if (
-        !error.name &&
-        !error.picture &&
-        !error.description &&
-        !error.area &&
-        !error.possessions &&
-        !error.totalProjects
-      ) {
-        setspinn(true);
-        handlerValidatedFormSubmit();
-      }
-    }
-  }, [error]);
 
-  return (
-    <form>
-      <div className="developer-container">
-        <div className="developer-personalDetails">
-          {/* 1st row */}
-          <div className="developer-alignRow">
-            {/* Name */}
-            <div className="developer-inputFieldDiv form-group">
-              <label className="developer-inputLabel ">
-                Name <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="text"
-                name="Name"
-                placeholder="Name"
-                className="developer-inputField"
-                id={error.name ? 'red-border' : ''}
-                onChange={handleInputchange('name')}
-              />
-            </div>
-            {/* Area*/}
-            <div className="developer-inputFieldDiv form-group">
-              <label className="developer-inputLabel">
-                Area <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="text"
-                id={error.area ? 'red-border' : ''}
-                name="Area"
-                placeholder="Area"
-                className="developer-inputField"
-                onChange={handleInputchange('area')}
-              />
-            </div>
-          </div>
-          {/* 2nd Row */}
-          <div className="developer-alignRow">
-            {/* Possessions */}
-            <div className="developer-inputFieldDiv form-group">
-              <label className="developer-inputLabel">
-                Possessions{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="text"
-                id={error.possessions ? 'red-border' : ''}
-                name="Possessions"
-                placeholder="Possessions"
-                className="developer-inputField"
-                onChange={handleInputchange('possessions')}
-              />
-            </div>
-            {/* TotalProjects*/}
-            <div className="developer-inputFieldDiv form-group">
-              <label className="developer-inputLabel">
-                TotalProjects{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="number"
-                id={error.totalProjects ? 'red-border' : ''}
-                name="TotalProjects"
-                placeholder="TotalProjects"
-                className="developer-inputField"
-                onChange={handleInputchange('totalProjects')}
-              />
-            </div>
-          </div>
-          {/* 3rd Row  */}
-          <div className="developer-alignRow">
-            {/* Picture */}
-            <div className="developer-textFieldDiv form-group">
-              <label className="developer-inputLabel ">
-                Picture{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <input
-                type="file"
-                name="Picture"
-                placeholder="Picture"
-                className="developer-inputField"
-                id={error.picture ? 'red-border' : ''}
-                onChange={handleFileInputchange('developer')}
-              />
+    const handlerValidatedFormSubmit = async () => {
+        try {
+            const payloaddata = {
+                id: id,
+                developer: developerData,
+            };
+            await updateProperty(payloaddata);
+            history.push(`/property/`);
+            setspinn(false);
+        } catch (error) {
+            console.log(error);
+            setspinn(false);
+        }
+    };
+    const handleFileInputchange = (name) => async (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        if (!file) return;
+        const storageRef = ref(storage, `${name}/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {},
+            (error) => {
+                alert(error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                    setdeveloperData({ ...developerData, picture: url });
+                });
+            }
+        );
+    };
 
-              <div className="developer-inputFieldDiv-image">
-                {developerData.picture == '' ? (
-                  <h6>No Image Uploaded</h6>
-                ) : (
-                  <img
-                    src={developerData.picture}
-                    height="100px"
-                    width="100px"
-                    alt="Developer image"
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-          {/* 4th Row */}
-          <div className="developer-alignRow">
-            {/* Description*/}
-            <div className="developer-textFieldDiv">
-              <label className="developer-inputLabel">
-                Description{' '}
-                <span style={{ color: 'red', fontSize: '1.2rem' }}>*</span>{' '}
-              </label>
-              <textarea
-                className="developer-textField"
-                onChange={handleInputchange('description')}
-                name="caption"
-                id={error.description ? 'red-border' : ''}
-              ></textarea>
-            </div>
-          </div>
-          {/* Submit */}`
-          <div className="developer-submitDetailDiv">
-            <button
-              className="developer-submitDetailBtn"
-              onClick={handlesubmit}
-            >
-              Add Developer
-              {spinn ? (
-                <div
-                  class="spinner-border spinner-border-sm text-white mx-2"
-                  role="status"
-                >
-                  <span class="visually-hidden">Loading...</span>
+    const handlesubmit = (e) => {
+        e.preventDefault();
+        const updatedError = {
+            name: developerData.name === "" ? true : false,
+            picture: developerData.picture === "" ? true : false,
+            description: developerData.description === "" ? true : false,
+            area: developerData.area === "" ? true : false,
+            possessions: developerData.possessions === "" ? true : false,
+            totalProjects: developerData.totalProjects === "" ? true : false,
+        };
+        setError(updatedError);
+    };
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        } else {
+            if (
+                !error.name &&
+                !error.picture &&
+                !error.description &&
+                !error.area &&
+                !error.possessions &&
+                !error.totalProjects
+            ) {
+                setspinn(true);
+                handlerValidatedFormSubmit();
+            }
+        }
+    }, [error]);
+
+    return (
+        <form>
+            <div className="developer-container">
+                <div className="developer-personalDetails">
+                    {/* 1st row */}
+                    <div className="developer-alignRow">
+                        {/* Name */}
+                        <div className="developer-inputFieldDiv form-group">
+                            <label className="developer-inputLabel ">
+                                Name{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="text"
+                                name="Name"
+                                placeholder="Name"
+                                className="developer-inputField"
+                                id={error.name ? "red-border" : ""}
+                                onChange={handleInputchange("name")}
+                            />
+                        </div>
+                        {/* Area*/}
+                        <div className="developer-inputFieldDiv form-group">
+                            <label className="developer-inputLabel">
+                                Area{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="text"
+                                id={error.area ? "red-border" : ""}
+                                name="Area"
+                                placeholder="Area"
+                                className="developer-inputField"
+                                onChange={handleInputchange("area")}
+                            />
+                        </div>
+                    </div>
+                    {/* 2nd Row */}
+                    <div className="developer-alignRow">
+                        {/* Possessions */}
+                        <div className="developer-inputFieldDiv form-group">
+                            <label className="developer-inputLabel">
+                                Possessions{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="text"
+                                id={error.possessions ? "red-border" : ""}
+                                name="Possessions"
+                                placeholder="Possessions"
+                                className="developer-inputField"
+                                onChange={handleInputchange("possessions")}
+                            />
+                        </div>
+                        {/* TotalProjects*/}
+                        <div className="developer-inputFieldDiv form-group">
+                            <label className="developer-inputLabel">
+                                TotalProjects{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="number"
+                                id={error.totalProjects ? "red-border" : ""}
+                                name="TotalProjects"
+                                placeholder="TotalProjects"
+                                className="developer-inputField"
+                                onChange={handleInputchange("totalProjects")}
+                            />
+                        </div>
+                    </div>
+                    {/* 3rd Row  */}
+                    <div className="developer-alignRow">
+                        {/* Picture */}
+                        <div className="developer-textFieldDiv form-group">
+                            <label className="developer-inputLabel ">
+                                Picture{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="file"
+                                name="Picture"
+                                placeholder="Picture"
+                                className="developer-inputField"
+                                id={error.picture ? "red-border" : ""}
+                                onChange={handleFileInputchange("developer")}
+                            />
+
+                            <div className="developer-inputFieldDiv-image">
+                                {developerData.picture == "" ? (
+                                    <h6>No Image Uploaded</h6>
+                                ) : (
+                                    <img
+                                        src={developerData.picture}
+                                        height="100px"
+                                        width="100px"
+                                        alt="Developer image"
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    {/* 4th Row */}
+                    <div className="developer-alignRow">
+                        {/* Description*/}
+                        <div className="developer-textFieldDiv">
+                            <label className="developer-inputLabel">
+                                Description{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <textarea
+                                className="developer-textField"
+                                onChange={handleInputchange("description")}
+                                name="caption"
+                                id={error.description ? "red-border" : ""}
+                            ></textarea>
+                        </div>
+                    </div>
+                    {/* Submit */}`
+                    <div className="developer-submitDetailDiv">
+                        <button
+                            className="developer-submitDetailBtn"
+                            onClick={handlesubmit}
+                        >
+                            Add Developer
+                            {spinn ? (
+                                <div
+                                    className="spinner-border spinner-border-sm text-white mx-2"
+                                    role="status"
+                                >
+                                    <span className="visually-hidden">
+                                        Loading...
+                                    </span>
+                                </div>
+                            ) : (
+                                ""
+                            )}
+                        </button>
+                    </div>
+                    `
                 </div>
-              ) : (
-                ''
-              )}
-            </button>
-          </div>
-          `
-        </div>
-      </div>
-    </form>
-  );
+            </div>
+        </form>
+    );
 };
 
 export default AddDeveloperForm;

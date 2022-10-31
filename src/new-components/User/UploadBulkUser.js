@@ -95,10 +95,10 @@ const UploadBulkUser = () => {
                         Add Bulk User
                         {loading ? (
                             <div
-                                class="spinner-border spinner-border-sm text-white mx-2"
+                                className="spinner-border spinner-border-sm text-white mx-2"
                                 role="status"
                             >
-                                <span class="visually-hidden">Loading...</span>
+                                <span className="visually-hidden">Loading...</span>
                             </div>
                         ) : (
                             ""

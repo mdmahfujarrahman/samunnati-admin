@@ -23,6 +23,8 @@ const UtableRow = ({
     setUserData,
     UserData,
     setFilterData,
+    wifeName,
+    maritalStatus,
     filterData,
 }) => {
     const [deleteModalOpen, setdeleteModalOpen] = useState(false);
@@ -93,6 +95,8 @@ const UtableRow = ({
                 <td>{email ? email : "-"}</td>
                 <td>{residenceNumber ? residenceNumber : "-"}</td>
                 <td>{address ? address : "-"}</td>
+                <td>{maritalStatus ? maritalStatus : "-"}</td>
+                <td>{wifeName ? wifeName : "-"}</td>
                 <td className="action-btn">
                     <button
                         onClick={() => handleViewProfile(userId)}

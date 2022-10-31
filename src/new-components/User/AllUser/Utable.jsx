@@ -19,6 +19,8 @@ const Utable = ({ UserData, setUserData, filterData, setFilterData }) => {
                         <th>Email</th>
                         <th>Residence Number</th>
                         <th>Address</th>
+                        <th>Marital Status</th>
+                        <th>Wife Name</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -44,6 +46,8 @@ const Utable = ({ UserData, setUserData, filterData, setFilterData }) => {
                                       residenceNumber={item.residenceNumber}
                                       address={item.address}
                                       imgUrl={item.imgUrl}
+                                      maritalStatus={item.maritalStatus}
+                                      wifeName={item.wifeName}
                                       setFilterData={setFilterData}
                                       setUserData={setUserData}
                                   />
@@ -70,6 +74,10 @@ const Utable = ({ UserData, setUserData, filterData, setFilterData }) => {
                                       residenceNumber={
                                           item.userInfoEng?.residenceNumber
                                       }
+                                      maritalStatus={
+                                          item.userInfoEng?.maritalStatus
+                                      }
+                                      wifeName={item.userInfoEng?.wifeName}
                                       address={item.userInfoEng?.address}
                                       imgUrl={item.userInfoEng?.imgUrl}
                                       setUserData={setUserData}

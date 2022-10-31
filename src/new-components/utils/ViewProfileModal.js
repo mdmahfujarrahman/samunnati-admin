@@ -82,6 +82,8 @@ const ViewProfileModal = ({
                                     <p>Residence Number:</p>
                                     <p>Email:</p>
                                     <p>Address:</p>
+                                    <p>Marital Status:</p>
+                                    <p>Wife Name:</p>
                                 </div>
                                 <div className="col-6">
                                     <p>
@@ -134,6 +136,16 @@ const ViewProfileModal = ({
                                             ? userInfoEng.address
                                             : "-"}
                                     </p>
+                                    <p>
+                                        {userInfoEng.maritalStatus
+                                            ? userInfoEng.maritalStatus
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoEng.wifeName
+                                            ? userInfoEng.wifeName
+                                            : "-"}
+                                    </p>
                                 </div>
                             </div>
                         </Show>
@@ -150,6 +162,8 @@ const ViewProfileModal = ({
                                     <p>Residence Number:</p>
                                     <p>Email:</p>
                                     <p>Address:</p>
+                                    <p>Marital Status:</p>
+                                    <p>Wife Name:</p>
                                 </div>
                                 <div className="col-6">
                                     <p>{userInfoHindi.name}</p>
@@ -196,6 +210,16 @@ const ViewProfileModal = ({
                                     <p>
                                         {userInfoHindi.address
                                             ? userInfoHindi.address
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.maritalStatus
+                                            ? userInfoHindi.maritalStatus
+                                            : "-"}
+                                    </p>
+                                    <p>
+                                        {userInfoHindi.wifeName
+                                            ? userInfoHindi.wifeName
                                             : "-"}
                                     </p>
                                 </div>

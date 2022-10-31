@@ -1,11 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import "../../styles/newstyles/addPropertyForm.css";
-import { useHistory } from "react-router-dom";
-import { addProperty } from "../../redux/api";
-import { storage } from "../../firebase";
-import Select from "react-select";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import axios from "axios";
+import React, { useRef, useState } from "react";
+import Select from "react-select";
+import "../../styles/newstyles/addPropertyForm.css";
 
 const AddVideoForm = () => {
     const isFirstRender = useRef(true);
@@ -192,10 +188,10 @@ const AddVideoForm = () => {
                             Add Property
                             {spinn ? (
                                 <div
-                                    class="spinner-border spinner-border-sm text-white mx-2"
+                                    className="spinner-border spinner-border-sm text-white mx-2"
                                     role="status"
                                 >
-                                    <span class="visually-hidden">
+                                    <span className="visually-hidden">
                                         Loading...
                                     </span>
                                 </div>
