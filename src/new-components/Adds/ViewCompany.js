@@ -23,39 +23,6 @@ const ViewCompany = ({
             >
                 <Modal.Body>
                     <div>
-                        {/* <div className="toggle-container">
-                            <p>
-                                {language
-                                    ? userInfoHindi.name
-                                    : userInfoEng.name}
-                            </p>
-                            <div className="toggle-btn">
-                                <label
-                                    className={language ? "" : "toggle-color"}
-                                    for="flexSwitchCheckChecked"
-                                >
-                                    English
-                                </label>
-                                <div className="form-check form-switch form-switch-xl">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        onChange={(e) =>
-                                            setLanguage(e.target.checked)
-                                        }
-                                        id="flexSwitchCheckChecked"
-                                    />
-                                    <label
-                                        className={
-                                            language ? "toggle-color" : ""
-                                        }
-                                        for="flexSwitchCheckChecked"
-                                    >
-                                        हिन्दी
-                                    </label>
-                                </div>
-                            </div>
-                        </div> */}
                         <div className="profile-img">
                             <div className="img-container">
                                 <img
