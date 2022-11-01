@@ -86,14 +86,14 @@ const Adds = () => {
                         {searchInput.length ? (
                             <AddsTable
                                 filterData={filterData}
-                                setUserData={setAddsData}
+                                setAddsData={setAddsData}
                                 setFilterData={setFilterData}
                                 addsData={addsData}
                             />
                         ) : (
                             <AddsTable
                                 addsData={addsData}
-                                setUserData={setAddsData}
+                                setAddsData={setAddsData}
                             />
                         )}
                     </div>

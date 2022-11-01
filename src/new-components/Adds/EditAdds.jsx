@@ -2,10 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { CreateAdds, GetUserByName } from "../../redux/api";
+import {
+    GetSingleCompany,
+    GetUserByName,
+    UpdateCompany,
+} from "../../redux/api";
 import "../../styles/newstyles/addPropertyForm.css";
 
-const AddAdds = () => {
+const EditAdds = () => {
+    const id = window.location.pathname.split("/")[3];
     const [spinn, setSpinn] = useState(false);
     const history = useHistory();
     const [ownerName, setOwnerName] = useState([]);
@@ -20,15 +25,16 @@ const AddAdds = () => {
         website: "",
         template: "",
     });
-
-    const loadAllUser = async () => {
-        const data = await GetUserByName();
-        setOwnerName(data?.data?.result);
+    const loadCompanyData = async (id) => {
+        const data = await GetSingleCompany(id);
+        setCompanyData(data?.data?.result);
+        const owner_name = await GetUserByName();
+        setOwnerName(owner_name?.data?.result);
     };
 
     useEffect(() => {
-        loadAllUser();
-    }, []);
+        loadCompanyData(id);
+    }, [id]);
 
     const handleInputchange = (e) => {
         const { name, value } = e.target;
@@ -39,14 +45,14 @@ const AddAdds = () => {
         setCompanyData({ ...companyData, imgUrl: e.target.files[0] });
     };
 
-    const createCompany = async (newData) => {
+    const updateCompany = async (companyId, newData) => {
         try {
-            const data = await CreateAdds(newData);
+            const data = await UpdateCompany(companyId, newData);
             setCompanyData(data?.data?.data);
             if (data.status === 200) {
                 history.push("/adds");
             }
-            toast.success(`${newData.companyName} added successfully`);
+            toast.success(`${newData.companyName} update successfully`);
             setSpinn(false);
         } catch (error) {
             setSpinn(false);
@@ -78,7 +84,7 @@ const AddAdds = () => {
             imgUrl: data?.data?.link || "",
         };
         console.log(newData);
-        createCompany(newData);
+        updateCompany(id, newData);
     };
     return (
         <form>
@@ -98,6 +104,7 @@ const AddAdds = () => {
                             <input
                                 type="text"
                                 name="companyName"
+                                value={companyData?.companyName}
                                 placeholder="Company Name"
                                 className="addproperty-inputField"
                                 onChange={handleInputchange}
@@ -115,6 +122,7 @@ const AddAdds = () => {
                             <input
                                 type="text"
                                 name="phoneNumber"
+                                value={companyData?.phoneNumber}
                                 placeholder="Company Phone Number"
                                 className="addproperty-inputField"
                                 onChange={handleInputchange}
@@ -137,6 +145,7 @@ const AddAdds = () => {
                             <input
                                 type="email"
                                 name="email"
+                                value={companyData?.email}
                                 placeholder="Company Email"
                                 className="addproperty-inputField"
                                 onChange={handleInputchange}
@@ -155,6 +164,7 @@ const AddAdds = () => {
                             <input
                                 type="text"
                                 name="website"
+                                value={companyData?.email}
                                 placeholder="Company Website"
                                 className="addproperty-inputField"
                                 onChange={handleInputchange}
@@ -177,7 +187,9 @@ const AddAdds = () => {
                                 onChange={handleInputchange}
                                 className="addproperty-inputField"
                             >
-                                <option hidden>Choose Owner Name</option>
+                                <option checked={companyData?.ownerName} hidden>
+                                    {companyData?.ownerName}
+                                </option>
                                 {ownerName.map((user) => (
                                     <option
                                         key={user._id}
@@ -202,6 +214,7 @@ const AddAdds = () => {
                             <input
                                 type="file"
                                 name="video"
+                                // value={companyData?.imgUrl}
                                 placeholder="Upload Video"
                                 className="addproperty-inputField"
                                 onChange={handleFile}
@@ -221,6 +234,7 @@ const AddAdds = () => {
                             <input
                                 type="text"
                                 name="address"
+                                value={companyData?.address}
                                 placeholder="Address"
                                 className="addproperty-inputField"
                                 onChange={handleInputchange}
@@ -242,7 +256,9 @@ const AddAdds = () => {
                                 onChange={handleInputchange}
                                 className="addproperty-inputField"
                             >
-                                <option hidden>Choose Template</option>
+                                <option checked={companyData?.template} hidden>
+                                    {companyData?.template}
+                                </option>
 
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -265,6 +281,7 @@ const AddAdds = () => {
                             <textarea
                                 type="text"
                                 name="companyDescription"
+                                value={companyData?.companyDescription}
                                 placeholder="Company description"
                                 className="addproperty-inputField"
                                 onChange={handleInputchange}
@@ -276,7 +293,7 @@ const AddAdds = () => {
                             className="addproperty-submitDetailBtn"
                             onClick={handlesubmit}
                         >
-                            Add Company
+                            Update Company
                             {spinn ? (
                                 <div
                                     className="spinner-border spinner-border-sm text-white mx-2"
@@ -297,4 +314,4 @@ const AddAdds = () => {
     );
 };
 
-export default AddAdds;
+export default EditAdds;

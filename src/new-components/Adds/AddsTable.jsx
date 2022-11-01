@@ -41,6 +41,7 @@ const AddsTable = ({ addsData, setAddsData, filterData, setFilterData }) => {
                                       address={item.address}
                                       imgUrl={item.imgUrl}
                                       companyId={item._id}
+                                      companyName={item.companyName}
                                       template={item.template}
                                       setFilterData={setFilterData}
                                       setAddsData={setAddsData}

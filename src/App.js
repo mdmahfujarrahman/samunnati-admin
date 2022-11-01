@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddAdds from './new-components/Adds/AddAdds';
 import Adds from './new-components/Adds/Adds';
+import EditAdds from './new-components/Adds/EditAdds';
 import LoginPage from './new-components/LoginPage';
 import NavSidebar from './new-components/NavSidebar';
 import AddUser from './new-components/User/AddUser';
@@ -29,7 +30,8 @@ const App = () => {
                   />
                   <Route exact path="/user/:id" component={EditUser} />
                   <Route path="/adds" exact component={Adds} />
-                  <Route exact path="/adds/add" component={AddAdds} />
+                  <Route path="/adds/add" component={AddAdds} />
+                  <Route path="/adds/edit/:id" exact component={EditAdds} />
                   {/* <Route path="/Query" exact component={Query} />
           <Route path="/category" exact component={Category} />
           <Route path="/category/add" exact component={AddCategory} />

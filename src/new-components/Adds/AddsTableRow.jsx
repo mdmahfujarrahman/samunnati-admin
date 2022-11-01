@@ -3,7 +3,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-import { DeleteUser, GetSingleCompany } from "../../redux/api";
+import { DeleteCompany, DeleteUser, GetSingleCompany } from "../../redux/api";
 import DeleteModal from "../utils/DeleteModal";
 import ViewCompany from "./ViewCompany";
 
@@ -29,6 +29,8 @@ const AddsTableRow = ({
     const [ConfirmDelete, setConfirmDelete] = useState(false);
     const [companyData, setCompanyData] = useState();
 
+    console.log(companyId);
+
     const handleDeleteConfirm = () => {
         setdeleteModalOpen(false);
         setConfirmDelete(true);
@@ -44,13 +46,16 @@ const AddsTableRow = ({
         setdeleteModalOpen(true);
     };
     const handleConfirmDeleteBlog = async (id) => {
+        debugger;
+        console.log(id);
         if (setFilterData) {
             try {
                 const updateUser = filterData?.filter((b) => b.id !== id);
                 setFilterData(updateUser);
                 const newData = addsData?.filter((b) => b._id !== id);
                 setAddsData(newData);
-                await DeleteUser(id);
+                const result = await DeleteUser(id);
+                console.log(result);
             } catch (err) {
                 console.log(err);
             }
@@ -58,7 +63,7 @@ const AddsTableRow = ({
             try {
                 const updateUser = addsData?.filter((b) => b._id !== id);
                 setAddsData(updateUser);
-                await DeleteUser(id);
+                await DeleteCompany(id);
             } catch (err) {
                 console.log(err);
             }
@@ -66,7 +71,8 @@ const AddsTableRow = ({
     };
     useEffect(() => {
         if (ConfirmDelete) {
-            // handleConfirmDeleteBlog(userId);
+            console.log(companyId);
+            handleConfirmDeleteBlog(companyId);
         }
     }, [ConfirmDelete]);
 
@@ -97,13 +103,13 @@ const AddsTableRow = ({
                     >
                         <VisibilityIcon />{" "}
                     </button>
-                    <Link to="/">
+                    <Link to={`/adds/edit/${companyId}`}>
                         <button className="edit-btn">
-                            <ModeEditIcon />{" "}
+                            <ModeEditIcon />
                         </button>
                     </Link>
                     <button
-                        // onClick={(e) => handleDeleteUser(e)}
+                        onClick={(e) => handleDeleteUser(e)}
                         className="delete-btn"
                     >
                         <DeleteIcon />{" "}
@@ -115,7 +121,7 @@ const AddsTableRow = ({
                     show={deleteModalOpen}
                     handleConfirm={handleDeleteConfirm}
                     handleCancel={handleDeleteCancel}
-                    // categorytag={name}
+                    categorytag={companyName}
                 />
             )}
             {profileModalOpen && (

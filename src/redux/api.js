@@ -22,6 +22,10 @@ export const GetUserByName = () => newAPI.get("/user/userName");
 export const CreateAdds = (data) => newAPI.post("/adds", data)
 export const GetAllAdds = (data) => newAPI.get("/adds/allAdds");
 export const GetSingleCompany = (id) => newAPI.get(`/adds?companyId=${id}`);
+export const UpdateCompany = (id, data) => newAPI.patch(`/adds/one?companyId=${id}`, data);
+
+export const DeleteCompany = (id) =>
+    newAPI.patch(`/adds/one?type=DELETE-USER`, { companyId: id });
 
 
 // export const GetQuery = () => NewAPI.get('/api/admin/query?queryIndex=0');
