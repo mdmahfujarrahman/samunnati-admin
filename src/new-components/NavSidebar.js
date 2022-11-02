@@ -117,7 +117,7 @@ const NavSidebar = (props) => {
                     >
                         <IconButton
                             edge="start"
-                            color="inherit"
+                            // color="inherit"
                             aria-label="open drawer"
                             onClick={toggleDrawer}
                             sx={{

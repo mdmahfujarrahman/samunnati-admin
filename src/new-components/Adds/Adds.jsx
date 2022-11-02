@@ -61,7 +61,7 @@ const Adds = () => {
                             />
                             <input
                                 type="text"
-                                placeholder="Enter a Name , Occupation or More"
+                                placeholder="Enter a Company Name , Owner Name more"
                                 className="unitdetails-searchInput"
                                 id="searchInput"
                                 value={searchInput}
