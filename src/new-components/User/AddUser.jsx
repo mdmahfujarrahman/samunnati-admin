@@ -4,11 +4,12 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CreateUser } from "../../redux/api";
 import "../../styles/newstyles/addPropertyForm.css";
+import Children from "./Children";
 
 const AddUser = () => {
     const [spinn, setSpinn] = useState(false);
     const history = useHistory();
-    const [childMarid, setChildMarid] = useState("");
+
     const [userData, setUserData] = useState({
         name: "",
         age: "",
@@ -25,21 +26,18 @@ const AddUser = () => {
         wifeName: "",
         children: [],
     });
-    const [isMarried, setIsMarried] = useState(false);
     const [childrenData, setChildrenData] = useState({
         name: "",
         phoneNumber: "",
         maritalStatus: "",
     });
+    const [isMarried, setIsMarried] = useState(false);
+
+    console.log(userData);
 
     const handleInputchange = (e) => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value });
-    };
-
-    const handleChildInput = (e) => {
-        const { name, value } = e.target;
-        setChildrenData({ ...childrenData, [name]: value });
     };
 
     const handleFile = (e) => {
@@ -54,11 +52,8 @@ const AddUser = () => {
         }
     }, [userData?.maritalStatus]);
 
-    console.log(isMarried);
-
     const createUser = async (newData) => {
         try {
-            debugger;
             const data = await CreateUser(newData);
             setUserData(data?.data?.data);
             if (data.status === 200) {
@@ -89,7 +84,7 @@ const AddUser = () => {
             }
         }
 
-        if (userData.maritalStatus === "single") {
+        if (userData.maritalStatus === "Single") {
             const newData = {
                 ...userData,
                 wifeName: "",
@@ -98,17 +93,50 @@ const AddUser = () => {
             };
 
             console.log(newData);
-            createUser(newData);
+            // createUser(newData);
         } else {
+            if (!userData.wifeName) {
+                setSpinn(false);
+                return toast.error("Please enter wife name");
+            }
+            console.log(childrenData);
+            if (
+                childrenData.name ||
+                childrenData.phoneNumber ||
+                childrenData.maritalStatus
+            ) {
+                if (userData.children.length === 0) {
+                    return toast.error(
+                        "Please add children first or clear input"
+                    );
+                }
+            }
+
             const newData = {
                 ...userData,
-                children: [{ ...childrenData, childMarid }],
                 imgUrl: data?.data?.link || "",
             };
             console.log("inside Else:", newData);
-            createUser(newData);
+            // createUser(newData);
         }
     };
+
+    const [count, setCount] = useState(1);
+
+    const addMore = (e) => {
+        e.preventDefault();
+        setCount(count + 1);
+    };
+
+    const deleteChild = (e) => {
+        e.preventDefault();
+        if (count === 1) {
+            toast.error("Sorry can't delete this filed but you can skip");
+        } else {
+            setCount(count - 1);
+        }
+    };
+
     return (
         <form>
             <div className="addproperty-container">
@@ -342,89 +370,18 @@ const AddUser = () => {
                             </div>
                         )}
                     </div>
-                    {isMarried && (
-                        <>
-                            <div className="addproperty-alignRow">
-                                <div className="addproperty-inputFieldDiv">
-                                    <label className="addproperty-inputLabel">
-                                        Children Name{" "}
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                fontSize: "1.2rem",
-                                            }}
-                                        >
-                                            *
-                                        </span>{" "}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Children Name"
-                                        className="addproperty-inputField"
-                                        onChange={handleChildInput}
-                                    />
-                                </div>
-                                <div className="addproperty-inputFieldDiv">
-                                    <label className="addproperty-inputLabel">
-                                        Children Phone Number{" "}
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                fontSize: "1.2rem",
-                                            }}
-                                        >
-                                            *
-                                        </span>{" "}
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        name="phoneNumber"
-                                        placeholder="Children Phone Number"
-                                        className="addproperty-inputField"
-                                        onChange={handleChildInput}
-                                    />
-                                </div>
-                            </div>
-                            <div className="addproperty-alignRowChildren">
-                                <div className="addproperty-inputFieldDiv">
-                                    <label className="addproperty-inputLabel">
-                                        Children Marital Status{" "}
-                                        <span
-                                            style={{
-                                                color: "red",
-                                                fontSize: "1.2rem",
-                                            }}
-                                        >
-                                            *
-                                        </span>{" "}
-                                    </label>
-                                    <select
-                                        onChange={(e) =>
-                                            setChildMarid(e.target.value)
-                                        }
-                                        className="addproperty-inputField"
-                                    >
-                                        <option value="">
-                                            Choose Marital Status
-                                        </option>
-                                        <option value="Married">Married</option>
-                                        <option value="Single">Single</option>
-                                    </select>
-                                </div>
-                                {/* <div className="addproperty-inputFieldDivChildren">
-                                    <button className="add-childrenBtn">
-                                        {" "}
-                                        Add more children
-                                    </button>
-                                    <button className="add-childrenBtn">
-                                        {" "}
-                                        Add children
-                                    </button>
-                                </div> */}
-                            </div>{" "}
-                        </>
-                    )}
+                    {isMarried &&
+                        [...Array(count)].map((i, index) => (
+                            <Children
+                                key={index}
+                                setChildrenData={setChildrenData}
+                                childrenData={childrenData}
+                                userData={userData}
+                                index={index}
+                                deleteChild={deleteChild}
+                                addMore={addMore}
+                            />
+                        ))}
                     <div className="addproperty-alignRow">
                         <div className="addproperty-textFieldDiv">
                             <label className="addproperty-inputLabel">
