@@ -1,13 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AddChildren, AllChildren, RemoveChildren } from "../../action/action";
 import { getSingleUser, UpdateUser } from "../../redux/api";
-import Children from "./Children";
+import EditChildren from "./EditChildren";
 
 const EditUser = () => {
     const { id } = useParams();
+    const { allChildren } = useSelector((state) => state.children);
+    const dispatch = useDispatch();
     console.log(id);
+    console.log(allChildren);
     const [spinn, setSpinn] = useState(false);
     const history = useHistory();
     const [userData, setUserData] = useState({
@@ -26,16 +31,18 @@ const EditUser = () => {
         wifeName: "",
         children: [],
     });
+
     const [childrenData, setChildrenData] = useState({
         name: "",
         phoneNumber: "",
         maritalStatus: "",
     });
-    const [isMarried, setIsMarried] = useState(false);
     const getUserDate = async (id) => {
         try {
             const data = await getSingleUser(id);
             console.log(data);
+
+            dispatch(AllChildren(data?.data?.result.userInfoEng.children));
             setIsMarried(data?.data?.result.userInfoEng?.maritalStatus);
             setUserData(data?.data?.result.userInfoEng);
         } catch (error) {
@@ -44,7 +51,16 @@ const EditUser = () => {
     };
     useEffect(() => {
         getUserDate(id);
-    }, [id]);
+    }, []);
+
+    const [isMarried, setIsMarried] = useState(false);
+    useEffect(() => {
+        if (userData?.maritalStatus === "Married") {
+            setIsMarried(true);
+        } else {
+            setIsMarried(false);
+        }
+    }, [userData?.maritalStatus]);
 
     const handleInputchange = (e) => {
         const { name, value } = e.target;
@@ -70,7 +86,24 @@ const EditUser = () => {
         }
     };
 
-    console.log(userData);
+    const deleteChild = (e, deleteId) => {
+        e.preventDefault();
+        dispatch(RemoveChildren(deleteId));
+    };
+
+    let addMoreChild = {
+        name: "",
+        phoneNumber: "",
+        maritalStatus: "",
+        id: Math.random()
+            .toString(20)
+            .substring(2, 20 + 2),
+    };
+
+    const addMore = (e) => {
+        e.preventDefault();
+        dispatch(AddChildren(addMoreChild));
+    };
 
     const handlesubmit = async (e) => {
         setSpinn(true);
@@ -95,7 +128,7 @@ const EditUser = () => {
             };
 
             console.log(newData);
-            // updateUser(id, newData);
+            updateUser(id, newData);
         } else {
             if (!userData.wifeName) {
                 setSpinn(false);
@@ -103,28 +136,14 @@ const EditUser = () => {
             }
             const newData = {
                 ...userData,
+                children: allChildren,
                 imgUrl: data?.data?.link || "",
             };
             console.log("inside Else:", newData);
-            // updateUser(id, newData);
+            updateUser(id, newData);
         }
     };
 
-    const [count, setCount] = useState(1);
-
-    const addMore = (e) => {
-        e.preventDefault();
-        setCount(count + 1);
-    };
-
-    const deleteChild = (e) => {
-        e.preventDefault();
-        if (count === 1) {
-            toast.error("Sorry can't delete this filed but you can skip");
-        } else {
-            setCount(count - 1);
-        }
-    };
     return (
         <form>
             <div className="addproperty-container">
@@ -373,14 +392,16 @@ const EditUser = () => {
                         )}
                     </div>
                     {isMarried &&
-                        userData.children.length > 0 &&
-                        userData.children.map((child, index) => (
-                            <Children
+                        allChildren.length > 0 &&
+                        allChildren?.map((child, index) => (
+                            <EditChildren
                                 key={index}
+                                index={index}
                                 child={child}
                                 setChildrenData={setChildrenData}
                                 childrenData={childrenData}
                                 userData={userData}
+                                setUserData={setUserData}
                                 deleteChild={deleteChild}
                                 addMore={addMore}
                             />

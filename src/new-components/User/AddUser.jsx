@@ -93,7 +93,7 @@ const AddUser = () => {
             };
 
             console.log(newData);
-            // createUser(newData);
+            createUser(newData);
         } else {
             if (!userData.wifeName) {
                 setSpinn(false);
@@ -117,7 +117,7 @@ const AddUser = () => {
                 imgUrl: data?.data?.link || "",
             };
             console.log("inside Else:", newData);
-            // createUser(newData);
+            createUser(newData);
         }
     };
 
