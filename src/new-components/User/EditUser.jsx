@@ -148,6 +148,17 @@ const EditUser = () => {
         <form>
             <div className="addproperty-container">
                 <div className="addproperty-personalDetails">
+                    <div className="addproperty-alignRow">
+                        <p>Update User Info</p>
+                        {allChildren && allChildren.length === 0 && (
+                            <button
+                                onClick={(e) => addMore(e)}
+                                className="add-moreBtn"
+                            >
+                                Add Children
+                            </button>
+                        )}
+                    </div>
                     {/* 1st row */}
                     <div className="addproperty-alignRow">
                         <div className="addproperty-inputFieldDiv form-group">
@@ -368,27 +379,29 @@ const EditUser = () => {
                             </select>
                         </div>
                         {isMarried && (
-                            <div className="addproperty-inputFieldDiv">
-                                <label className="addproperty-inputLabel">
-                                    Wife Name{" "}
-                                    <span
-                                        style={{
-                                            color: "red",
-                                            fontSize: "1.2rem",
-                                        }}
-                                    >
-                                        *
-                                    </span>{" "}
-                                </label>
-                                <input
-                                    type="tel"
-                                    name="wifeName"
-                                    value={userData?.wifeName}
-                                    placeholder="Wife Name"
-                                    className="addproperty-inputField"
-                                    onChange={handleInputchange}
-                                />
-                            </div>
+                            <>
+                                <div className="addproperty-inputFieldDiv">
+                                    <label className="addproperty-inputLabel">
+                                        Wife Name{" "}
+                                        <span
+                                            style={{
+                                                color: "red",
+                                                fontSize: "1.2rem",
+                                            }}
+                                        >
+                                            *
+                                        </span>{" "}
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        name="wifeName"
+                                        value={userData?.wifeName}
+                                        placeholder="Wife Name"
+                                        className="addproperty-inputField"
+                                        onChange={handleInputchange}
+                                    />
+                                </div>
+                            </>
                         )}
                     </div>
                     {isMarried &&
