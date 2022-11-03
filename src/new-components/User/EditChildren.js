@@ -21,7 +21,6 @@ const EditChildren = ({
 
     const addChild = (id) => {
     
-        // console.log(childrenData);
         dispatch(
             UpdateChildren({
                 name: childrenData?.name || child?.name,
@@ -33,14 +32,6 @@ const EditChildren = ({
             })
         );
 
-
-        
-        // const newData = {
-        //     ...userData,
-        //     children: users,
-        // };
-        // toast.success("Children Data Updated");
-        // setUserData(newData);
     };
 
     
