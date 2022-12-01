@@ -1,3 +1,4 @@
+import CampaignIcon from '@mui/icons-material/Campaign';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MenuIcon from "@mui/icons-material/Menu";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
@@ -226,6 +227,36 @@ const NavSidebar = (props) => {
                                 )}
                             </ListItemIcon>
                             <ListItemText primary="Adds" />
+                        </ListItem>
+                        <ListItem
+                            button
+                            className={
+                                props.location.pathname.includes("/announcement")
+                                    ? classes.selectedList
+                                    : ""
+                            }
+                            onClick={() => handleListClick("/announcement")}
+                        >
+                            <ListItemIcon>
+                                {props.location.pathname.includes(
+                                    "/announcement"
+                                ) ? (
+                                    <CampaignIcon
+                                        style={{
+                                            color: "white",
+                                            fontSize: "1.8rem",
+                                        }}
+                                    />
+                                ) : (
+                                    <CampaignIcon
+                                        style={{
+                                            color: "white",
+                                            fontSize: "1.8rem",
+                                        }}
+                                    />
+                                )}
+                            </ListItemIcon>
+                            <ListItemText primary="Announcement" />
                         </ListItem>
                         {/* <ListItem
                             button
