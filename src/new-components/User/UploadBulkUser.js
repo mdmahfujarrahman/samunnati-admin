@@ -14,13 +14,53 @@ const UploadBulkUser = () => {
 
     const handleChange = async () => {
         const [file] = ref.current.files;
+        console.log(file);
         if (file) {
             handleFileReader(file, (data) => {
+                dataHandle(data);
                 data.pop()
-                setList(data);
+                console.log(data);
+                // setList(data);
             });
         }
     };
+
+    const dataHandle = (countryData) => {
+        let countryName = "";
+        let seaPortAll = [];
+        let airportAll = [];
+        let road = [];
+        let rail = [];
+        countryData.map((item) => {
+            if (item.CountryName) {
+                countryName = item.CountryName.toLowerCase();
+            }
+            if (item.seaPort) {
+                seaPortAll.push(item.seaPort.toLowerCase());
+            }
+            if (item.airPort) {
+                airportAll.push(item.airPort.toLowerCase());
+            }
+            if (item.road) {
+                road.push(item.road);
+            }
+            if (item.rail) {
+                rail.push(item.rail);
+            }
+            return null;
+        })
+
+        let data = {
+            [countryName]: {
+                seaPort: seaPortAll,
+                airPort: airportAll,
+                road: road,
+                rail: rail
+            }
+        }
+        console.log(data);
+    }
+
 
     const bulkUpload = async () => {
         setLoading(true);
