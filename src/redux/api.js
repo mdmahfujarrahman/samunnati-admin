@@ -2,13 +2,13 @@ import axios from 'axios';
 
 
 const newAPI = axios.create({
-    baseURL: "https://samunnati-backend.herokuapp.com/",
+    baseURL: "https://directory-admin.onrender.com/",
 });
 
 export const Login = (data) => newAPI.put("/auth/login", data);
 export const CreateUser = (data) => newAPI.post("/user", data);
 export const getSingleUser = (userId) => newAPI.get(`/user?userId=${userId}`);
-export const GetUser = () => newAPI.get("/user/userAll");
+export const GetUser = () => newAPI.get("/user/all");
 export const UpdateUser = (userId, data) =>
     newAPI.patch(`/user/one?userId=${userId}`, data);
 export const DeleteUser = (userId) =>
@@ -26,6 +26,14 @@ export const UpdateCompany = (id, data) => newAPI.patch(`/adds/one?companyId=${i
 
 export const DeleteCompany = (id) =>
     newAPI.patch(`/adds/one?type=DELETE-USER`, { companyId: id });
+
+
+export const GetAllAnnouncement = () => newAPI.get(`/announcement`);
+export const CreateAnnouncement = (data) => newAPI.post(`/announcement`, data);
+export const DeleteAnnouncement = (id) => newAPI.patch(`/announcement/one`, { announcementId: id });
+
+
+
 
 
 // export const GetQuery = () => NewAPI.get('/api/admin/query?queryIndex=0');

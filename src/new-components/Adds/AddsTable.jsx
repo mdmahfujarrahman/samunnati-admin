@@ -6,9 +6,10 @@ const AddsTable = ({ addsData, setAddsData, filterData, setFilterData }) => {
     return (
         <div className="table-wrapper" id="#scrollBar">
             <table className="fl-table">
-                <thead>
+                <thead className="">
                     <tr>
                         <th>Serial</th>
+                        <th>Image</th>
                         <th>Company Name</th>
                         <th>Owner Name</th>
                         <th>Company Description</th>

@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CreateAdds, GetUserByName } from "../../redux/api";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import "../../styles/newstyles/addPropertyForm.css";
+import { storage } from "../../firebase";
 
 const AddAdds = () => {
     const [spinn, setSpinn] = useState(false);
@@ -35,9 +37,6 @@ const AddAdds = () => {
         setCompanyData({ ...companyData, [name]: value });
     };
 
-    const handleFile = (e) => {
-        setCompanyData({ ...companyData, imgUrl: e.target.files[0] });
-    };
 
     const createCompany = async (newData) => {
         try {
@@ -58,28 +57,32 @@ const AddAdds = () => {
     const handlesubmit = async (e) => {
         setSpinn(true);
         e.preventDefault();
-        let data;
-        if (companyData.imgUrl) {
-            const formdata = new FormData();
-            formdata.append("file", companyData.imgUrl);
-
-            try {
-                data = await axios.post(
-                    "https://aws-file-upload-v1.herokuapp.com/api/v2/samunnati/upload/file",
-                    formdata
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        const newData = {
-            ...companyData,
-            imgUrl: data?.data?.link || "",
-        };
-        console.log(newData);
-        createCompany(newData);
+        createCompany(companyData);
     };
+
+    const handleImage = async (e) => {
+        const photo = e.target.files[0];
+        if (!photo) return;
+        const imgUrl = fileUpload(photo);
+        toast.promise(imgUrl, {
+            loading: "Image Uploading......",
+            success: "Image upload successful",
+            error: "Error when fetching",
+        });
+        imgUrl.then((url) => {
+            setCompanyData({
+                ...companyData,
+                imgUrl: url,
+            });
+        });
+    };
+    //file upload
+    const fileUpload = async (file) => {
+        const storageRef = ref(storage, `files/${file.name}`);
+        await uploadBytesResumable(storageRef, file);
+        return await getDownloadURL(storageRef);
+    };
+
     return (
         <form>
             <div className="addproperty-container">
@@ -189,44 +192,6 @@ const AddAdds = () => {
                                 ))}
                             </select>
                         </div>
-
-                        <div className="addproperty-inputFieldDiv">
-                            <label className="addproperty-inputLabel">
-                                Profile Photo{" "}
-                                <span
-                                    style={{ color: "red", fontSize: "1.2rem" }}
-                                >
-                                    *
-                                </span>{" "}
-                            </label>
-                            <input
-                                type="file"
-                                name="video"
-                                placeholder="Upload Video"
-                                className="addproperty-inputField"
-                                onChange={handleFile}
-                            />
-                        </div>
-                    </div>
-                    <div className="addproperty-alignRow">
-                        <div className="addproperty-inputFieldDiv">
-                            <label className="addproperty-inputLabel">
-                                Address{" "}
-                                <span
-                                    style={{ color: "red", fontSize: "1.2rem" }}
-                                >
-                                    *
-                                </span>{" "}
-                            </label>
-                            <input
-                                type="text"
-                                name="address"
-                                placeholder="Address"
-                                className="addproperty-inputField"
-                                onChange={handleInputchange}
-                            />
-                        </div>
-
                         <div className="addproperty-inputFieldDiv">
                             <label className="addproperty-inputLabel">
                                 Adds Template{" "}
@@ -251,7 +216,25 @@ const AddAdds = () => {
                             </select>
                         </div>
                     </div>
-                    <div className="addproperty-alignRow"></div>
+                    <div className="addproperty-alignRow">
+                        <div className="addproperty-textFieldDiv">
+                            <label className="addproperty-inputLabel">
+                                Address{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="text"
+                                name="address"
+                                placeholder="Address"
+                                className="addproperty-inputField"
+                                onChange={handleInputchange}
+                            />
+                        </div>
+                    </div>
                     <div className="addproperty-alignRow">
                         <div className="addproperty-textFieldDiv">
                             <label className="addproperty-inputLabel">
@@ -271,6 +254,30 @@ const AddAdds = () => {
                             />
                         </div>
                     </div>
+                    <div className="addproperty-alignRow">
+                        <div className="addproperty-inputFieldDiv">
+                            <label className="addproperty-inputLabel">
+                                Photo{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="file"
+                                name="video"
+                                placeholder="Upload Video"
+                                className="addproperty-inputField"
+                                onChange={handleImage}
+                            />
+                        </div>
+                    </div>
+                    {companyData?.imgUrl && <div className="addproperty-alignRow">
+                        <div className="addproperty-inputFieldDiv">
+                            <img className="w-50" src={companyData?.imgUrl} alt="" />
+                        </div>
+                    </div>}
                     <div className="addproperty-submitDetailDiv">
                         <button
                             className="addproperty-submitDetailBtn"
