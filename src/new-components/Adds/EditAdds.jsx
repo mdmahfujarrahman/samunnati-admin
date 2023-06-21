@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { toast } from "react-toastify";
 import {
     GetSingleCompany,
@@ -8,6 +9,7 @@ import {
     UpdateCompany,
 } from "../../redux/api";
 import "../../styles/newstyles/addPropertyForm.css";
+import { storage } from "../../firebase";
 
 const EditAdds = () => {
     const id = window.location.pathname.split("/")[3];
@@ -41,9 +43,6 @@ const EditAdds = () => {
         setCompanyData({ ...companyData, [name]: value });
     };
 
-    const handleFile = (e) => {
-        setCompanyData({ ...companyData, imgUrl: e.target.files[0] });
-    };
 
     const updateCompany = async (companyId, newData) => {
         try {
@@ -59,32 +58,36 @@ const EditAdds = () => {
         }
     };
 
-    console.log(companyData);
+
 
     const handlesubmit = async (e) => {
         setSpinn(true);
         e.preventDefault();
-        let data;
-        if (companyData.imgUrl) {
-            const formdata = new FormData();
-            formdata.append("file", companyData.imgUrl);
+        updateCompany(id, companyData);
+    };
 
-            try {
-                data = await axios.post(
-                    "https://aws-file-upload-v1.herokuapp.com/api/v2/samunnati/upload/file",
-                    formdata
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        }
 
-        const newData = {
-            ...companyData,
-            imgUrl: data?.data?.link || "",
-        };
-        console.log(newData);
-        updateCompany(id, newData);
+    const handleImage = async (e) => {
+        const photo = e.target.files[0];
+        if (!photo) return;
+        const imgUrl = fileUpload(photo);
+        toast.promise(imgUrl, {
+            loading: "Image Uploading......",
+            success: "Image upload successful",
+            error: "Error when fetching",
+        });
+        imgUrl.then((url) => {
+            setCompanyData({
+                ...companyData,
+                imgUrl: url,
+            });
+        });
+    };
+    //file upload
+    const fileUpload = async (file) => {
+        const storageRef = ref(storage, `files/${file.name}`);
+        await uploadBytesResumable(storageRef, file);
+        return await getDownloadURL(storageRef);
     };
     return (
         <form>
@@ -204,45 +207,6 @@ const EditAdds = () => {
 
                         <div className="addproperty-inputFieldDiv">
                             <label className="addproperty-inputLabel">
-                                Profile Photo{" "}
-                                <span
-                                    style={{ color: "red", fontSize: "1.2rem" }}
-                                >
-                                    *
-                                </span>{" "}
-                            </label>
-                            <input
-                                type="file"
-                                name="video"
-                                // value={companyData?.imgUrl}
-                                placeholder="Upload Video"
-                                className="addproperty-inputField"
-                                onChange={handleFile}
-                            />
-                        </div>
-                    </div>
-                    <div className="addproperty-alignRow">
-                        <div className="addproperty-inputFieldDiv">
-                            <label className="addproperty-inputLabel">
-                                Address{" "}
-                                <span
-                                    style={{ color: "red", fontSize: "1.2rem" }}
-                                >
-                                    *
-                                </span>{" "}
-                            </label>
-                            <input
-                                type="text"
-                                name="address"
-                                value={companyData?.address}
-                                placeholder="Address"
-                                className="addproperty-inputField"
-                                onChange={handleInputchange}
-                            />
-                        </div>
-
-                        <div className="addproperty-inputFieldDiv">
-                            <label className="addproperty-inputLabel">
                                 Adds Template{" "}
                                 <span
                                     style={{ color: "red", fontSize: "1.2rem" }}
@@ -267,7 +231,26 @@ const EditAdds = () => {
                             </select>
                         </div>
                     </div>
-                    <div className="addproperty-alignRow"></div>
+                    <div className="addproperty-alignRow">
+                        <div className="addproperty-textFieldDiv">
+                            <label className="addproperty-inputLabel">
+                                Address{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="text"
+                                name="address"
+                                value={companyData?.address}
+                                placeholder="Address"
+                                className="addproperty-inputField"
+                                onChange={handleInputchange}
+                            />
+                        </div>
+                    </div>
                     <div className="addproperty-alignRow">
                         <div className="addproperty-textFieldDiv">
                             <label className="addproperty-inputLabel">
@@ -281,13 +264,37 @@ const EditAdds = () => {
                             <textarea
                                 type="text"
                                 name="companyDescription"
-                                value={companyData?.companyDescription}
                                 placeholder="Company description"
+                                value={companyData?.companyDescription}
                                 className="addproperty-inputField"
                                 onChange={handleInputchange}
                             />
                         </div>
                     </div>
+                    <div className="addproperty-alignRow">
+                        <div className="addproperty-inputFieldDiv">
+                            <label className="addproperty-inputLabel">
+                                Photo{" "}
+                                <span
+                                    style={{ color: "red", fontSize: "1.2rem" }}
+                                >
+                                    *
+                                </span>{" "}
+                            </label>
+                            <input
+                                type="file"
+                                name="video"
+                                placeholder="Upload Video"
+                                className="addproperty-inputField"
+                                onChange={handleImage}
+                            />
+                        </div>
+                    </div>
+                    {companyData?.imgUrl && <div className="addproperty-alignRow">
+                        <div className="addproperty-inputFieldDiv">
+                            <img className="w-50" src={companyData?.imgUrl} alt="" />
+                        </div>
+                    </div>}
                     <div className="addproperty-submitDetailDiv">
                         <button
                             className="addproperty-submitDetailBtn"

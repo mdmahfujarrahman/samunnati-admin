@@ -61,6 +61,7 @@
     text-align: left;
     padding: 12px 10px;
 }
+
 .action-btn {
     overflow: visible !important;
     text-overflow: clip !important;
@@ -118,6 +119,7 @@
     cursor: pointer;
     border-radius: 4px;
 }
+
 .edit-btn {
     color: white;
     background-color: green;
@@ -126,4 +128,15 @@
     cursor: pointer;
     border-radius: 4px;
     margin-right: 5px;
+}
+
+.image-td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
 }

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 import { DeleteCompany, DeleteUser, GetSingleCompany } from "../../redux/api";
 import DeleteModal from "../utils/DeleteModal";
 import ViewCompany from "./ViewCompany";
+import noImage from "../../images/no image.png";
 
 const AddsTableRow = ({
     index,
@@ -88,9 +89,10 @@ const AddsTableRow = ({
         <>
             <tr>
                 <td>{index + 1}</td>
+                <td className="image-td"><img src={imgUrl ? imgUrl : noImage} alt="" /></td>
                 <td>{companyName ? companyName : "-"}</td>
                 <td>{ownerName ? ownerName : "-"}</td>
-                <td>{companyDescription ? companyDescription : "-"}</td>
+                <td title={companyDescription}>{companyDescription ? companyDescription : "-"}</td>
                 <td>{phoneNumber ? phoneNumber : "-"}</td>
                 <td>{email ? email : "-"}</td>
                 <td>{website ? website : "-"}</td>
