@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const newAPI = axios.create({
-    // baseURL: "https://directory-admin.onrender.com/",
-    baseURL: "http://localhost:5002/",
+    baseURL: "https://directory-admin.onrender.com/",
+    // baseURL: "http://localhost:5002/",
 });
 
 export const Login = (data) => newAPI.put("/auth/login", data);
