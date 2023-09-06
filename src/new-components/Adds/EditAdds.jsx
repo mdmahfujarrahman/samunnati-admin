@@ -43,8 +43,41 @@ const EditAdds = () => {
         setCompanyData({ ...companyData, [name]: value });
     };
 
-
     const updateCompany = async (companyId, newData) => {
+        if (newData.companyName === "") {
+            setSpinn(false);
+            return toast.error("Company name is required");
+        }
+        if (newData.ownerName === "") {
+            setSpinn(false);
+            return toast.error("Owner name is required");
+        }
+
+        if (newData.companyDescription === "") {
+            setSpinn(false);
+            return toast.error("Company description is required");
+        }
+        if (newData.phoneNumber === "") {
+            setSpinn(false);
+            return toast.error("Phone number is required");
+        }
+        if (newData.email === "") {
+            setSpinn(false);
+            return toast.error("Email is required");
+        }
+        if (newData.imgUrl === "") {
+            setSpinn(false);
+            return toast.error("Image is required");
+        }
+        if (newData.website === "") {
+            setSpinn(false);
+            return toast.error("Website is required");
+        }
+        if (newData.template === "") {
+            setSpinn(false);
+            return toast.error("Template is required");
+        }
+
         try {
             const data = await UpdateCompany(companyId, newData);
             setCompanyData(data?.data?.data);
@@ -58,30 +91,24 @@ const EditAdds = () => {
         }
     };
 
-
-
     const handlesubmit = async (e) => {
         setSpinn(true);
         e.preventDefault();
         updateCompany(id, companyData);
     };
 
-
     const handleImage = async (e) => {
         const photo = e.target.files[0];
         if (!photo) return;
-        const imgUrl = fileUpload(photo);
-        toast.promise(imgUrl, {
-            loading: "Image Uploading......",
-            success: "Image upload successful",
-            error: "Error when fetching",
-        });
-        imgUrl.then((url) => {
-            setCompanyData({
-                ...companyData,
-                imgUrl: url,
-            });
-        });
+        toast.loading("Image uploading...");
+        try {
+            const imgUrl = await fileUpload(photo);
+            setCompanyData({ ...companyData, imgUrl });
+            toast.dismiss();
+            toast.success("Image uploaded successfully");
+        } catch (error) {
+            toast.error("Image uploading failed");
+        }
     };
     //file upload
     const fileUpload = async (file) => {
@@ -235,11 +262,6 @@ const EditAdds = () => {
                         <div className="addproperty-textFieldDiv">
                             <label className="addproperty-inputLabel">
                                 Address{" "}
-                                <span
-                                    style={{ color: "red", fontSize: "1.2rem" }}
-                                >
-                                    *
-                                </span>{" "}
                             </label>
                             <input
                                 type="text"
@@ -290,11 +312,17 @@ const EditAdds = () => {
                             />
                         </div>
                     </div>
-                    {companyData?.imgUrl && <div className="addproperty-alignRow">
-                        <div className="addproperty-inputFieldDiv">
-                            <img className="w-50" src={companyData?.imgUrl} alt="" />
+                    {companyData?.imgUrl && (
+                        <div className="addproperty-alignRow">
+                            <div className="addproperty-inputFieldDiv">
+                                <img
+                                    className="w-50"
+                                    src={companyData?.imgUrl}
+                                    alt=""
+                                />
+                            </div>
                         </div>
-                    </div>}
+                    )}
                     <div className="addproperty-submitDetailDiv">
                         <button
                             className="addproperty-submitDetailBtn"
