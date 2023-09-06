@@ -1,8 +1,8 @@
-import axios from 'axios';
-
+import axios from "axios";
 
 const newAPI = axios.create({
-    baseURL: "https://directory-admin.onrender.com/",
+    // baseURL: "https://directory-admin.onrender.com/",
+    baseURL: "http://localhost:5002/",
 });
 
 export const Login = (data) => newAPI.put("/auth/login", data);
@@ -16,29 +16,24 @@ export const DeleteUser = (userId) =>
 export const BulkUserUpload = (data) => newAPI.post("/user/bulk-add", data);
 export const GetUserByName = () => newAPI.get("/user/userName");
 
-
 // Adds
 
-export const CreateAdds = (data) => newAPI.post("/adds", data)
+export const CreateAdds = (data) => newAPI.post("/adds", data);
 export const GetAllAdds = (data) => newAPI.get("/adds/allAdds");
 export const GetSingleCompany = (id) => newAPI.get(`/adds?companyId=${id}`);
-export const UpdateCompany = (id, data) => newAPI.patch(`/adds/one?companyId=${id}`, data);
+export const UpdateCompany = (id, data) =>
+    newAPI.patch(`/adds/one?companyId=${id}`, data);
 
 export const DeleteCompany = (id) =>
     newAPI.patch(`/adds/one?type=DELETE-USER`, { companyId: id });
 
-
 export const GetAllAnnouncement = () => newAPI.get(`/announcement`);
 export const CreateAnnouncement = (data) => newAPI.post(`/announcement`, data);
-export const DeleteAnnouncement = (id) => newAPI.patch(`/announcement/one`, { announcementId: id });
-
-
-
-
+export const DeleteAnnouncement = (id) =>
+    newAPI.patch(`/announcement/one`, { announcementId: id });
 
 // export const GetQuery = () => NewAPI.get('/api/admin/query?queryIndex=0');
 // export const GetUsers = () => NewAPI.get('/api/admin/user?userIndex=0');
-
 
 // // Property
 
